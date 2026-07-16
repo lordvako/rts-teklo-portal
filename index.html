@@ -271,36 +271,28 @@ let currentView = 'company';
 const VALID_LOGIN = 'ritsteklo';
 const VALID_PASSWORD = '2026';
 
-// ========== ФУНКЦИЯ РАСЧЁТА ГАРАНТИИ ==========
 function calculateWarranty(installDate) {
     if (!installDate || installDate === 'Unknown' || installDate === 'N/A') {
         return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Дата неизвестна' };
     }
-
     const parts = installDate.split('.');
     if (parts.length !== 2) {
         return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неверный формат' };
     }
-
     const installMonth = parseInt(parts[0]);
     const installYear = parseInt(parts[1]);
     if (isNaN(installMonth) || isNaN(installYear)) {
         return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неверный формат' };
     }
-
     const now = new Date();
     const currentYear = now.getFullYear();
     const currentMonth = now.getMonth() + 1;
-
     let endMonth = installMonth;
     let endYear = installYear + 1;
     if (endMonth > 12) { endMonth -= 12; endYear += 1; }
     const endDateStr = `${String(endMonth).padStart(2, '0')}.${endYear}`;
-
     const elapsedMonths = (currentYear - installYear) * 12 + (currentMonth - installMonth);
-
     let status, percent, remaining;
-
     if (elapsedMonths < 0) {
         status = 'pending';
         percent = 0;
@@ -315,16 +307,16 @@ function calculateWarranty(installDate) {
         const leftMonths = 12 - elapsedMonths;
         remaining = `${Math.round(leftMonths * 10) / 10} мес. осталось`;
     }
-
     return { status, percent, end: endDateStr, remaining };
 }
 
 async function loadMachinesData() {
     try {
-        let response = await fetch('data/machines.json');
+        // Файл в корне — просто machines.json
+        let response = await fetch('machines.json');
         if (!response.ok) {
             const baseUrl = window.location.href.replace(/\/[^\/]*$/, '/');
-            response = await fetch(baseUrl + 'data/machines.json');
+            response = await fetch(baseUrl + 'machines.json');
         }
         if (!response.ok) throw new Error('HTTP ' + response.status);
         
