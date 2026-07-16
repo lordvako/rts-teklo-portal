@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTS Teklo — Редактор данных</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+:root {
+  --primary: #1a3a5c; --primary-light: #2a5a8c; --accent: #e8b923; --accent-glow: rgba(232,185,35,0.3);
+  --success: #22c55e; --warning: #f59e0b; --danger: #ef4444; --info: #3b82f6;
+  --bg-dark: #0f172a; --bg-card: rgba(30,41,59,0.7); --bg-card-hover: rgba(30,41,59,0.9);
+  --text: #e2e8f0; --text-muted: #94a3b8; --border: rgba(148,163,184,0.15);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text); min-height: 100vh; }
+.header { background: rgba(15,23,42,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 16px 32px;
+  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header h1 { font-size: 20px; font-weight: 700; }
+.header h1 span { color: var(--accent); }
+.header-actions { display: flex; gap: 12px; }
+.action-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: all 0.3s; border: none; }
+.action-btn.primary { background: linear-gradient(135deg, var(--accent), #d4a017); color: var(--bg-dark); }
+.action-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(232,185,35,0.4); }
+.action-btn.secondary { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); }
+.action-btn.secondary:hover { background: rgba(255,255,255,0.1); }
+.action-btn.danger { background: var(--danger); color: white; }
+.action-btn.danger:hover { background: #dc2626; }
+.container { max-width: 1400px; margin: 0 auto; padding: 24px 32px; }
+.section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.section-title::before { content: ''; width: 4px; height: 24px; background: linear-gradient(180deg, var(--accent), var(--primary)); border-radius: 2px; }
+.machine-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.machine-row { display: grid; grid-template-columns: 60px 1fr 120px 120px 100px 80px 80px 100px; gap: 8px; align-items: center;
+  padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; font-size: 13px; transition: all 0.3s; }
+.machine-row:hover { background: var(--bg-card-hover); border-color: rgba(232,185,35,0.2); }
+.machine-row.header-row { background: rgba(255,255,255,0.03); font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-size: 11px; }
+.machine-row.header-row:hover { background: rgba(255,255,255,0.03); border-color: var(--border); }
+.machine-row .cell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.machine-row .cell.id { font-family: monospace; color: var(--text-muted); }
+.machine-row .cell.serial { font-family: monospace; color: var(--accent); }
+.machine-row .cell.status { text-align: center; }
+.machine-row .cell.status .badge { padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.badge-active { background: rgba(34,197,94,0.15); color: var(--success); }
+.badge-expired { background: rgba(239,68,68,0.15); color: var(--danger); }
+.badge-unknown { background: rgba(148,163,184,0.15); color: var(--text-muted); }
+.machine-row .actions { display: flex; gap: 4px; justify-content: flex-end; }
+.machine-row .actions button { width: 28px; height: 28px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.machine-row .actions .edit-btn { background: rgba(59,130,246,0.15); color: var(--info); }
+.machine-row .actions .edit-btn:hover { background: var(--info); color: white; }
+.machine-row .actions .del-btn { background: rgba(239,68,68,0.15); color: var(--danger); }
+.machine-row .actions .del-btn:hover { background: var(--danger); color: white; }
+.add-btn { width: 100%; padding: 16px; background: rgba(34,197,94,0.1); border: 2px dashed rgba(34,197,94,0.3); border-radius: 12px;
+  color: var(--success); font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.3s; margin-bottom: 24px; }
+.add-btn:hover { background: rgba(34,197,94,0.2); border-color: var(--success); }
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+  z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.show { display: flex; }
+.modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; width: 100%; max-width: 700px;
+  max-height: 90vh; overflow-y: auto; animation: modalAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes modalAppear { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.modal-header { padding: 24px 32px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.modal-header h2 { font-size: 20px; font-weight: 700; }
+.modal-close { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  color: var(--text-muted); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+.modal-close:hover { background: var(--danger); color: white; border-color: var(--danger); }
+.modal-body { padding: 24px 32px; }
+.modal-footer { padding: 16px 32px 24px; display: flex; gap: 12px; justify-content: flex-end; }
+.modal-btn { padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.3s; border: none; }
+.modal-btn.primary { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; }
+.modal-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -5px rgba(26,58,92,0.5); }
+.modal-btn.secondary { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); }
+.modal-btn.secondary:hover { background: rgba(255,255,255,0.1); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.form-group input, .form-group select, .form-group textarea { padding: 12px 14px; background: rgba(15,23,42,0.6); border: 1px solid var(--border);
+  border-radius: 10px; color: var(--text); font-size: 14px; font-family: inherit; outline: none; transition: all 0.3s; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.form-group textarea { min-height: 60px; resize: vertical; }
+.form-group.full-width { grid-column: 1 / -1; }
+.spare-editor { margin-top: 8px; }
+.spare-row { display: grid; grid-template-columns: 1fr 80px 36px; gap: 8px; margin-bottom: 8px; align-items: center; }
+.spare-row input { padding: 10px 12px; background: rgba(15,23,42,0.6); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: inherit; font-size: 13px; }
+.spare-row input:focus { border-color: var(--accent); outline: none; }
+.spare-row button { width: 32px; height: 32px; border-radius: 8px; background: rgba(239,68,68,0.15); border: none; color: var(--danger); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.spare-row button:hover { background: var(--danger); color: white; }
+.add-spare-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3);
+  color: var(--success); border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; font-family: inherit; margin-top: 4px; }
+.add-spare-btn:hover { background: var(--success); color: white; }
+.toast { position: fixed; bottom: 24px; right: 24px; padding: 16px 24px; border-radius: 12px; font-size: 14px; font-weight: 500;
+  z-index: 2000; animation: toastIn 0.4s ease; display: flex; align-items: center; gap: 10px; }
+@keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.toast.success { background: rgba(34,197,94,0.9); color: white; }
+.toast.error { background: rgba(239,68,68,0.9); color: white; }
+.toast.info { background: rgba(59,130,246,0.9); color: white; }
+.instructions { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; }
+.instructions h3 { font-size: 14px; color: var(--info); margin-bottom: 8px; }
+.instructions ol { padding-left: 20px; color: var(--text-muted); font-size: 13px; line-height: 1.8; }
+.instructions code { background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.4); }
+@media (max-width: 768px) {
+  .machine-row { grid-template-columns: 40px 1fr 80px 60px; }
+  .machine-row .cell:nth-child(4), .machine-row .cell:nth-child(5), .machine-row .cell:nth-child(6) { display: none; }
+  .header { padding: 12px 16px; }
+  .container { padding: 16px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>RTS TEKLO <span>— Редактор данных</span></h1>
+  <div class="header-actions">
+    <button class="action-btn secondary" onclick="loadFromFile()">📁 Загрузить JSON</button>
+    <button class="action-btn primary" onclick="downloadJSON()">💾 Скачать JSON</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="instructions">
+    <h3>📋 Как редактировать данные:</h3>
+    <ol>
+      <li>Нажмите <b>"Загрузить JSON"</b> и выберите файл <code>data/machines.json</code> из вашего репозитория</li>
+      <li>Редактируйте машины (✎) или добавьте новую (+)</li>
+      <li>Нажмите <b>"Скачать JSON"</b> — получите обновлённый файл</li>
+      <li>Загрузите этот файл на GitHub в папку <code>data/machines.json</code></li>
+      <li>Все пользователи увидят изменения при следующем заходе!</li>
+    </ol>
+  </div>
+
+  <div class="section-title">Список машин</div>
+  <div class="machine-list" id="machine-list"></div>
+  <button class="add-btn" onclick="openAddModal()">+ Добавить новую машину</button>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Редактировать машину</h2>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Тип оборудования *</label>
+          <select id="form-equipment">
+            <option value="Evolution 5">Evolution 5</option>
+            <option value="Evolution 16">Evolution 16</option>
+            <option value="Evolution 12">Evolution 12</option>
+            <option value="Evolution 1">Evolution 1</option>
+            <option value="EasySet">EasySet</option>
+            <option value="NEO">NEO</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Серийный номер *</label>
+          <input type="text" id="form-serial" placeholder="IRIS-XXXX">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Завод *</label>
+          <select id="form-plant" onchange="checkNewPlant()">
+            <option value="KAMYSHIN (Verallia), Volgograd region, Russia">KAMYSHIN (Verallia)</option>
+            <option value="KAVMINSTEKLO (Verallia), Stavropol region, Russia">KAVMINSTEKLO (Verallia)</option>
+            <option value="STEKLOTEH, Tyumen, Russia">STEKLOTEH</option>
+            <option value="GLASS DECOR, Novoalexandrovsk, Russia">GLASS DECOR (Novoalexandrovsk)</option>
+            <option value="GLASS DECOR, Vladimir region, Russia">GLASS DECOR (Vladimir)</option>
+            <option value="PETERBURGSKOYE STEKLO, Luga, Russia">PETERBURGSKOYE STEKLO</option>
+            <option value="9th of JANUARY, Vyshniy Volochek, Russia">9th of JANUARY</option>
+            <option value="NEW">+ Новый завод...</option>
+          </select>
+        </div>
+        <div class="form-group" id="new-plant-group" style="display:none;">
+          <label>Название нового завода</label>
+          <input type="text" id="form-new-plant" placeholder="Название, город, регион">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Линия</label><input type="text" id="form-line" placeholder="3, 731, 2.1"></div>
+        <div class="form-group"><label>Год установки</label><input type="number" id="form-year" placeholder="2025" min="2000" max="2030"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Дата поставки (MM.YYYY)</label><input type="text" id="form-delivery" placeholder="01.2025"></div>
+        <div class="form-group"><label>Дата установки (MM.YYYY)</label><input type="text" id="form-install" placeholder="03.2025"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group full-width"><label>Комментарии</label><textarea id="form-comments" placeholder="Дополнительная информация..."></textarea></div>
+      </div>
+      <div class="spare-editor">
+        <label style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:block;">Запасные части</label>
+        <div id="spare-list"></div>
+        <button class="add-spare-btn" onclick="addSpareRow()">+ Добавить запчасть</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn secondary" onclick="closeModal()">Отмена</button>
+      <button class="modal-btn primary" onclick="saveMachine()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="file-input" accept=".json" style="display:none" onchange="handleFileSelect(event)">
+
+<script>
+let machines = [];
+let nextId = 2000;
+let deleteId = null;
+
+function loadFromFile() {
+  document.getElementById('file-input').click();
+}
+
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      machines = JSON.parse(e.target.result);
+      const maxId = Math.max(...machines.map(m => m.id), 0);
+      nextId = maxId + 1;
+      renderList();
+      showToast('Данные загружены: ' + machines.length + ' машин', 'success');
+    } catch (err) {
+      showToast('Ошибка чтения JSON: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function calculateWarrantyStatus(installDate) {
+  if (!installDate || installDate === 'Unknown' || installDate === 'N/A') {
+    return { status: 'unknown', percent: 0, end: 'Unknown' };
+  }
+  const parts = installDate.split('.');
+  if (parts.length !== 2) return { status: 'unknown', percent: 0, end: 'Unknown' };
+  const installMonth = parseInt(parts[0]);
+  const installYear = parseInt(parts[1]);
+  if (isNaN(installMonth) || isNaN(installYear)) return { status: 'unknown', percent: 0, end: 'Unknown' };
+  
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1;
+  
+  let endMonth = installMonth;
+  let endYear = installYear + 1;
+  if (endMonth > 12) { endMonth -= 12; endYear += 1; }
+  const endDateStr = `${String(endMonth).padStart(2,'0')}.${endYear}`;
+  
+  const elapsedMonths = (currentYear - installYear) * 12 + (currentMonth - installMonth);
+  let status, percent;
+  if (elapsedMonths < 0) { status = 'pending'; percent = 0; }
+  else if (elapsedMonths >= 12) { status = 'expired'; percent = 100; }
+  else { status = 'active'; percent = Math.round((elapsedMonths / 12) * 100 * 10) / 10; }
+  return { status, percent, end: endDateStr };
+}
+
+function renderList() {
+  const list = document.getElementById('machine-list');
+  list.innerHTML = `
+    <div class="machine-row header-row">
+      <div class="cell">ID</div>
+      <div class="cell">Завод</div>
+      <div class="cell">Тип</div>
+      <div class="cell">Серийный</div>
+      <div class="cell">Год</div>
+      <div class="cell">Линия</div>
+      <div class="cell">Статус</div>
+      <div class="cell" style="text-align:right;">Действия</div>
+    </div>
+  `;
+  machines.forEach(m => {
+    const warranty = calculateWarrantyStatus(m.install_date);
+    const statusClass = warranty.status === 'active' ? 'badge-active' : warranty.status === 'expired' ? 'badge-expired' : 'badge-unknown';
+    const statusText = warranty.status === 'active' ? 'Активна' : warranty.status === 'expired' ? 'Истекла' : '?';
+    const shortPlant = m.plant ? m.plant.split(',')[0] : '?';
+    const year = m.install_date && m.install_date !== 'Unknown' ? m.install_date.split('.')[1] : '?';
+    const row = document.createElement('div');
+    row.className = 'machine-row';
+    row.innerHTML = `
+      <div class="cell id">${m.id}</div>
+      <div class="cell" title="${m.plant || ''}">${shortPlant}</div>
+      <div class="cell">${m.equipment || '?'}</div>
+      <div class="cell serial">${m.serial || '?'}</div>
+      <div class="cell">${year}</div>
+      <div class="cell">${m.line || 'N/A'}</div>
+      <div class="cell status"><span class="badge ${statusClass}">${statusText}</span></div>
+      <div class="cell actions">
+        <button class="edit-btn" onclick="openEditModal(${m.id})" title="Редактировать">✎</button>
+        <button class="del-btn" onclick="deleteMachine(${m.id})" title="Удалить">×</button>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+function openAddModal() {
+  document.getElementById('modal-title').textContent = 'Добавить машину';
+  document.getElementById('edit-id').value = '';
+  document.getElementById('form-equipment').value = 'Evolution 5';
+  document.getElementById('form-serial').value = '';
+  document.getElementById('form-plant').value = 'KAMYSHIN (Verallia), Volgograd region, Russia';
+  document.getElementById('new-plant-group').style.display = 'none';
+  document.getElementById('form-new-plant').value = '';
+  document.getElementById('form-line').value = '';
+  document.getElementById('form-year').value = '2025';
+  document.getElementById('form-delivery').value = '';
+  document.getElementById('form-install').value = '';
+  document.getElementById('form-comments').value = '';
+  document.getElementById('spare-list').innerHTML = '';
+  addSpareRow();
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
+function openEditModal(id) {
+  const m = machines.find(x => x.id === id);
+  if (!m) return;
+  document.getElementById('modal-title').textContent = 'Редактировать машину #' + id;
+  document.getElementById('edit-id').value = id;
+  document.getElementById('form-equipment').value = m.equipment || 'Evolution 5';
+  document.getElementById('form-serial').value = m.serial || '';
+  
+  const plantSelect = document.getElementById('form-plant');
+  let found = false;
+  for (let i = 0; i < plantSelect.options.length; i++) {
+    if (plantSelect.options[i].value === m.plant) { plantSelect.value = m.plant; found = true; break; }
+  }
+  if (!found && m.plant) { plantSelect.value = 'NEW'; document.getElementById('new-plant-group').style.display = 'block'; document.getElementById('form-new-plant').value = m.plant; }
+  else { document.getElementById('new-plant-group').style.display = 'none'; }
+  
+  document.getElementById('form-line').value = (m.line && m.line !== 'N/A') ? m.line : '';
+  const year = (m.install_date && m.install_date !== 'Unknown') ? m.install_date.split('.')[1] : '';
+  document.getElementById('form-year').value = year || '';
+  document.getElementById('form-delivery').value = (m.delivery_date && m.delivery_date !== 'Unknown') ? m.delivery_date : '';
+  document.getElementById('form-install').value = (m.install_date && m.install_date !== 'Unknown') ? m.install_date : '';
+  document.getElementById('form-comments').value = (m.comments && m.comments !== '-') ? m.comments : '';
+  
+  const spareList = document.getElementById('spare-list');
+  spareList.innerHTML = '';
+  (m.spare_parts || []).forEach(sp => addSpareRow(sp.name, sp.qty));
+  if (spareList.children.length === 0) addSpareRow();
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
+function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
+
+function checkNewPlant() {
+  document.getElementById('new-plant-group').style.display = document.getElementById('form-plant').value === 'NEW' ? 'block' : 'none';
+}
+
+function addSpareRow(name = '', qty = 1) {
+  const container = document.getElementById('spare-list');
+  const row = document.createElement('div');
+  row.className = 'spare-row';
+  row.innerHTML = `<input type="text" placeholder="Название" value="${name}"><input type="number" placeholder="Кол-во" value="${qty}" min="1"><button onclick="this.parentElement.remove()">×</button>`;
+  container.appendChild(row);
+}
+
+function saveMachine() {
+  const editId = document.getElementById('edit-id').value;
+  const equipment = document.getElementById('form-equipment').value.trim();
+  const serial = document.getElementById('form-serial').value.trim();
+  let plant = document.getElementById('form-plant').value;
+  if (plant === 'NEW') plant = document.getElementById('form-new-plant').value.trim();
+  const line = document.getElementById('form-line').value.trim() || 'N/A';
+  const delivery = document.getElementById('form-delivery').value.trim() || 'Unknown';
+  const install = document.getElementById('form-install').value.trim() || 'Unknown';
+  const comments = document.getElementById('form-comments').value.trim() || '-';
+
+  if (!equipment || !serial || !plant) { showToast('Заполните обязательные поля!', 'error'); return; }
+
+  const spareParts = [];
+  document.querySelectorAll('.spare-row').forEach(row => {
+    const name = row.children[0].value.trim();
+    const qty = parseInt(row.children[1].value) || 1;
+    if (name) spareParts.push({ name, qty });
+  });
+
+  const machineData = {
+    id: editId ? parseInt(editId) : nextId++,
+    plant,
+    line,
+    equipment,
+    serial,
+    delivery_date: delivery,
+    install_date: install,
+    spare_parts: spareParts,
+    comments: comments
+  };
+
+  if (editId) {
+    const idx = machines.findIndex(m => m.id === parseInt(editId));
+    if (idx !== -1) { machines[idx] = machineData; showToast('Машина обновлена', 'success'); }
+  } else {
+    machines.push(machineData);
+    showToast('Машина добавлена', 'success');
+  }
+  renderList();
+  closeModal();
+}
+
+function deleteMachine(id) {
+  if (!confirm('Удалить машину #' + id + '?')) return;
+  machines = machines.filter(m => m.id !== id);
+  renderList();
+  showToast('Машина удалена', 'success');
+}
+
+function downloadJSON() {
+  if (machines.length === 0) { showToast('Нет данных для сохранения', 'error'); return; }
+  const dataStr = JSON.stringify(machines, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'machines.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('JSON скачан! Загрузите его на GitHub.', 'success');
+}
+
+function showToast(message, type = 'info') {
+  const existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  toast.innerHTML = (type === 'success' ? '✓ ' : type === 'error' ? '✗ ' : 'ℹ ') + message;
+  document.body.appendChild(toast);
+  setTimeout(() => { toast.style.animation = 'toastIn 0.4s ease reverse'; setTimeout(() => toast.remove(), 400); }, 4000);
+}
+
+window.addEventListener('load', () => {
+  showToast('Загрузите JSON-файл или начните с нуля', 'info');
+});
+</script>
+</body>
+</html>
