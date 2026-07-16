@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RTS Teklo — Equipment Portal</title>
+<title>RITSTEKLO/RITSERVICE — Equipment Portal</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 :root {
@@ -50,13 +50,19 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 .error-msg.show { opacity: 1; }
 #main-app { display: none; }
 .header { background: rgba(15,23,42,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 16px 32px;
-  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-.header-left { display: flex; align-items: center; gap: 16px; }
+  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 12px; }
+.header-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .back-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px;
   border-radius: 8px; cursor: pointer; font-size: 13px; transition: all 0.3s; display: none; }
 .back-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
 .header-title { font-size: 18px; font-weight: 700; }
 .header-title span { color: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.lang-switch { display: flex; gap: 4px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 10px; padding: 4px; }
+.lang-btn { padding: 6px 14px; border: none; border-radius: 7px; cursor: pointer; font-size: 12px; font-weight: 600;
+  font-family: inherit; transition: all 0.3s; background: transparent; color: var(--text-muted); }
+.lang-btn:hover { color: var(--text); }
+.lang-btn.active { background: var(--primary); color: white; box-shadow: 0 2px 8px rgba(26,58,92,0.4); }
 .user-badge { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 8px 16px;
   border-radius: 50px; border: 1px solid var(--border); font-size: 13px; }
 .user-badge .dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; }
@@ -154,7 +160,9 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
   .equipment-grid { grid-template-columns: 1fr; padding: 0 16px 40px; }
   .company-grid { grid-template-columns: 1fr; padding: 20px 16px; }
   .filters { padding: 0 16px 24px; }
-  .header { padding: 12px 16px; }
+  .header { padding: 12px 16px; flex-direction: column; align-items: stretch; }
+  .header-left { justify-content: center; }
+  .header-right { justify-content: center; }
   .login-card { margin: 20px; padding: 32px; }
 }
 </style>
@@ -164,24 +172,24 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 
 <div class="loading-overlay" id="loading-overlay">
   <div class="spinner"></div>
-  <p style="color: var(--text-muted); font-size: 14px;">Загрузка данных...</p>
+  <p style="color: var(--text-muted); font-size: 14px;" id="loading-text">Загрузка данных...</p>
 </div>
 
 <div id="login-screen">
   <div class="login-card">
     <div class="logo-area">
-      <h1>RTS TEKLO</h1>
-      <p>Equipment Portal</p>
+      <h1>RITSTEKLO/RITSERVICE</h1>
+      <p id="login-subtitle">Equipment Portal</p>
     </div>
     <div class="input-group">
-      <label>Логин</label>
+      <label id="login-label">Логин</label>
       <input type="text" id="login-input" placeholder="Введите логин">
     </div>
     <div class="input-group">
-      <label>Пароль</label>
+      <label id="password-label">Пароль</label>
       <input type="password" id="password-input" placeholder="Введите пароль">
     </div>
-    <button class="login-btn" onclick="doLogin()">Войти в систему</button>
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Войти в систему</button>
     <div class="error-msg" id="error-msg">Неверный логин или пароль</div>
   </div>
 </div>
@@ -192,16 +200,22 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
       <button class="back-btn" id="back-btn" onclick="goBack()">← Назад</button>
       <div class="header-title">RTS TEKLO <span id="page-subtitle">— Выбор компании</span></div>
     </div>
-    <div class="user-badge">
-      <div class="dot"></div>
-      <span id="user-name">ritsteklo</span>
-      <span style="color:var(--text-muted)">|</span>
-      <span style="cursor:pointer;color:var(--danger)" onclick="logout()">Выход</span>
+    <div class="header-right">
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="ru" onclick="switchLang('ru')">РУ</button>
+        <button class="lang-btn" data-lang="en" onclick="switchLang('en')">EN</button>
+      </div>
+      <div class="user-badge">
+        <div class="dot"></div>
+        <span id="user-name">ritsteklo</span>
+        <span style="color:var(--text-muted)">|</span>
+        <span style="cursor:pointer;color:var(--danger)" id="logout-btn" onclick="logout()">Выход</span>
+      </div>
     </div>
   </div>
 
   <div id="company-view">
-    <div class="company-grid">
+    <div class="company-grid" id="company-grid">
       <div class="company-card" onclick="selectCompany('iris')">
         <div class="company-logo" style="background: linear-gradient(135deg, #1a3a5c, #2a5a8c);">IRIS</div>
         <h3>IRIS Inspection Machines</h3>
@@ -231,21 +245,21 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 
   <div id="iris-view" style="display:none;">
     <div class="stats-bar">
-      <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label">Всего машин</div></div>
-      <div class="stat-card"><div class="stat-value" id="stat-active">0</div><div class="stat-label">На гарантии</div></div>
-      <div class="stat-card"><div class="stat-value" id="stat-expired">0</div><div class="stat-label">Гарантия истекла</div></div>
-      <div class="stat-card"><div class="stat-value" id="stat-plants">0</div><div class="stat-label">Заводов</div></div>
+      <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label" id="stat-total-label">Всего машин</div></div>
+      <div class="stat-card"><div class="stat-value" id="stat-active">0</div><div class="stat-label" id="stat-active-label">На гарантии</div></div>
+      <div class="stat-card"><div class="stat-value" id="stat-expired">0</div><div class="stat-label" id="stat-expired-label">Гарантия истекла</div></div>
+      <div class="stat-card"><div class="stat-value" id="stat-plants">0</div><div class="stat-label" id="stat-plants-label">Заводов</div></div>
     </div>
 
-    <div class="section-title">Распределение по заводам</div>
+    <div class="section-title" id="plant-dist-title">Распределение по заводам</div>
     <div class="plant-dist" id="plant-dist"></div>
 
-    <div class="section-title">История поставок по годам</div>
+    <div class="section-title" id="timeline-title">История поставок по годам</div>
     <div class="timeline-container"><div class="timeline" id="timeline"></div></div>
 
-    <div class="section-title">Оборудование IRIS</div>
+    <div class="section-title" id="equipment-title">Оборудование IRIS</div>
     <div class="filters" id="filters">
-      <button class="filter-btn active" onclick="filterEq('all')">Все</button>
+      <button class="filter-btn active" onclick="filterEq('all')" id="filter-all">Все</button>
       <button class="filter-btn" onclick="filterEq('Evolution 5')">Evolution 5</button>
       <button class="filter-btn" onclick="filterEq('Evolution 16')">Evolution 16</button>
       <button class="filter-btn" onclick="filterEq('EasySet')">EasySet</button>
@@ -257,9 +271,9 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 
   <div id="other-view" style="display:none; padding: 60px 32px; text-align: center;">
     <div style="font-size: 64px; margin-bottom: 20px;">🔧</div>
-    <h2 style="font-size: 24px; margin-bottom: 12px;">Раздел в разработке</h2>
-    <p style="color: var(--text-muted);">Данные по этой компании будут добавлены позже.</p>
-    <button class="login-btn" style="max-width: 200px; margin-top: 24px;" onclick="goBack()">Вернуться назад</button>
+    <h2 id="other-title" style="font-size: 24px; margin-bottom: 12px;">Раздел в разработке</h2>
+    <p id="other-desc" style="color: var(--text-muted);">Данные по этой компании будут добавлены позже.</p>
+    <button class="login-btn" style="max-width: 200px; margin-top: 24px;" onclick="goBack()" id="other-back">Вернуться назад</button>
   </div>
 </div>
 
@@ -267,22 +281,189 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 let irisData = [];
 let currentFilter = 'all';
 let currentView = 'company';
+let currentLang = 'ru';
 
 const VALID_LOGIN = 'ritsteklo';
 const VALID_PASSWORD = '2026';
 
+// ========== ПЕРЕВОДЫ ==========
+const LANG = {
+  ru: {
+    loading: 'Загрузка данных...',
+    login_subtitle: 'Equipment Portal',
+    login_label: 'Логин',
+    password_label: 'Пароль',
+    login_placeholder: 'Введите логин',
+    password_placeholder: 'Введите пароль',
+    login_btn: 'Войти в систему',
+    login_error: 'Неверный логин или пароль',
+    logout: 'Выход',
+    back: 'Назад',
+    page_title: '— Выбор компании',
+    company_iris_title: 'IRIS Inspection Machines',
+    company_iris_desc: 'Системы инспекции стекла. Оборудование для контроля качества стеклянной тары и изделий.',
+    company_bottero_title: 'Bottero',
+    company_bottero_desc: 'Итальянская компания — мировой лидер в производстве оборудования для обработки плоского и полого стекла.',
+    company_fermac_title: 'Fermac',
+    company_fermac_desc: 'Оборудование для стекольной промышленности. Запасные части и сервисное обслуживание.',
+    company_carmet_title: 'Carmet',
+    company_carmet_desc: 'Специализированное оборудование для производства стекла. Инновационные решения.',
+    stat_total: 'Всего машин',
+    stat_active: 'На гарантии',
+    stat_expired: 'Гарантия истекла',
+    stat_plants: 'Заводов',
+    plant_dist: 'Распределение по заводам',
+    timeline_title: 'История поставок по годам',
+    equipment_title: 'Оборудование IRIS',
+    filter_all: 'Все',
+    warranty_label: 'Гарантийный период',
+    warranty_active: 'На гарантии',
+    warranty_expired: 'Гарантия истекла',
+    warranty_pending: 'Ожидает',
+    warranty_unknown: 'Неизвестно',
+    warranty_remaining_months: 'мес. осталось',
+    warranty_expired_text: 'Гарантия истекла',
+    warranty_pending_text: 'Ожидает установки',
+    warranty_unknown_text: 'Дата неизвестна',
+    spare_title: 'Запасные части в комплекте',
+    other_title: 'Раздел в разработке',
+    other_desc: 'Данные по этой компании будут добавлены позже.',
+    other_back: 'Вернуться назад',
+    plant: 'Завод',
+    line: 'Линия',
+    delivery: 'Дата поставки',
+    install: 'Дата установки',
+    warranty_until: 'Гарантия до',
+    timeline_install: 'установок',
+    eq_unknown: 'Неизвестно'
+  },
+  en: {
+    loading: 'Loading data...',
+    login_subtitle: 'Equipment Portal',
+    login_label: 'Login',
+    password_label: 'Password',
+    login_placeholder: 'Enter login',
+    password_placeholder: 'Enter password',
+    login_btn: 'Sign In',
+    login_error: 'Invalid login or password',
+    logout: 'Logout',
+    back: '← Back',
+    page_title: '— Select Company',
+    company_iris_title: 'IRIS Inspection Machines',
+    company_iris_desc: 'Glass inspection systems. Equipment for quality control of glass containers and products.',
+    company_bottero_title: 'Bottero',
+    company_bottero_desc: 'Italian company — world leader in manufacturing equipment for flat and hollow glass processing.',
+    company_fermac_title: 'Fermac',
+    company_fermac_desc: 'Equipment for the glass industry. Spare parts and service maintenance.',
+    company_carmet_title: 'Carmet',
+    company_carmet_desc: 'Specialized equipment for glass production. Innovative solutions.',
+    stat_total: 'Total Machines',
+    stat_active: 'Under Warranty',
+    stat_expired: 'Warranty Expired',
+    stat_plants: 'Plants',
+    plant_dist: 'Distribution by Plants',
+    timeline_title: 'Delivery History by Year',
+    equipment_title: 'IRIS Equipment',
+    filter_all: 'All',
+    warranty_label: 'Warranty Period',
+    warranty_active: 'Under Warranty',
+    warranty_expired: 'Warranty Expired',
+    warranty_pending: 'Pending',
+    warranty_unknown: 'Unknown',
+    warranty_remaining_months: 'months left',
+    warranty_expired_text: 'Warranty expired',
+    warranty_pending_text: 'Awaiting installation',
+    warranty_unknown_text: 'Date unknown',
+    spare_title: 'Spare Parts Included',
+    other_title: 'Under Development',
+    other_desc: 'Data for this company will be added later.',
+    other_back: 'Go Back',
+    plant: 'Plant',
+    line: 'Line',
+    delivery: 'Delivery Date',
+    install: 'Installation Date',
+    warranty_until: 'Warranty Until',
+    timeline_install: 'installations',
+    eq_unknown: 'Unknown'
+  }
+};
+
+function t(key) {
+  return LANG[currentLang]?.[key] || key;
+}
+
+function switchLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+  updateUI();
+  if (currentView === 'iris') renderIrisDashboard();
+}
+
+function updateUI() {
+  document.getElementById('loading-text').textContent = t('loading');
+  document.getElementById('login-subtitle').textContent = t('login_subtitle');
+  document.getElementById('login-label').textContent = t('login_label');
+  document.getElementById('password-label').textContent = t('password_label');
+  document.getElementById('login-input').placeholder = t('login_placeholder');
+  document.getElementById('password-input').placeholder = t('password_placeholder');
+  document.getElementById('login-btn').textContent = t('login_btn');
+  document.getElementById('error-msg').textContent = t('login_error');
+  document.getElementById('logout-btn').textContent = t('logout');
+  document.getElementById('back-btn').innerHTML = t('back');
+  
+  if (currentView === 'company') {
+    document.getElementById('page-subtitle').textContent = t('page_title');
+  }
+  
+  document.getElementById('stat-total-label').textContent = t('stat_total');
+  document.getElementById('stat-active-label').textContent = t('stat_active');
+  document.getElementById('stat-expired-label').textContent = t('stat_expired');
+  document.getElementById('stat-plants-label').textContent = t('stat_plants');
+  document.getElementById('plant-dist-title').textContent = t('plant_dist');
+  document.getElementById('timeline-title').textContent = t('timeline_title');
+  document.getElementById('equipment-title').textContent = t('equipment_title');
+  document.getElementById('filter-all').textContent = t('filter_all');
+  document.getElementById('other-title').textContent = t('other_title');
+  document.getElementById('other-desc').textContent = t('other_desc');
+  document.getElementById('other-back').textContent = t('other_back');
+
+  // Company cards
+  const cards = document.querySelectorAll('.company-card');
+  if (cards.length >= 4) {
+    cards[0].querySelector('h3').textContent = t('company_iris_title');
+    cards[0].querySelector('p').textContent = t('company_iris_desc');
+    cards[1].querySelector('h3').textContent = t('company_bottero_title');
+    cards[1].querySelector('p').textContent = t('company_bottero_desc');
+    cards[2].querySelector('h3').textContent = t('company_fermac_title');
+    cards[2].querySelector('p').textContent = t('company_fermac_desc');
+    cards[3].querySelector('h3').textContent = t('company_carmet_title');
+    cards[3].querySelector('p').textContent = t('company_carmet_desc');
+  }
+
+  // Filters
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    if (btn.id !== 'filter-all' && btn.textContent.includes('Evolution')) {
+      // Keep equipment names as is (they are model names)
+    }
+  });
+}
+
+// ========== ФУНКЦИЯ РАСЧЁТА ГАРАНТИИ ==========
 function calculateWarranty(installDate) {
     if (!installDate || installDate === 'Unknown' || installDate === 'N/A') {
-        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Дата неизвестна' };
+        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: t('warranty_unknown_text') };
     }
     const parts = installDate.split('.');
     if (parts.length !== 2) {
-        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неверный формат' };
+        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: t('warranty_unknown_text') };
     }
     const installMonth = parseInt(parts[0]);
     const installYear = parseInt(parts[1]);
     if (isNaN(installMonth) || isNaN(installYear)) {
-        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неверный формат' };
+        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: t('warranty_unknown_text') };
     }
     const now = new Date();
     const currentYear = now.getFullYear();
@@ -296,23 +477,22 @@ function calculateWarranty(installDate) {
     if (elapsedMonths < 0) {
         status = 'pending';
         percent = 0;
-        remaining = 'Ожидает установки';
+        remaining = t('warranty_pending_text');
     } else if (elapsedMonths >= 12) {
         status = 'expired';
         percent = 100;
-        remaining = 'Гарантия истекла';
+        remaining = t('warranty_expired_text');
     } else {
         status = 'active';
         percent = Math.round((elapsedMonths / 12) * 100 * 10) / 10;
         const leftMonths = 12 - elapsedMonths;
-        remaining = `${Math.round(leftMonths * 10) / 10} мес. осталось`;
+        remaining = `${Math.round(leftMonths * 10) / 10} ${t('warranty_remaining_months')}`;
     }
     return { status, percent, end: endDateStr, remaining };
 }
 
 async function loadMachinesData() {
     try {
-        // Файл в корне — просто machines.json
         let response = await fetch('machines.json');
         if (!response.ok) {
             const baseUrl = window.location.href.replace(/\/[^\/]*$/, '/');
@@ -327,10 +507,12 @@ async function loadMachinesData() {
         if (sessionStorage.getItem('rts_auth') === 'true' && currentView === 'iris') {
             renderIrisDashboard();
         }
+        updateUI();
     } catch (e) {
         console.error('Error loading data:', e);
         document.getElementById('loading-overlay').innerHTML = 
-            '<p style="color:var(--danger)">Ошибка загрузки данных. Проверьте подключение.<br><small style="color:var(--text-muted)">' + e.message + '</small></p>';
+            '<p style="color:var(--danger)">' + (currentLang === 'ru' ? 'Ошибка загрузки данных. Проверьте подключение.' : 'Error loading data. Check connection.') + 
+            '<br><small style="color:var(--text-muted)">' + e.message + '</small></p>';
     }
 }
 
@@ -343,7 +525,9 @@ function doLogin() {
         document.getElementById('main-app').style.display = 'block';
         error.classList.remove('show');
         sessionStorage.setItem('rts_auth', 'true');
+        updateUI();
     } else {
+        error.textContent = t('login_error');
         error.classList.add('show');
         document.querySelector('.login-card').style.animation = 'none';
         setTimeout(() => { document.querySelector('.login-card').style.animation = 'shake 0.5s ease'; }, 10);
@@ -360,6 +544,7 @@ window.addEventListener('load', async () => {
     if (sessionStorage.getItem('rts_auth') === 'true') {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('main-app').style.display = 'block';
+        updateUI();
     }
 });
 
@@ -385,6 +570,7 @@ function selectCompany(company) {
         document.getElementById('other-view').style.display = 'block';
         document.getElementById('page-subtitle').textContent = '— ' + company.charAt(0).toUpperCase() + company.slice(1);
         currentView = 'other';
+        updateUI();
     }
 }
 
@@ -393,8 +579,9 @@ function goBack() {
     document.getElementById('iris-view').style.display = 'none';
     document.getElementById('other-view').style.display = 'none';
     document.getElementById('back-btn').style.display = 'none';
-    document.getElementById('page-subtitle').textContent = '— Выбор компании';
+    document.getElementById('page-subtitle').textContent = t('page_title');
     currentView = 'company';
+    updateUI();
 }
 
 function renderIrisDashboard() {
@@ -425,10 +612,11 @@ function renderIrisDashboard() {
     }});
     const sortedYears = Object.entries(yearCounts).sort((a,b) => a[0]-b[0]);
     document.getElementById('timeline').innerHTML = sortedYears.map(([year, count]) =>
-        `<div class="timeline-item"><div class="timeline-year">${year}</div><div class="timeline-count">${count}</div><div class="timeline-label">установок</div></div>`
+        `<div class="timeline-item"><div class="timeline-year">${year}</div><div class="timeline-count">${count}</div><div class="timeline-label">${t('timeline_install')}</div></div>`
     ).join('');
 
     renderEquipmentCards();
+    updateUI();
 }
 
 function renderEquipmentCards() {
@@ -441,9 +629,9 @@ function renderEquipmentCards() {
         const remaining = warranty.remaining;
 
         const statusClass = `badge-${status}`;
-        const statusText = status === 'active' ? 'На гарантии' : 
-                          status === 'expired' ? 'Гарантия истекла' : 
-                          status === 'pending' ? 'Ожидает' : 'Неизвестно';
+        const statusText = status === 'active' ? t('warranty_active') : 
+                          status === 'expired' ? t('warranty_expired') : 
+                          status === 'pending' ? t('warranty_pending') : t('warranty_unknown');
         const barClass = status;
         const barColor = status === 'active' ? 'var(--success)' : 
                          status === 'expired' ? 'var(--danger)' : 
@@ -465,15 +653,15 @@ function renderEquipmentCards() {
                 <div class="eq-badge ${statusClass}">${statusText}</div>
             </div>
             <div class="eq-body">
-                <div class="eq-info-row"><span class="eq-info-label">Завод</span><span class="eq-info-value" style="text-align:right; max-width: 60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${d.plant}</span></div>
-                <div class="eq-info-row"><span class="eq-info-label">Линия</span><span class="eq-info-value">${d.line}</span></div>
-                <div class="eq-info-row"><span class="eq-info-label">Дата поставки</span><span class="eq-info-value">${d.delivery_date}</span></div>
-                <div class="eq-info-row"><span class="eq-info-label">Дата установки</span><span class="eq-info-value">${d.install_date}</span></div>
-                <div class="eq-info-row"><span class="eq-info-label">Гарантия до</span><span class="eq-info-value">${endDate}</span></div>
+                <div class="eq-info-row"><span class="eq-info-label">${t('plant')}</span><span class="eq-info-value" style="text-align:right; max-width: 60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${d.plant}</span></div>
+                <div class="eq-info-row"><span class="eq-info-label">${t('line')}</span><span class="eq-info-value">${d.line}</span></div>
+                <div class="eq-info-row"><span class="eq-info-label">${t('delivery')}</span><span class="eq-info-value">${d.delivery_date}</span></div>
+                <div class="eq-info-row"><span class="eq-info-label">${t('install')}</span><span class="eq-info-value">${d.install_date}</span></div>
+                <div class="eq-info-row"><span class="eq-info-label">${t('warranty_until')}</span><span class="eq-info-value">${endDate}</span></div>
             </div>
             <div class="warranty-section">
                 <div class="warranty-header">
-                    <span class="warranty-label">Гарантийный период</span>
+                    <span class="warranty-label">${t('warranty_label')}</span>
                     <span class="warranty-value" style="color: ${barColor};">${remaining}</span>
                 </div>
                 <div class="warranty-bar-bg">
@@ -481,7 +669,7 @@ function renderEquipmentCards() {
                 </div>
             </div>
             <div class="spare-parts">
-                <div class="spare-title">Запасные части в комплекте</div>
+                <div class="spare-title">${t('spare_title')}</div>
                 ${sparePartsHtml}
             </div>
             ${commentsHtml}
