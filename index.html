@@ -272,15 +272,34 @@ const VALID_PASSWORD = '2026';
 
 async function loadMachinesData() {
   try {
-    const response = await fetch('data/machines.json?v=' + Date.now());
+    // Пробуем загрузить через относительный путь (для GitHub Pages)
+    let response = await fetch('data/machines.json');
+    
+    // Если не сработало, пробуем через window.location
+    if (!response.ok) {
+      const baseUrl = window.location.href.replace(/\/[^\/]*$/, '/');
+      response = await fetch(baseUrl + 'data/machines.json');
+    }
+    
     if (!response.ok) throw new Error('Failed to load');
+    
     irisData = await response.json();
+    
+    // Убираем "Grand total" записи (это итоговые строки из Excel)
+    irisData = irisData.filter(d => d.equipment !== 'Grand total');
+    
     document.getElementById('loading-overlay').classList.add('hidden');
+    
+    // Если уже авторизованы, рендерим дашборд
+    if (sessionStorage.getItem('rts_auth') === 'true') {
+      if (currentView === 'iris') renderIrisDashboard();
+    }
   } catch (e) {
     console.error('Error loading data:', e);
-    document.getElementById('loading-overlay').innerHTML = '<p style="color:var(--danger)">Ошибка загрузки данных. Проверьте подключение.</p>';
+    document.getElementById('loading-overlay').innerHTML = 
+      '<p style="color:var(--danger)">Ошибка загрузки данных. Проверьте подключение.<br><small style="color:var(--text-muted)">' + e.message + '</small></p>';
   }
-}
+
 
 function doLogin() {
   const login = document.getElementById('login-input').value.trim();
