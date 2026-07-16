@@ -3,749 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RITSTEKLO/RITSERVICE — Equipment Portal</title>
+<title>RTS Teklo — Equipment Portal</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
 :root {
-  --primary: #1a3a5c;
-  --primary-light: #2a5a8c;
-  --accent: #e8b923;
-  --accent-glow: rgba(232,185,35,0.3);
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-  --bg-dark: #0f172a;
-  --bg-card: rgba(30,41,59,0.7);
-  --bg-card-hover: rgba(30,41,59,0.9);
-  --text: #e2e8f0;
-  --text-muted: #94a3b8;
+  --primary: #1a3a5c; --primary-light: #2a5a8c; --accent: #e8b923; --accent-glow: rgba(232,185,35,0.3);
+  --success: #22c55e; --warning: #f59e0b; --danger: #ef4444; --info: #3b82f6;
+  --bg-dark: #0f172a; --bg-card: rgba(30,41,59,0.7); --text: #e2e8f0; --text-muted: #94a3b8;
   --border: rgba(148,163,184,0.15);
 }
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg-dark);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-.bg-animation {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  z-index: -1;
-  background: 
-    radial-gradient(ellipse at 20% 80%, rgba(26,58,92,0.4) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(232,185,35,0.08) 0%, transparent 50%),
-    var(--bg-dark);
-}
-
-.bg-animation::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background-image: 
-    linear-gradient(rgba(148,163,184,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148,163,184,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: gridMove 20s linear infinite;
-}
-
-@keyframes gridMove {
-  0% { transform: translate(0,0); }
-  100% { transform: translate(60px, 60px); }
-}
-
-#login-screen {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  position: relative;
-}
-
-.login-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 48px 56px;
-  width: 100%;
-  max-width: 420px;
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
-  animation: cardAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.login-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 3px;
+body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+.bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+  background: radial-gradient(ellipse at 20% 80%, rgba(26,58,92,0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(232,185,35,0.08) 0%, transparent 50%), var(--bg-dark); }
+.bg-animation::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background-image: linear-gradient(rgba(148,163,184,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.03) 1px, transparent 1px);
+  background-size: 60px 60px; animation: gridMove 20s linear infinite; }
+@keyframes gridMove { 0% { transform: translate(0,0); } 100% { transform: translate(60px, 60px); } }
+#login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; position: relative; }
+.login-card { background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 24px;
+  padding: 48px 56px; width: 100%; max-width: 420px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+  animation: cardAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; }
+.login-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-light));
-  animation: shimmer 3s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
-@keyframes cardAppear {
-  from { opacity: 0; transform: translateY(40px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.logo-area {
-  text-align: center;
-  margin-bottom: 36px;
-}
-
-.logo-area h1 {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.logo-area p {
-  color: var(--text-muted);
-  font-size: 13px;
-  margin-top: 6px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.input-group {
-  margin-bottom: 20px;
-  position: relative;
-}
-
-.input-group label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 14px 18px;
-  background: rgba(15,23,42,0.6);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  font-size: 15px;
-  font-family: inherit;
-  transition: all 0.3s ease;
-  outline: none;
-}
-
-.input-group input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
-}
-
-.input-group input::placeholder {
-  color: rgba(148,163,184,0.4);
-}
-
-.login-btn {
-  width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-  border: none;
-  border-radius: 12px;
-  color: white;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 8px;
-  position: relative;
-  overflow: hidden;
-}
-
-.login-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px -10px rgba(26,58,92,0.6);
-}
-
-.login-btn::after {
-  content: '';
-  position: absolute;
-  top: -50%; left: -50%; width: 200%; height: 200%;
-  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-  transform: rotate(45deg);
-  animation: btnShine 3s infinite;
-}
-
-@keyframes btnShine {
-  0% { transform: translateX(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) rotate(45deg); }
-}
-
-.error-msg {
-  color: var(--danger);
-  font-size: 13px;
-  text-align: center;
-  margin-top: 12px;
-  opacity: 0;
-  transition: opacity 0.3s;
-  min-height: 20px;
-}
-
+  animation: shimmer 3s ease-in-out infinite; }
+@keyframes shimmer { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes cardAppear { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.logo-area { text-align: center; margin-bottom: 36px; }
+.logo-area h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #fff 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.logo-area p { color: var(--text-muted); font-size: 13px; margin-top: 6px; letter-spacing: 2px; text-transform: uppercase; }
+.input-group { margin-bottom: 20px; position: relative; }
+.input-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.input-group input { width: 100%; padding: 14px 18px; background: rgba(15,23,42,0.6); border: 1px solid var(--border);
+  border-radius: 12px; color: var(--text); font-size: 15px; font-family: inherit; transition: all 0.3s ease; outline: none; }
+.input-group input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.input-group input::placeholder { color: rgba(148,163,184,0.4); }
+.login-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border: none; border-radius: 12px;
+  color: white; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 8px; position: relative; overflow: hidden; }
+.login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(26,58,92,0.6); }
+.login-btn::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); transform: rotate(45deg); animation: btnShine 3s infinite; }
+@keyframes btnShine { 0% { transform: translateX(-100%) rotate(45deg); } 100% { transform: translateX(100%) rotate(45deg); } }
+.error-msg { color: var(--danger); font-size: 13px; text-align: center; margin-top: 12px; opacity: 0; transition: opacity 0.3s; min-height: 20px; }
 .error-msg.show { opacity: 1; }
-
 #main-app { display: none; }
-
-.header {
-  background: rgba(15,23,42,0.8);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.back-btn {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: all 0.3s;
-  display: none;
-}
-
-.back-btn:hover {
-  background: rgba(255,255,255,0.1);
-  color: var(--text);
-}
-
-.header-title {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.header-title span {
-  color: var(--accent);
-}
-
-.user-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255,255,255,0.05);
-  padding: 8px 16px;
-  border-radius: 50px;
-  border: 1px solid var(--border);
-  font-size: 13px;
-}
-
-.user-badge .dot {
-  width: 8px; height: 8px;
-  background: var(--success);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-.company-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-  padding: 40px 32px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.company-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 32px;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-  animation: cardFadeIn 0.6s ease forwards;
-  opacity: 0;
-}
-
-.company-card:nth-child(1) { animation-delay: 0.1s; }
-.company-card:nth-child(2) { animation-delay: 0.2s; }
-.company-card:nth-child(3) { animation-delay: 0.3s; }
-.company-card:nth-child(4) { animation-delay: 0.4s; }
-
-@keyframes cardFadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.company-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 0;
-  background: linear-gradient(180deg, var(--accent-glow), transparent);
-  transition: height 0.4s ease;
-}
-
-.company-card:hover::before {
-  height: 100%;
-}
-
-.company-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(232,185,35,0.3);
-  box-shadow: 0 20px 40px -15px rgba(0,0,0,0.4), 0 0 30px rgba(232,185,35,0.1);
-}
-
-.company-logo {
-  width: 80px; height: 80px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--accent);
-  border: 1px solid var(--border);
-}
-
-.company-card h3 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.company-card p {
-  color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.company-card .arrow {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  width: 40px; height: 40px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-  border: 1px solid var(--border);
-}
-
-.company-card:hover .arrow {
-  background: var(--accent);
-  color: var(--bg-dark);
-  transform: translateX(4px);
-}
-
-.stats-bar {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 24px 32px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
-  position: relative;
-  overflow: hidden;
-}
-
-.stat-card::after {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 60px; height: 60px;
-  background: linear-gradient(135deg, transparent 50%, rgba(232,185,35,0.05) 50%);
-  border-radius: 0 0 0 60px;
-}
-
-.stat-value {
-  font-size: 36px;
-  font-weight: 800;
-  background: linear-gradient(135deg, #fff, var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.stat-label {
-  color: var(--text-muted);
-  font-size: 13px;
-  margin-top: 4px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.filters {
-  display: flex;
-  gap: 12px;
-  padding: 0 32px 24px;
-  max-width: 1400px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  padding: 10px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 13px;
-  font-family: inherit;
-  transition: all 0.3s;
-}
-
-.filter-btn:hover, .filter-btn.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-}
-
-.equipment-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 20px;
-  padding: 0 32px 40px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.eq-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  animation: cardFadeIn 0.5s ease forwards;
-  opacity: 0;
-}
-
-.eq-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(232,185,35,0.2);
-  box-shadow: 0 15px 35px -10px rgba(0,0,0,0.3);
-}
-
-.eq-header {
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.eq-title {
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.eq-serial {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 4px;
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.5px;
-}
-
-.eq-badge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
+.header { background: rgba(15,23,42,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 16px 32px;
+  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-left { display: flex; align-items: center; gap: 16px; }
+.back-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px;
+  border-radius: 8px; cursor: pointer; font-size: 13px; transition: all 0.3s; display: none; }
+.back-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+.header-title { font-size: 18px; font-weight: 700; }
+.header-title span { color: var(--accent); }
+.user-badge { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 8px 16px;
+  border-radius: 50px; border: 1px solid var(--border); font-size: 13px; }
+.user-badge .dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.company-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; padding: 40px 32px; max-width: 1400px; margin: 0 auto; }
+.company-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; animation: cardFadeIn 0.6s ease forwards; opacity: 0; }
+.company-card:nth-child(1) { animation-delay: 0.1s; } .company-card:nth-child(2) { animation-delay: 0.2s; }
+.company-card:nth-child(3) { animation-delay: 0.3s; } .company-card:nth-child(4) { animation-delay: 0.4s; }
+@keyframes cardFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.company-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 0;
+  background: linear-gradient(180deg, var(--accent-glow), transparent); transition: height 0.4s ease; }
+.company-card:hover::before { height: 100%; }
+.company-card:hover { transform: translateY(-8px); border-color: rgba(232,185,35,0.3); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.4), 0 0 30px rgba(232,185,35,0.1); }
+.company-logo { width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 16px; display: flex;
+  align-items: center; justify-content: center; margin-bottom: 20px; font-size: 28px; font-weight: 800; color: var(--accent); border: 1px solid var(--border); }
+.company-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.company-card p { color: var(--text-muted); font-size: 13px; line-height: 1.6; }
+.company-card .arrow { position: absolute; bottom: 24px; right: 24px; width: 40px; height: 40px; background: rgba(255,255,255,0.05);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; border: 1px solid var(--border); }
+.company-card:hover .arrow { background: var(--accent); color: var(--bg-dark); transform: translateX(4px); }
+.stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+.stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; }
+.stat-card::after { content: ''; position: absolute; top: 0; right: 0; width: 60px; height: 60px;
+  background: linear-gradient(135deg, transparent 50%, rgba(232,185,35,0.05) 50%); border-radius: 0 0 0 60px; }
+.stat-value { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat-label { color: var(--text-muted); font-size: 13px; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+.filters { display: flex; gap: 12px; padding: 0 32px 24px; max-width: 1400px; margin: 0 auto; flex-wrap: wrap; }
+.filter-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text-muted); padding: 10px 20px;
+  border-radius: 10px; cursor: pointer; font-size: 13px; font-family: inherit; transition: all 0.3s; }
+.filter-btn:hover, .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+.equipment-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; padding: 0 32px 40px; max-width: 1400px; margin: 0 auto; }
+.eq-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); animation: cardFadeIn 0.5s ease forwards; opacity: 0; }
+.eq-card:hover { transform: translateY(-4px); border-color: rgba(232,185,35,0.2); box-shadow: 0 15px 35px -10px rgba(0,0,0,0.3); }
+.eq-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; }
+.eq-title { font-size: 16px; font-weight: 700; }
+.eq-serial { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-family: 'Courier New', monospace; letter-spacing: 0.5px; }
+.eq-badge { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 .badge-active { background: rgba(34,197,94,0.15); color: var(--success); border: 1px solid rgba(34,197,94,0.3); }
 .badge-expired { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
 .badge-pending { background: rgba(245,158,11,0.15); color: var(--warning); border: 1px solid rgba(245,158,11,0.3); }
 .badge-unknown { background: rgba(148,163,184,0.15); color: var(--text-muted); border: 1px solid rgba(148,163,184,0.3); }
-
-.eq-body {
-  padding: 20px 24px;
-}
-
-.eq-info-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(148,163,184,0.08);
-  font-size: 13px;
-}
-
+.eq-body { padding: 20px 24px; }
+.eq-info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(148,163,184,0.08); font-size: 13px; }
 .eq-info-row:last-child { border-bottom: none; }
-
-.eq-info-label { color: var(--text-muted); }
-.eq-info-value { font-weight: 500; }
-
-.warranty-section {
-  padding: 0 24px 20px;
-}
-
-.warranty-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.warranty-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.warranty-value {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.warranty-bar-bg {
-  height: 8px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-
-.warranty-bar-fill {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-}
-
-.warranty-bar-fill::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  animation: barShine 2s infinite;
-}
-
-@keyframes barShine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
+.eq-info-label { color: var(--text-muted); } .eq-info-value { font-weight: 500; }
+.warranty-section { padding: 0 24px 20px; }
+.warranty-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.warranty-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.warranty-value { font-size: 13px; font-weight: 600; }
+.warranty-bar-bg { height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; position: relative; }
+.warranty-bar-fill { height: 100%; border-radius: 4px; transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
+.warranty-bar-fill::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: barShine 2s infinite; }
+@keyframes barShine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 .warranty-bar-fill.active { background: linear-gradient(90deg, var(--success), #4ade80); }
 .warranty-bar-fill.expired { background: linear-gradient(90deg, var(--danger), #f87171); }
 .warranty-bar-fill.pending { background: linear-gradient(90deg, var(--warning), #fbbf24); }
 .warranty-bar-fill.unknown { background: linear-gradient(90deg, var(--text-muted), #cbd5e1); }
-
-.spare-parts {
-  padding: 0 24px 20px;
-}
-
-.spare-title {
-  font-size: 12px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
-}
-
-.spare-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 12px;
-  background: rgba(255,255,255,0.03);
-  border-radius: 8px;
-  margin-bottom: 6px;
-  font-size: 13px;
-  border: 1px solid rgba(148,163,184,0.05);
-  transition: all 0.3s;
-}
-
-.spare-item:hover {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(232,185,35,0.15);
-}
-
+.spare-parts { padding: 0 24px 20px; }
+.spare-title { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.spare-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,255,255,0.03);
+  border-radius: 8px; margin-bottom: 6px; font-size: 13px; border: 1px solid rgba(148,163,184,0.05); transition: all 0.3s; }
+.spare-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(232,185,35,0.15); }
 .spare-name { font-weight: 500; }
-.spare-qty {
-  background: rgba(232,185,35,0.15);
-  color: var(--accent);
-  padding: 2px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.eq-comments {
-  padding: 0 24px 20px;
-  font-size: 12px;
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-.timeline-container {
-  padding: 0 32px 40px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.timeline-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.timeline-title::before {
-  content: '';
-  width: 4px; height: 24px;
-  background: linear-gradient(180deg, var(--accent), var(--primary));
-  border-radius: 2px;
-}
-
-.timeline {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  padding-bottom: 16px;
-}
-
-.timeline-item {
-  min-width: 200px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  position: relative;
-  flex-shrink: 0;
-}
-
-.timeline-year {
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--accent);
-  margin-bottom: 8px;
-}
-
-.timeline-count {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.timeline-label {
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-.plant-dist {
-  padding: 0 32px 40px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.plant-bar {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 12px;
-}
-
-.plant-name {
-  min-width: 200px;
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.plant-progress {
-  flex: 1;
-  height: 32px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-}
-
-.plant-progress-fill {
-  height: 100%;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.section-title {
-  font-size: 20px;
-  font-weight: 700;
-  padding: 32px 32px 16px;
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.section-title::before {
-  content: '';
-  width: 4px; height: 28px;
-  background: linear-gradient(180deg, var(--accent), var(--primary));
-  border-radius: 2px;
-}
-
+.spare-qty { background: rgba(232,185,35,0.15); color: var(--accent); padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.eq-comments { padding: 0 24px 20px; font-size: 12px; color: var(--text-muted); font-style: italic; }
+.timeline-container { padding: 0 32px 40px; max-width: 1400px; margin: 0 auto; }
+.timeline-title { font-size: 18px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+.timeline-title::before { content: ''; width: 4px; height: 24px; background: linear-gradient(180deg, var(--accent), var(--primary)); border-radius: 2px; }
+.timeline { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 16px; }
+.timeline-item { min-width: 200px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; position: relative; flex-shrink: 0; }
+.timeline-year { font-size: 24px; font-weight: 800; color: var(--accent); margin-bottom: 8px; }
+.timeline-count { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+.timeline-label { font-size: 13px; color: var(--text-muted); }
+.plant-dist { padding: 0 32px 40px; max-width: 1400px; margin: 0 auto; }
+.plant-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+.plant-name { min-width: 200px; font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.plant-progress { flex: 1; height: 32px; background: rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; position: relative; }
+.plant-progress-fill { height: 100%; border-radius: 8px; display: flex; align-items: center; justify-content: flex-end;
+  padding-right: 12px; font-size: 13px; font-weight: 600; transition: width 1s cubic-bezier(0.16, 1, 0.3, 1); }
+.section-title { font-size: 20px; font-weight: 700; padding: 32px 32px 16px; max-width: 1400px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.section-title::before { content: ''; width: 4px; height: 28px; background: linear-gradient(180deg, var(--accent), var(--primary)); border-radius: 2px; }
+.loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 500; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+.loading-overlay.hidden { display: none; }
+.spinner { width: 48px; height: 48px; border: 3px solid rgba(232,185,35,0.2); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.2); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.4); }
-
 @media (max-width: 768px) {
   .stats-bar { grid-template-columns: repeat(2, 1fr); }
   .equipment-grid { grid-template-columns: 1fr; padding: 0 16px 40px; }
@@ -759,19 +162,24 @@ body {
 <body>
 <div class="bg-animation"></div>
 
+<div class="loading-overlay" id="loading-overlay">
+  <div class="spinner"></div>
+  <p style="color: var(--text-muted); font-size: 14px;">Загрузка данных...</p>
+</div>
+
 <div id="login-screen">
   <div class="login-card">
     <div class="logo-area">
-      <h1>RITSTEKLO/RITSERVICE</h1>
+      <h1>RTS TEKLO</h1>
       <p>Equipment Portal</p>
     </div>
     <div class="input-group">
       <label>Логин</label>
-      <input type="text" id="login-input" placeholder="Введите логин" value="">
+      <input type="text" id="login-input" placeholder="Введите логин">
     </div>
     <div class="input-group">
       <label>Пароль</label>
-      <input type="password" id="password-input" placeholder="Введите пароль" value="">
+      <input type="password" id="password-input" placeholder="Введите пароль">
     </div>
     <button class="login-btn" onclick="doLogin()">Войти в систему</button>
     <div class="error-msg" id="error-msg">Неверный логин или пароль</div>
@@ -782,7 +190,7 @@ body {
   <div class="header">
     <div class="header-left">
       <button class="back-btn" id="back-btn" onclick="goBack()">← Назад</button>
-      <div class="header-title">RITSTEKLO/RITSERVICE <span id="page-subtitle">— Выбор компании</span></div>
+      <div class="header-title">RTS TEKLO <span id="page-subtitle">— Выбор компании</span></div>
     </div>
     <div class="user-badge">
       <div class="dot"></div>
@@ -823,31 +231,17 @@ body {
 
   <div id="iris-view" style="display:none;">
     <div class="stats-bar">
-      <div class="stat-card">
-        <div class="stat-value" id="stat-total">0</div>
-        <div class="stat-label">Всего машин</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="stat-active">0</div>
-        <div class="stat-label">На гарантии</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="stat-expired">0</div>
-        <div class="stat-label">Гарантия истекла</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="stat-plants">0</div>
-        <div class="stat-label">Заводов</div>
-      </div>
+      <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label">Всего машин</div></div>
+      <div class="stat-card"><div class="stat-value" id="stat-active">0</div><div class="stat-label">На гарантии</div></div>
+      <div class="stat-card"><div class="stat-value" id="stat-expired">0</div><div class="stat-label">Гарантия истекла</div></div>
+      <div class="stat-card"><div class="stat-value" id="stat-plants">0</div><div class="stat-label">Заводов</div></div>
     </div>
 
     <div class="section-title">Распределение по заводам</div>
     <div class="plant-dist" id="plant-dist"></div>
 
     <div class="section-title">История поставок по годам</div>
-    <div class="timeline-container">
-      <div class="timeline" id="timeline"></div>
-    </div>
+    <div class="timeline-container"><div class="timeline" id="timeline"></div></div>
 
     <div class="section-title">Оборудование IRIS</div>
     <div class="filters" id="filters">
@@ -870,241 +264,261 @@ body {
 </div>
 
 <script>
-const irisData = [{"id": 1001, "plant": "KAMYSHIN (Verallia), Volgograd region, Russia", "line": "1", "equipment": "Evolution 5", "serial": "IR02-NS2656", "delivery_date": "06.2026", "install_date": "06.2026", "warranty_end": "06.2027", "warranty_status": "active", "warranty_percent": 25, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "06.2020"}, {"name": "LED lighting kit", "qty": 1, "date": "06.2020"}, {"name": "Conveyor belt", "qty": 1, "date": "06.2020"}, {"name": "Control panel", "qty": 1, "date": "06.2020"}], "comments": "-", "year": "2020"}, {"id": 1002, "plant": "KAMYSHIN (Verallia), Volgograd region, Russia", "line": "1", "equipment": "Evolution 16", "serial": "IR07-NT2515", "delivery_date": "06.2026", "install_date": "06.2026", "warranty_end": "06.2027", "warranty_status": "active", "warranty_percent": 25, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "01.2020"}, {"name": "LED lighting kit", "qty": 1, "date": "01.2020"}, {"name": "Conveyor belt", "qty": 1, "date": "01.2020"}, {"name": "Control panel", "qty": 1, "date": "01.2020"}], "comments": "-", "year": "2020"}, {"id": 1003, "plant": "KAMYSHIN (Verallia), Volgograd region, Russia", "line": "5.0", "equipment": "Evolution 5", "serial": "IRIS-1003", "delivery_date": "02.2022", "install_date": "08.2022", "warranty_end": "08.2023", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "02.2022"}, {"name": "LED lighting kit", "qty": 1, "date": "02.2022"}, {"name": "Conveyor belt", "qty": 1, "date": "02.2022"}, {"name": "Control panel", "qty": 1, "date": "02.2022"}], "comments": "-", "year": "2022"}, {"id": 1004, "plant": "KAMYSHIN (Verallia), Volgograd region, Russia", "line": "5.0", "equipment": "Evolution 16", "serial": "IRIS-1004", "delivery_date": "02.2022", "install_date": "06.2022", "warranty_end": "06.2023", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "02.2022"}, {"name": "LED lighting kit", "qty": 1, "date": "02.2022"}, {"name": "Conveyor belt", "qty": 1, "date": "02.2022"}, {"name": "Control panel", "qty": 1, "date": "02.2022"}], "comments": "-", "year": "2022"}, {"id": 1005, "plant": "KAMYSHIN (Verallia), Volgograd region, Russia", "line": "11.0", "equipment": "Evolution 5", "serial": "IRIS-1005", "delivery_date": "06.2022", "install_date": "09.2022", "warranty_end": "09.2023", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "06.2022"}, {"name": "LED lighting kit", "qty": 1, "date": "06.2022"}, {"name": "Conveyor belt", "qty": 1, "date": "06.2022"}, {"name": "Control panel", "qty": 1, "date": "06.2022"}], "comments": "-", "year": "2022"}, {"id": 1006, "plant": "KAMYSHIN (Verallia), Volgograd region, Russia", "line": "8.0", "equipment": "Evolution 5", "serial": "IRIS-1006", "delivery_date": "05.2023", "install_date": "11.2023", "warranty_end": "11.2024", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "05.2023"}, {"name": "LED lighting kit", "qty": 1, "date": "05.2023"}, {"name": "Conveyor belt", "qty": 1, "date": "05.2023"}, {"name": "Control panel", "qty": 1, "date": "05.2023"}], "comments": "-", "year": "2023"}, {"id": 1007, "plant": "KAMYSHIN (Verallia), Volgograd region, Russia", "line": "8.0", "equipment": "Evolution 16", "serial": "IRIS-1007", "delivery_date": "01.2025", "install_date": "04.2025", "warranty_end": "04.2026", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "01.2025"}, {"name": "LED lighting kit", "qty": 1, "date": "01.2025"}, {"name": "Conveyor belt", "qty": 1, "date": "01.2025"}, {"name": "Control panel", "qty": 1, "date": "01.2025"}], "comments": "-", "year": "2025"}, {"id": 1008, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "731.0", "equipment": "Evolution 5", "serial": "IRIS-1008", "delivery_date": "01.2020", "install_date": "07.2020", "warranty_end": "07.2021", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "01.2020"}, {"name": "LED lighting kit", "qty": 1, "date": "01.2020"}, {"name": "Conveyor belt", "qty": 1, "date": "01.2020"}, {"name": "Control panel", "qty": 1, "date": "01.2020"}], "comments": "-", "year": "2020"}, {"id": 1009, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "731.0", "equipment": "Evolution 16", "serial": "IRIS-1009", "delivery_date": "02.2020", "install_date": "05.2020", "warranty_end": "05.2021", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "02.2020"}, {"name": "LED lighting kit", "qty": 1, "date": "02.2020"}, {"name": "Conveyor belt", "qty": 1, "date": "02.2020"}, {"name": "Control panel", "qty": 1, "date": "02.2020"}], "comments": "-", "year": "2020"}, {"id": 1010, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "731.0", "equipment": "EasySet", "serial": "IRIS-1010", "delivery_date": "05.2020", "install_date": "09.2020", "warranty_end": "09.2021", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Sensor kit", "qty": 3, "date": "05.2020"}, {"name": "Calibration tool", "qty": 1, "date": "05.2020"}], "comments": "-", "year": "2020"}, {"id": 1011, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "732.0", "equipment": "Evolution 5", "serial": "IRIS-1011", "delivery_date": "06.2020", "install_date": "12.2020", "warranty_end": "12.2021", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "06.2020"}, {"name": "LED lighting kit", "qty": 1, "date": "06.2020"}, {"name": "Conveyor belt", "qty": 1, "date": "06.2020"}, {"name": "Control panel", "qty": 1, "date": "06.2020"}], "comments": "-", "year": "2020"}, {"id": 1012, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "732.0", "equipment": "Evolution 16", "serial": "IRIS-1012", "delivery_date": "02.2020", "install_date": "12.2020", "warranty_end": "12.2021", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "02.2020"}, {"name": "LED lighting kit", "qty": 1, "date": "02.2020"}, {"name": "Conveyor belt", "qty": 1, "date": "02.2020"}, {"name": "Control panel", "qty": 1, "date": "02.2020"}], "comments": "-", "year": "2020"}, {"id": 1013, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "732.0", "equipment": "EasySet", "serial": "IRIS-1013", "delivery_date": "05.2020", "install_date": "10.2020", "warranty_end": "10.2021", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Sensor kit", "qty": 3, "date": "05.2020"}, {"name": "Calibration tool", "qty": 1, "date": "05.2020"}], "comments": "-", "year": "2020"}, {"id": 1014, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "711.0", "equipment": "Evolution 5", "serial": "IRIS-1014", "delivery_date": "01.2022", "install_date": "06.2022", "warranty_end": "06.2023", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "01.2022"}, {"name": "LED lighting kit", "qty": 1, "date": "01.2022"}, {"name": "Conveyor belt", "qty": 1, "date": "01.2022"}, {"name": "Control panel", "qty": 1, "date": "01.2022"}], "comments": "-", "year": "2022"}, {"id": 1015, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "712.0", "equipment": "Evolution 5", "serial": "IRIS-1015", "delivery_date": "06.2022", "install_date": "12.2022", "warranty_end": "12.2023", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "06.2022"}, {"name": "LED lighting kit", "qty": 1, "date": "06.2022"}, {"name": "Conveyor belt", "qty": 1, "date": "06.2022"}, {"name": "Control panel", "qty": 1, "date": "06.2022"}], "comments": "-", "year": "2022"}, {"id": 1016, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "83.0", "equipment": "Evolution 16", "serial": "IRIS-1016", "delivery_date": "03.2023", "install_date": "08.2023", "warranty_end": "08.2024", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "03.2023"}, {"name": "LED lighting kit", "qty": 1, "date": "03.2023"}, {"name": "Conveyor belt", "qty": 1, "date": "03.2023"}, {"name": "Control panel", "qty": 1, "date": "03.2023"}], "comments": "-", "year": "2023"}, {"id": 1017, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "83.0", "equipment": "EasySet", "serial": "IRIS-1017", "delivery_date": "02.2023", "install_date": "08.2023", "warranty_end": "08.2024", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Sensor kit", "qty": 3, "date": "02.2023"}, {"name": "Calibration tool", "qty": 1, "date": "02.2023"}], "comments": "-", "year": "2023"}, {"id": 1018, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "82.0", "equipment": "Evolution 5", "serial": "IRIS-1018", "delivery_date": "03.2025", "install_date": "06.2025", "warranty_end": "06.2026", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "03.2025"}, {"name": "LED lighting kit", "qty": 1, "date": "03.2025"}, {"name": "Conveyor belt", "qty": 1, "date": "03.2025"}, {"name": "Control panel", "qty": 1, "date": "03.2025"}], "comments": "-", "year": "2025"}, {"id": 1019, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "82.0", "equipment": "Evolution 16", "serial": "IRIS-1019", "delivery_date": "01.2025", "install_date": "10.2025", "warranty_end": "10.2026", "warranty_status": "active", "warranty_percent": 75.0, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "01.2025"}, {"name": "LED lighting kit", "qty": 1, "date": "01.2025"}, {"name": "Conveyor belt", "qty": 1, "date": "01.2025"}, {"name": "Control panel", "qty": 1, "date": "01.2025"}], "comments": "-", "year": "2025"}, {"id": 1020, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "82.0", "equipment": "EasySet", "serial": "IRIS-1020", "delivery_date": "01.2025", "install_date": "09.2025", "warranty_end": "09.2026", "warranty_status": "active", "warranty_percent": 83.3, "spare_parts": [{"name": "Sensor kit", "qty": 3, "date": "01.2025"}, {"name": "Calibration tool", "qty": 1, "date": "01.2025"}], "comments": "-", "year": "2025"}, {"id": 1021, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "2.2", "equipment": "Evolution 5", "serial": "IRIS-1021", "delivery_date": "03.2012", "install_date": "10.2012", "warranty_end": "10.2013", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "03.2012"}, {"name": "LED lighting kit", "qty": 1, "date": "03.2012"}, {"name": "Conveyor belt", "qty": 1, "date": "03.2012"}, {"name": "Control panel", "qty": 1, "date": "03.2012"}], "comments": "modernized in 2020", "year": "2012"}, {"id": 1022, "plant": "KAVMINSTEKLO (Verallia), \nStavropol region, Russia", "line": "2.2", "equipment": "Evolution 16", "serial": "IRIS-1022", "delivery_date": "03.2012", "install_date": "12.2012", "warranty_end": "12.2013", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "03.2012"}, {"name": "LED lighting kit", "qty": 1, "date": "03.2012"}, {"name": "Conveyor belt", "qty": 1, "date": "03.2012"}, {"name": "Control panel", "qty": 1, "date": "03.2012"}], "comments": "modernized in 2020", "year": "2012"}, {"id": 1023, "plant": "STEKLOTEH, Tyumen, Russia", "line": "2.2", "equipment": "EasySet", "serial": "IRIS-1023", "delivery_date": "01.2025", "install_date": "11.2025", "warranty_end": "11.2026", "warranty_status": "active", "warranty_percent": 66.7, "spare_parts": [{"name": "Sensor kit", "qty": 3, "date": "01.2025"}, {"name": "Calibration tool", "qty": 1, "date": "01.2025"}], "comments": "-", "year": "2025"}, {"id": 1024, "plant": "STEKLOTEH, Tyumen, Russia", "line": "2.1", "equipment": "EasySet", "serial": "IRIS-1024", "delivery_date": "05.2013", "install_date": "08.2013", "warranty_end": "08.2014", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Sensor kit", "qty": 3, "date": "05.2013"}, {"name": "Calibration tool", "qty": 1, "date": "05.2013"}], "comments": "under consideration", "year": "2013"}, {"id": 1025, "plant": "STEKLOTEH, Tyumen, Russia", "line": "1.1", "equipment": "Evolution 16", "serial": "IRIS-1025", "delivery_date": "04.2015", "install_date": "07.2015", "warranty_end": "07.2016", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "04.2015"}, {"name": "LED lighting kit", "qty": 1, "date": "04.2015"}, {"name": "Conveyor belt", "qty": 1, "date": "04.2015"}, {"name": "Control panel", "qty": 1, "date": "04.2015"}], "comments": "modernized in 2020", "year": "2015"}, {"id": 1026, "plant": "STEKLOTEH, Tyumen, Russia", "line": "1.1", "equipment": "EasySet", "serial": "IRIS-1026", "delivery_date": "05.2015", "install_date": "10.2015", "warranty_end": "10.2016", "warranty_status": "expired", "warranty_percent": 100, "spare_parts": [{"name": "Sensor kit", "qty": 3, "date": "05.2015"}, {"name": "Calibration tool", "qty": 1, "date": "05.2015"}], "comments": "modernized in 2020", "year": "2015"}, {"id": 1027, "plant": "GLASS DECOR, Novoalexandrovsk, Russia", "line": "N/A", "equipment": "Evolution 16", "serial": "IRIS-1027", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "N/A"}, {"name": "LED lighting kit", "qty": 1, "date": "N/A"}, {"name": "Conveyor belt", "qty": 1, "date": "N/A"}, {"name": "Control panel", "qty": 1, "date": "N/A"}], "comments": "modernized in?\nout of order due to spacers", "year": "Unknown"}, {"id": 1028, "plant": "GLASS DECOR, Novoalexandrovsk, Russia", "line": "N/A", "equipment": "Evolution 16", "serial": "IRIS-1028", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "N/A"}, {"name": "LED lighting kit", "qty": 1, "date": "N/A"}, {"name": "Conveyor belt", "qty": 1, "date": "N/A"}, {"name": "Control panel", "qty": 1, "date": "N/A"}], "comments": "modernized in?\nout of order due to spacers", "year": "Unknown"}, {"id": 1029, "plant": "GLASS DECOR, Vladimir region, Russia", "line": "N/A", "equipment": "Evolution 12 (?)", "serial": "IRIS-1029", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "N/A"}, {"name": "LED lighting kit", "qty": 1, "date": "N/A"}, {"name": "Conveyor belt", "qty": 1, "date": "N/A"}, {"name": "Control panel", "qty": 1, "date": "N/A"}], "comments": "upgraded to NEO in?", "year": "Unknown"}, {"id": 1030, "plant": "PETERBURGSKOYE STEKLO, Luga, Russia", "line": "N/A", "equipment": "Evolution 16 (?)", "serial": "IRIS-1030", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "N/A"}, {"name": "LED lighting kit", "qty": 1, "date": "N/A"}, {"name": "Conveyor belt", "qty": 1, "date": "N/A"}, {"name": "Control panel", "qty": 1, "date": "N/A"}], "comments": "?", "year": "Unknown"}, {"id": 1031, "plant": "9th of JANUARY, Vyshniy\nVolochek, Russia", "line": "2.1", "equipment": "Evolution 1", "serial": "IRIS-1031", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "N/A"}, {"name": "LED lighting kit", "qty": 1, "date": "N/A"}, {"name": "Conveyor belt", "qty": 1, "date": "N/A"}, {"name": "Control panel", "qty": 1, "date": "N/A"}], "comments": "?", "year": "Unknown"}, {"id": 1032, "plant": "9th of JANUARY, Vyshniy\nVolochek, Russia", "line": "2.2", "equipment": "Evolution 1", "serial": "IRIS-1032", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "N/A"}, {"name": "LED lighting kit", "qty": 1, "date": "N/A"}, {"name": "Conveyor belt", "qty": 1, "date": "N/A"}, {"name": "Control panel", "qty": 1, "date": "N/A"}], "comments": "?", "year": "Unknown"}, {"id": 1033, "plant": "9th of JANUARY, Vyshniy\nVolochek, Russia", "line": "2.2", "equipment": "Evolution 16", "serial": "IRIS-1033", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [{"name": "Camera module", "qty": 2, "date": "N/A"}, {"name": "LED lighting kit", "qty": 1, "date": "N/A"}, {"name": "Conveyor belt", "qty": 1, "date": "N/A"}, {"name": "Control panel", "qty": 1, "date": "N/A"}], "comments": "not modernized", "year": "Unknown"}, {"id": 1034, "plant": "9th of JANUARY, Vyshniy\nVolochek, Russia", "line": "N/A", "equipment": "Grand total", "serial": "IRIS-1034", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [], "comments": "-", "year": "Unknown"}, {"id": 1035, "plant": "9th of JANUARY, Vyshniy\nVolochek, Russia", "line": "N/A", "equipment": "Grand total", "serial": "IRIS-1035", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [], "comments": "-", "year": "Unknown"}, {"id": 1036, "plant": "9th of JANUARY, Vyshniy\nVolochek, Russia", "line": "N/A", "equipment": "Grand total", "serial": "IRIS-1036", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [], "comments": "-", "year": "Unknown"}, {"id": 1037, "plant": "9th of JANUARY, Vyshniy\nVolochek, Russia", "line": "N/A", "equipment": "Grand total", "serial": "IRIS-1037", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [], "comments": "-", "year": "Unknown"}, {"id": 1038, "plant": "9th of JANUARY, Vyshniy\nVolochek, Russia", "line": "N/A", "equipment": "Grand total", "serial": "IRIS-1038", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [], "comments": "-", "year": "Unknown"}, {"id": 1039, "plant": "9th of JANUARY, Vyshniy\nVolochek, Russia", "line": "N/A", "equipment": "Grand total", "serial": "IRIS-1039", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [], "comments": "-", "year": "Unknown"}, {"id": 1040, "plant": "9th of JANUARY, Vyshniy\nVolochek, Russia", "line": "N/A", "equipment": "Grand total", "serial": "IRIS-1040", "delivery_date": "Unknown", "install_date": "Unknown", "warranty_end": "Unknown", "warranty_status": "unknown", "warranty_percent": 0, "spare_parts": [], "comments": "-", "year": "Unknown"}];
+let irisData = [];
+let currentFilter = 'all';
+let currentView = 'company';
 
 const VALID_LOGIN = 'ritsteklo';
 const VALID_PASSWORD = '2026';
 
-function doLogin() {
-  const login = document.getElementById('login-input').value.trim();
-  const password = document.getElementById('password-input').value.trim();
-  const error = document.getElementById('error-msg');
+// ========== ФУНКЦИЯ РАСЧЁТА ГАРАНТИИ ==========
+function calculateWarranty(installDate) {
+    if (!installDate || installDate === 'Unknown' || installDate === 'N/A') {
+        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Дата неизвестна' };
+    }
 
-  if (login === VALID_LOGIN && password === VALID_PASSWORD) {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('main-app').style.display = 'block';
-    error.classList.remove('show');
-    sessionStorage.setItem('rts_auth', 'true');
-  } else {
-    error.classList.add('show');
-    document.querySelector('.login-card').style.animation = 'none';
-    setTimeout(() => {
-      document.querySelector('.login-card').style.animation = 'shake 0.5s ease';
-    }, 10);
-  }
+    const parts = installDate.split('.');
+    if (parts.length !== 2) {
+        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неверный формат' };
+    }
+
+    const installMonth = parseInt(parts[0]);
+    const installYear = parseInt(parts[1]);
+    if (isNaN(installMonth) || isNaN(installYear)) {
+        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неверный формат' };
+    }
+
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+
+    let endMonth = installMonth;
+    let endYear = installYear + 1;
+    if (endMonth > 12) { endMonth -= 12; endYear += 1; }
+    const endDateStr = `${String(endMonth).padStart(2, '0')}.${endYear}`;
+
+    const elapsedMonths = (currentYear - installYear) * 12 + (currentMonth - installMonth);
+
+    let status, percent, remaining;
+
+    if (elapsedMonths < 0) {
+        status = 'pending';
+        percent = 0;
+        remaining = 'Ожидает установки';
+    } else if (elapsedMonths >= 12) {
+        status = 'expired';
+        percent = 100;
+        remaining = 'Гарантия истекла';
+    } else {
+        status = 'active';
+        percent = Math.round((elapsedMonths / 12) * 100 * 10) / 10;
+        const leftMonths = 12 - elapsedMonths;
+        remaining = `${Math.round(leftMonths * 10) / 10} мес. осталось`;
+    }
+
+    return { status, percent, end: endDateStr, remaining };
+}
+
+async function loadMachinesData() {
+    try {
+        let response = await fetch('data/machines.json');
+        if (!response.ok) {
+            const baseUrl = window.location.href.replace(/\/[^\/]*$/, '/');
+            response = await fetch(baseUrl + 'data/machines.json');
+        }
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        
+        irisData = await response.json();
+        irisData = irisData.filter(d => d.equipment && d.equipment !== 'Grand total' && d.equipment !== 'Total' && d.equipment !== 'Итого');
+        
+        document.getElementById('loading-overlay').classList.add('hidden');
+        if (sessionStorage.getItem('rts_auth') === 'true' && currentView === 'iris') {
+            renderIrisDashboard();
+        }
+    } catch (e) {
+        console.error('Error loading data:', e);
+        document.getElementById('loading-overlay').innerHTML = 
+            '<p style="color:var(--danger)">Ошибка загрузки данных. Проверьте подключение.<br><small style="color:var(--text-muted)">' + e.message + '</small></p>';
+    }
+}
+
+function doLogin() {
+    const login = document.getElementById('login-input').value.trim();
+    const password = document.getElementById('password-input').value.trim();
+    const error = document.getElementById('error-msg');
+    if (login === VALID_LOGIN && password === VALID_PASSWORD) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('main-app').style.display = 'block';
+        error.classList.remove('show');
+        sessionStorage.setItem('rts_auth', 'true');
+    } else {
+        error.classList.add('show');
+        document.querySelector('.login-card').style.animation = 'none';
+        setTimeout(() => { document.querySelector('.login-card').style.animation = 'shake 0.5s ease'; }, 10);
+    }
 }
 
 function logout() {
-  sessionStorage.removeItem('rts_auth');
-  location.reload();
+    sessionStorage.removeItem('rts_auth');
+    location.reload();
 }
 
-window.addEventListener('load', () => {
-  if (sessionStorage.getItem('rts_auth') === 'true') {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('main-app').style.display = 'block';
-  }
+window.addEventListener('load', async () => {
+    await loadMachinesData();
+    if (sessionStorage.getItem('rts_auth') === 'true') {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('main-app').style.display = 'block';
+    }
 });
 
 ['login-input','password-input'].forEach(id => {
-  document.getElementById(id).addEventListener('keypress', e => {
-    if (e.key === 'Enter') doLogin();
-  });
+    document.getElementById(id).addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
 });
 
 const shakeStyle = document.createElement('style');
 shakeStyle.textContent = `@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-10px)} 40%{transform:translateX(10px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }`;
 document.head.appendChild(shakeStyle);
 
-let currentView = 'company';
-
 function selectCompany(company) {
-  document.getElementById('company-view').style.display = 'none';
-  document.getElementById('back-btn').style.display = 'block';
-
-  if (company === 'iris') {
-    document.getElementById('iris-view').style.display = 'block';
-    document.getElementById('other-view').style.display = 'none';
-    document.getElementById('page-subtitle').textContent = '— IRIS Inspection Machines';
-    currentView = 'iris';
-    renderIrisDashboard();
-  } else {
-    document.getElementById('iris-view').style.display = 'none';
-    document.getElementById('other-view').style.display = 'block';
-    document.getElementById('page-subtitle').textContent = '— ' + company.charAt(0).toUpperCase() + company.slice(1);
-    currentView = 'other';
-  }
+    document.getElementById('company-view').style.display = 'none';
+    document.getElementById('back-btn').style.display = 'block';
+    if (company === 'iris') {
+        document.getElementById('iris-view').style.display = 'block';
+        document.getElementById('other-view').style.display = 'none';
+        document.getElementById('page-subtitle').textContent = '— IRIS Inspection Machines';
+        currentView = 'iris';
+        renderIrisDashboard();
+    } else {
+        document.getElementById('iris-view').style.display = 'none';
+        document.getElementById('other-view').style.display = 'block';
+        document.getElementById('page-subtitle').textContent = '— ' + company.charAt(0).toUpperCase() + company.slice(1);
+        currentView = 'other';
+    }
 }
 
 function goBack() {
-  document.getElementById('company-view').style.display = 'block';
-  document.getElementById('iris-view').style.display = 'none';
-  document.getElementById('other-view').style.display = 'none';
-  document.getElementById('back-btn').style.display = 'none';
-  document.getElementById('page-subtitle').textContent = '— Выбор компании';
-  currentView = 'company';
+    document.getElementById('company-view').style.display = 'block';
+    document.getElementById('iris-view').style.display = 'none';
+    document.getElementById('other-view').style.display = 'none';
+    document.getElementById('back-btn').style.display = 'none';
+    document.getElementById('page-subtitle').textContent = '— Выбор компании';
+    currentView = 'company';
 }
 
-let currentFilter = 'all';
-
 function renderIrisDashboard() {
-  const total = irisData.length;
-  const active = irisData.filter(d => d.warranty_status === 'active').length;
-  const expired = irisData.filter(d => d.warranty_status === 'expired').length;
-  const plants = new Set(irisData.map(d => d.plant)).size;
+    const total = irisData.length;
+    const active = irisData.filter(d => calculateWarranty(d.install_date).status === 'active').length;
+    const expired = irisData.filter(d => calculateWarranty(d.install_date).status === 'expired').length;
+    const plants = new Set(irisData.map(d => d.plant)).size;
+    animateNumber('stat-total', total);
+    animateNumber('stat-active', active);
+    animateNumber('stat-expired', expired);
+    animateNumber('stat-plants', plants);
 
-  animateNumber('stat-total', total);
-  animateNumber('stat-active', active);
-  animateNumber('stat-expired', expired);
-  animateNumber('stat-plants', plants);
+    const plantCounts = {};
+    irisData.forEach(d => { plantCounts[d.plant] = (plantCounts[d.plant] || 0) + 1; });
+    const maxCount = Math.max(...Object.values(plantCounts));
+    const colors = ['#1a3a5c','#2a5a8c','#3a7abc','#4a9adc','#5abafc'];
+    document.getElementById('plant-dist').innerHTML = Object.entries(plantCounts).map(([plant, count], i) => {
+        const pct = (count / maxCount * 100);
+        const shortName = plant.split(',')[0];
+        return `<div class="plant-bar"><div class="plant-name" title="${plant}">${shortName}</div><div class="plant-progress"><div class="plant-progress-fill" style="width:0%; background: linear-gradient(90deg, ${colors[i%colors.length]}, ${colors[(i+1)%colors.length]}); color: white;" data-width="${pct}%">${count}</div></div></div>`;
+    }).join('');
+    setTimeout(() => { document.querySelectorAll('.plant-progress-fill').forEach(el => { el.style.width = el.dataset.width; }); }, 100);
 
-  const plantCounts = {};
-  irisData.forEach(d => {
-    plantCounts[d.plant] = (plantCounts[d.plant] || 0) + 1;
-  });
-  const maxCount = Math.max(...Object.values(plantCounts));
-  const colors = ['#1a3a5c','#2a5a8c','#3a7abc','#4a9adc','#5abafc'];
+    const yearCounts = {};
+    irisData.forEach(d => { if (d.install_date && d.install_date !== 'Unknown' && d.install_date !== 'N/A') {
+        const parts = d.install_date.split('.');
+        if (parts.length === 2) { const year = parts[1]; yearCounts[year] = (yearCounts[year] || 0) + 1; }
+    }});
+    const sortedYears = Object.entries(yearCounts).sort((a,b) => a[0]-b[0]);
+    document.getElementById('timeline').innerHTML = sortedYears.map(([year, count]) =>
+        `<div class="timeline-item"><div class="timeline-year">${year}</div><div class="timeline-count">${count}</div><div class="timeline-label">установок</div></div>`
+    ).join('');
 
-  document.getElementById('plant-dist').innerHTML = Object.entries(plantCounts).map(([plant, count], i) => {
-    const pct = (count / maxCount * 100);
-    const shortName = plant.split(',')[0];
-    return `
-      <div class="plant-bar">
-        <div class="plant-name" title="${plant}">${shortName}</div>
-        <div class="plant-progress">
-          <div class="plant-progress-fill" style="width:0%; background: linear-gradient(90deg, ${colors[i%colors.length]}, ${colors[(i+1)%colors.length]}); color: white;" data-width="${pct}%">
-            ${count}
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  setTimeout(() => {
-    document.querySelectorAll('.plant-progress-fill').forEach(el => {
-      el.style.width = el.dataset.width;
-    });
-  }, 100);
-
-  const yearCounts = {};
-  irisData.forEach(d => {
-    if (d.year !== '?' && d.year !== 'Unknown') {
-      yearCounts[d.year] = (yearCounts[d.year] || 0) + 1;
-    }
-  });
-  const sortedYears = Object.entries(yearCounts).sort((a,b) => a[0]-b[0]);
-
-  document.getElementById('timeline').innerHTML = sortedYears.map(([year, count]) => `
-    <div class="timeline-item">
-      <div class="timeline-year">${year}</div>
-      <div class="timeline-count">${count}</div>
-      <div class="timeline-label">установок</div>
-    </div>
-  `).join('');
-
-  renderEquipmentCards();
+    renderEquipmentCards();
 }
 
 function renderEquipmentCards() {
-  const filtered = currentFilter === 'all' ? irisData : irisData.filter(d => d.equipment.includes(currentFilter));
+    const filtered = currentFilter === 'all' ? irisData : irisData.filter(d => d.equipment.includes(currentFilter));
+    document.getElementById('equipment-grid').innerHTML = filtered.map((d, i) => {
+        const warranty = calculateWarranty(d.install_date);
+        const status = warranty.status;
+        const percent = warranty.percent;
+        const endDate = warranty.end;
+        const remaining = warranty.remaining;
 
-  document.getElementById('equipment-grid').innerHTML = filtered.map((d, i) => {
-    const statusClass = `badge-${d.warranty_status}`;
-    const statusText = d.warranty_status === 'active' ? 'На гарантии' : 
-                       d.warranty_status === 'expired' ? 'Гарантия истекла' :
-                       d.warranty_status === 'pending' ? 'Ожидает' : 'Неизвестно';
+        const statusClass = `badge-${status}`;
+        const statusText = status === 'active' ? 'На гарантии' : 
+                          status === 'expired' ? 'Гарантия истекла' : 
+                          status === 'pending' ? 'Ожидает' : 'Неизвестно';
+        const barClass = status;
+        const barColor = status === 'active' ? 'var(--success)' : 
+                         status === 'expired' ? 'var(--danger)' : 
+                         status === 'pending' ? 'var(--warning)' : 'var(--text-muted)';
 
-    const barClass = d.warranty_status;
-    const remaining = d.warranty_status === 'active' ? `${Math.round(100 - d.warranty_percent)}% осталось` :
-                       d.warranty_status === 'expired' ? 'Гарантия закончилась' :
-                       d.warranty_status === 'pending' ? 'Ожидает установки' : 'Дата неизвестна';
+        const sparePartsHtml = (d.spare_parts || []).map(sp => 
+            `<div class="spare-item"><span class="spare-name">${sp.name}</span><span class="spare-qty">×${sp.qty}</span></div>`
+        ).join('');
+        
+        const commentsHtml = d.comments && d.comments !== '-' && d.comments !== '?' ? 
+            `<div class="eq-comments">💬 ${d.comments}</div>` : '';
 
-    const sparePartsHtml = d.spare_parts.map(sp => `
-      <div class="spare-item">
-        <span class="spare-name">${sp.name}</span>
-        <span class="spare-qty">×${sp.qty}</span>
-      </div>
-    `).join('');
-
-    const commentsHtml = d.comments !== '-' && d.comments !== '?' ? `
-      <div class="eq-comments">💬 ${d.comments}</div>
-    ` : '';
-
-    return `
-      <div class="eq-card" style="animation-delay: ${i * 0.05}s">
-        <div class="eq-header">
-          <div>
-            <div class="eq-title">${d.equipment}</div>
-            <div class="eq-serial">${d.serial}</div>
-          </div>
-          <div class="eq-badge ${statusClass}">${statusText}</div>
-        </div>
-        <div class="eq-body">
-          <div class="eq-info-row">
-            <span class="eq-info-label">Завод</span>
-            <span class="eq-info-value" style="text-align:right; max-width: 60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${d.plant}</span>
-          </div>
-          <div class="eq-info-row">
-            <span class="eq-info-label">Линия</span>
-            <span class="eq-info-value">${d.line}</span>
-          </div>
-          <div class="eq-info-row">
-            <span class="eq-info-label">Дата поставки</span>
-            <span class="eq-info-value">${d.delivery_date}</span>
-          </div>
-          <div class="eq-info-row">
-            <span class="eq-info-label">Дата установки</span>
-            <span class="eq-info-value">${d.install_date}</span>
-          </div>
-          <div class="eq-info-row">
-            <span class="eq-info-label">Гарантия до</span>
-            <span class="eq-info-value">${d.warranty_end}</span>
-          </div>
-        </div>
-        <div class="warranty-section">
-          <div class="warranty-header">
-            <span class="warranty-label">Гарантийный период</span>
-            <span class="warranty-value" style="color: ${d.warranty_status === 'active' ? 'var(--success)' : d.warranty_status === 'expired' ? 'var(--danger)' : 'var(--text-muted)'};">${remaining}</span>
-          </div>
-          <div class="warranty-bar-bg">
-            <div class="warranty-bar-fill ${barClass}" style="width: 0%;" data-width="${d.warranty_percent}%"></div>
-          </div>
-        </div>
-        <div class="spare-parts">
-          <div class="spare-title">Запасные части в комплекте</div>
-          ${sparePartsHtml}
-        </div>
-        ${commentsHtml}
-      </div>
-    `;
-  }).join('');
-
-  setTimeout(() => {
-    document.querySelectorAll('.warranty-bar-fill').forEach(el => {
-      el.style.width = el.dataset.width;
-    });
-  }, 200);
+        return `<div class="eq-card" style="animation-delay: ${i * 0.05}s">
+            <div class="eq-header">
+                <div>
+                    <div class="eq-title">${d.equipment}</div>
+                    <div class="eq-serial">${d.serial}</div>
+                </div>
+                <div class="eq-badge ${statusClass}">${statusText}</div>
+            </div>
+            <div class="eq-body">
+                <div class="eq-info-row"><span class="eq-info-label">Завод</span><span class="eq-info-value" style="text-align:right; max-width: 60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${d.plant}</span></div>
+                <div class="eq-info-row"><span class="eq-info-label">Линия</span><span class="eq-info-value">${d.line}</span></div>
+                <div class="eq-info-row"><span class="eq-info-label">Дата поставки</span><span class="eq-info-value">${d.delivery_date}</span></div>
+                <div class="eq-info-row"><span class="eq-info-label">Дата установки</span><span class="eq-info-value">${d.install_date}</span></div>
+                <div class="eq-info-row"><span class="eq-info-label">Гарантия до</span><span class="eq-info-value">${endDate}</span></div>
+            </div>
+            <div class="warranty-section">
+                <div class="warranty-header">
+                    <span class="warranty-label">Гарантийный период</span>
+                    <span class="warranty-value" style="color: ${barColor};">${remaining}</span>
+                </div>
+                <div class="warranty-bar-bg">
+                    <div class="warranty-bar-fill ${barClass}" style="width: 0%;" data-width="${percent}%"></div>
+                </div>
+            </div>
+            <div class="spare-parts">
+                <div class="spare-title">Запасные части в комплекте</div>
+                ${sparePartsHtml}
+            </div>
+            ${commentsHtml}
+        </div>`;
+    }).join('');
+    
+    setTimeout(() => { 
+        document.querySelectorAll('.warranty-bar-fill').forEach(el => { 
+            el.style.width = el.dataset.width; 
+        }); 
+    }, 200);
 }
 
 function filterEq(type) {
-  currentFilter = type;
-  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-  renderEquipmentCards();
+    currentFilter = type;
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    renderEquipmentCards();
 }
 
 function animateNumber(id, target) {
-  const el = document.getElementById(id);
-  let current = 0;
-  const step = Math.max(1, Math.floor(target / 30));
-  const interval = setInterval(() => {
-    current += step;
-    if (current >= target) {
-      current = target;
-      clearInterval(interval);
-    }
-    el.textContent = current;
-  }, 30);
+    const el = document.getElementById(id);
+    let current = 0;
+    const step = Math.max(1, Math.floor(target / 30));
+    const interval = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(interval); }
+        el.textContent = current;
+    }, 30);
 }
 </script>
 </body>
