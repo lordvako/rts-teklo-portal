@@ -110,6 +110,15 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.2); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.4); }
+
+/* Чекбоксы для комплектации */
+.completion-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 8px 0; }
+.completion-checkbox { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; padding: 6px 10px;
+  background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(148,163,184,0.08); transition: all 0.3s; }
+.completion-checkbox:hover { background: rgba(255,255,255,0.06); border-color: rgba(232,185,35,0.2); }
+.completion-checkbox input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+.completion-checkbox input[type="checkbox"]:checked + span { color: var(--accent); font-weight: 600; }
+
 @media (max-width: 768px) {
   .machine-row { grid-template-columns: 40px 1fr 80px 60px; }
   .machine-row .cell:nth-child(4), .machine-row .cell:nth-child(5), .machine-row .cell:nth-child(6) { display: none; }
@@ -118,6 +127,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
   .header-actions { justify-content: center; }
   .container { padding: 16px; }
   .form-row { grid-template-columns: 1fr; }
+  .completion-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
@@ -212,18 +222,18 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
       </div>
       <div class="form-row" id="completion-row" style="display:none;">
         <div class="form-group full-width">
-          <label id="form-completion-label">Комплектация (для Evolution 5)</label>
-          <select id="form-completion">
-            <option value="FINISH1">FINISH1</option>
-            <option value="FINISH2">FINISH2</option>
-            <option value="FINISH COMBI">FINISH COMBI</option>
-            <option value="BASE">BASE</option>
-            <option value="BASE STRESS">BASE STRESS</option>
-            <option value="BASE STRESS COMBI">BASE STRESS COMBI</option>
-            <option value="LECTOR BOTTOM">LECTOR BOTTOM</option>
-            <option value="LECTOR TOP">LECTOR TOP</option>
-            <option value="WIRE EDGE">WIRE EDGE</option>
-          </select>
+          <label id="form-completion-label">Комплектация (выберите несколько)</label>
+          <div class="completion-grid" id="completion-grid">
+            <label class="completion-checkbox"><input type="checkbox" value="FINISH1"><span>FINISH1</span></label>
+            <label class="completion-checkbox"><input type="checkbox" value="FINISH2"><span>FINISH2</span></label>
+            <label class="completion-checkbox"><input type="checkbox" value="FINISH COMBI"><span>FINISH COMBI</span></label>
+            <label class="completion-checkbox"><input type="checkbox" value="BASE"><span>BASE</span></label>
+            <label class="completion-checkbox"><input type="checkbox" value="BASE STRESS"><span>BASE STRESS</span></label>
+            <label class="completion-checkbox"><input type="checkbox" value="BASE STRESS COMBI"><span>BASE STRESS COMBI</span></label>
+            <label class="completion-checkbox"><input type="checkbox" value="LECTOR BOTTOM"><span>LECTOR BOTTOM</span></label>
+            <label class="completion-checkbox"><input type="checkbox" value="LECTOR TOP"><span>LECTOR TOP</span></label>
+            <label class="completion-checkbox"><input type="checkbox" value="WIRE EDGE"><span>WIRE EDGE</span></label>
+          </div>
         </div>
       </div>
       <div class="form-row">
@@ -282,7 +292,7 @@ const LANG = {
     form_new_plant: 'Название нового завода',
     form_direction: 'Направление',
     form_software: 'Версия ПО',
-    form_completion: 'Комплектация (для Evolution 5)',
+    form_completion: 'Комплектация (выберите несколько)',
     form_line: 'Линия',
     form_year: 'Год установки',
     form_delivery: 'Дата поставки (MM.YYYY)',
@@ -340,7 +350,7 @@ const LANG = {
     form_new_plant: 'New Plant Name',
     form_direction: 'Direction',
     form_software: 'Software Version',
-    form_completion: 'Completion (for Evolution 5)',
+    form_completion: 'Completion (select multiple)',
     form_line: 'Line',
     form_year: 'Installation Year',
     form_delivery: 'Delivery Date (MM.YYYY)',
@@ -423,7 +433,6 @@ function updateUI() {
   document.getElementById('modal-cancel').textContent = t('modal_cancel');
   document.getElementById('modal-save').textContent = t('modal_save');
   
-  // New plant option
   const plantSelect = document.getElementById('form-plant');
   const newOption = plantSelect.querySelector('option[value="NEW"]');
   if (newOption) newOption.textContent = t('new_plant_option');
@@ -501,6 +510,18 @@ function calculateWarrantyStatus(installDate) {
   return { status, percent, end: endDateStr };
 }
 
+function getSelectedCompletion() {
+  const checkboxes = document.querySelectorAll('#completion-grid input[type="checkbox"]:checked');
+  return Array.from(checkboxes).map(cb => cb.value);
+}
+
+function setCompletionValues(values) {
+  const checkboxes = document.querySelectorAll('#completion-grid input[type="checkbox"]');
+  checkboxes.forEach(cb => {
+    cb.checked = values.includes(cb.value);
+  });
+}
+
 function renderList() {
   const list = document.getElementById('machine-list');
   list.innerHTML = `
@@ -550,7 +571,7 @@ function openAddModal() {
   document.getElementById('form-new-plant').value = '';
   document.getElementById('form-direction').value = 'Правосторонняя';
   document.getElementById('form-software').value = '';
-  document.getElementById('form-completion').value = 'FINISH1';
+  setCompletionValues([]);
   document.getElementById('form-line').value = '';
   document.getElementById('form-year').value = '2025';
   document.getElementById('form-delivery').value = '';
@@ -581,7 +602,12 @@ function openEditModal(id) {
   
   document.getElementById('form-direction').value = m.direction || 'Правосторонняя';
   document.getElementById('form-software').value = m.software || '';
-  document.getElementById('form-completion').value = m.completion || 'FINISH1';
+  
+  // Устанавливаем чекбоксы комплектации
+  const completionValues = Array.isArray(m.completion) ? m.completion : 
+                          (m.completion ? m.completion.split(', ').filter(Boolean) : []);
+  setCompletionValues(completionValues);
+  
   document.getElementById('form-line').value = (m.line && m.line !== 'N/A') ? m.line : '';
   const year = (m.install_date && m.install_date !== 'Unknown') ? m.install_date.split('.')[1] : '';
   document.getElementById('form-year').value = year || '';
@@ -621,7 +647,7 @@ function saveMachine() {
   if (plant === 'NEW') plant = document.getElementById('form-new-plant').value.trim();
   const direction = document.getElementById('form-direction').value;
   const software = document.getElementById('form-software').value.trim();
-  const completion = document.getElementById('form-completion').value;
+  const completion = getSelectedCompletion();
   const line = document.getElementById('form-line').value.trim() || 'N/A';
   const delivery = document.getElementById('form-delivery').value.trim() || 'Unknown';
   const install = document.getElementById('form-install').value.trim() || 'Unknown';
@@ -644,7 +670,7 @@ function saveMachine() {
     serial,
     direction: direction || 'Правосторонняя',
     software: software || '',
-    completion: equipment === 'Evolution 5' ? completion : '',
+    completion: equipment === 'Evolution 5' ? completion : [],
     delivery_date: delivery,
     install_date: install,
     spare_parts: spareParts,
