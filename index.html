@@ -439,7 +439,6 @@ function updateUI() {
   document.getElementById('other-desc').textContent = t('other_desc');
   document.getElementById('other-back').textContent = t('other_back');
 
-  // Company cards
   const cards = document.querySelectorAll('.company-card');
   if (cards.length >= 4) {
     cards[0].querySelector('h3').textContent = t('company_iris_title');
@@ -646,7 +645,6 @@ function renderEquipmentCards() {
         const commentsHtml = d.comments && d.comments !== '-' && d.comments !== '?' ? 
             `<div class="eq-comments">💬 ${d.comments}</div>` : '';
 
-        // Дополнительные поля
         let extraFields = '';
         if (d.direction) {
             extraFields += `<span class="tag">${t('direction')}: ${d.direction}</span>`;
@@ -654,8 +652,10 @@ function renderEquipmentCards() {
         if (d.software) {
             extraFields += `<span class="tag">${t('software')}: ${d.software}</span>`;
         }
-        if (d.completion && d.equipment === 'Evolution 5') {
-            extraFields += `<span class="tag">${t('completion')}: ${d.completion}</span>`;
+        // Комплектация — массив значений, отображаем через запятую
+        if (d.completion && d.completion.length > 0 && d.equipment === 'Evolution 5') {
+            const completionList = Array.isArray(d.completion) ? d.completion.join(', ') : d.completion;
+            extraFields += `<span class="tag">${t('completion')}: ${completionList}</span>`;
         }
         const extraHtml = extraFields ? `<div class="eq-extra-row">${extraFields}</div>` : '';
 
