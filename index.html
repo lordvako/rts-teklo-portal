@@ -110,6 +110,8 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 .eq-info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(148,163,184,0.08); font-size: 13px; }
 .eq-info-row:last-child { border-bottom: none; }
 .eq-info-label { color: var(--text-muted); } .eq-info-value { font-weight: 500; }
+.eq-extra-row { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 8px 0; border-bottom: 1px solid rgba(148,163,184,0.08); font-size: 13px; }
+.eq-extra-row .tag { background: rgba(232,185,35,0.1); color: var(--accent); padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
 .warranty-section { padding: 0 24px 20px; }
 .warranty-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .warranty-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
@@ -264,6 +266,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
       <button class="filter-btn" onclick="filterEq('Evolution 16')">Evolution 16</button>
       <button class="filter-btn" onclick="filterEq('EasySet')">EasySet</button>
       <button class="filter-btn" onclick="filterEq('Evolution 1')">Evolution 1</button>
+      <button class="filter-btn" onclick="filterEq('IBot')">IBot</button>
     </div>
 
     <div class="equipment-grid" id="equipment-grid"></div>
@@ -335,7 +338,10 @@ const LANG = {
     install: 'Дата установки',
     warranty_until: 'Гарантия до',
     timeline_install: 'установок',
-    eq_unknown: 'Неизвестно'
+    eq_unknown: 'Неизвестно',
+    direction: 'Направление',
+    software: 'Версия ПО',
+    completion: 'Комплектация'
   },
   en: {
     loading: 'Loading data...',
@@ -384,7 +390,10 @@ const LANG = {
     install: 'Installation Date',
     warranty_until: 'Warranty Until',
     timeline_install: 'installations',
-    eq_unknown: 'Unknown'
+    eq_unknown: 'Unknown',
+    direction: 'Direction',
+    software: 'Software Version',
+    completion: 'Completion'
   }
 };
 
@@ -442,13 +451,6 @@ function updateUI() {
     cards[3].querySelector('h3').textContent = t('company_carmet_title');
     cards[3].querySelector('p').textContent = t('company_carmet_desc');
   }
-
-  // Filters
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    if (btn.id !== 'filter-all' && btn.textContent.includes('Evolution')) {
-      // Keep equipment names as is (they are model names)
-    }
-  });
 }
 
 // ========== ФУНКЦИЯ РАСЧЁТА ГАРАНТИИ ==========
@@ -644,6 +646,19 @@ function renderEquipmentCards() {
         const commentsHtml = d.comments && d.comments !== '-' && d.comments !== '?' ? 
             `<div class="eq-comments">💬 ${d.comments}</div>` : '';
 
+        // Дополнительные поля
+        let extraFields = '';
+        if (d.direction) {
+            extraFields += `<span class="tag">${t('direction')}: ${d.direction}</span>`;
+        }
+        if (d.software) {
+            extraFields += `<span class="tag">${t('software')}: ${d.software}</span>`;
+        }
+        if (d.completion && d.equipment === 'Evolution 5') {
+            extraFields += `<span class="tag">${t('completion')}: ${d.completion}</span>`;
+        }
+        const extraHtml = extraFields ? `<div class="eq-extra-row">${extraFields}</div>` : '';
+
         return `<div class="eq-card" style="animation-delay: ${i * 0.05}s">
             <div class="eq-header">
                 <div>
@@ -654,6 +669,7 @@ function renderEquipmentCards() {
             </div>
             <div class="eq-body">
                 <div class="eq-info-row"><span class="eq-info-label">${t('plant')}</span><span class="eq-info-value" style="text-align:right; max-width: 60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${d.plant}</span></div>
+                ${extraHtml}
                 <div class="eq-info-row"><span class="eq-info-label">${t('line')}</span><span class="eq-info-value">${d.line}</span></div>
                 <div class="eq-info-row"><span class="eq-info-label">${t('delivery')}</span><span class="eq-info-value">${d.delivery_date}</span></div>
                 <div class="eq-info-row"><span class="eq-info-label">${t('install')}</span><span class="eq-info-value">${d.install_date}</span></div>
