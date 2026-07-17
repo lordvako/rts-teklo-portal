@@ -31,7 +31,7 @@
         "qty": 1
       }
     ],
-    "comments": "-"
+    "comments": "Не работает вспышка станции считывателя сверху"
   },
   {
     "id": 1002,
@@ -62,39 +62,17 @@
   },
   {
     "id": 1003,
-    "plant": "KAMYSHIN (Verallia), Volgograd region, Russia",
-    "line": "5.0",
-    "equipment": "Evolution 5",
+    "plant": "KAVMINSTEKLO (Verallia), Stavropol region, Russia",
+    "line": "8",
+    "equipment": "IBot",
     "serial": "IRIS-1003",
-    "delivery_date": "02.2022",
-    "install_date": "08.2022",
-    "warranty_end": "08.2023",
-    "warranty_status": "expired",
-    "warranty_percent": 100,
-    "spare_parts": [
-      {
-        "name": "Camera module",
-        "qty": 2,
-        "date": "02.2022"
-      },
-      {
-        "name": "LED lighting kit",
-        "qty": 1,
-        "date": "02.2022"
-      },
-      {
-        "name": "Conveyor belt",
-        "qty": 1,
-        "date": "02.2022"
-      },
-      {
-        "name": "Control panel",
-        "qty": 1,
-        "date": "02.2022"
-      }
-    ],
-    "comments": "-",
-    "year": "2022"
+    "direction": "Правосторонняя",
+    "software": "3",
+    "completion": [],
+    "delivery_date": "02.2026",
+    "install_date": "04.2026",
+    "spare_parts": [],
+    "comments": "-"
   },
   {
     "id": 1004,
