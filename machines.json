@@ -5,30 +5,33 @@
     "line": "1",
     "equipment": "Evolution 5",
     "serial": "IR02-NS2656",
+    "direction": "Правосторонняя",
+    "software": "10.7.6.0",
+    "completion": [
+      "FINISH COMBI",
+      "BASE STRESS",
+      "BASE STRESS COMBI",
+      "LECTOR BOTTOM",
+      "LECTOR TOP",
+      "WIRE EDGE"
+    ],
     "delivery_date": "11.2025",
     "install_date": "06.2026",
-    "warranty_end": "06.2027",
-    "warranty_status": "active",
-    "warranty_percent": 8.3,
     "spare_parts": [
       {
         "name": "Camera module",
-        "qty": 2,
-        "date": "11.2025"
+        "qty": 2
       },
       {
         "name": "Conveyor belt",
-        "qty": 1,
-        "date": "11.2025"
+        "qty": 1
       },
       {
         "name": "Control panel",
-        "qty": 1,
-        "date": "11.2025"
+        "qty": 1
       }
     ],
-    "comments": "-",
-    "year": "2026"
+    "comments": "-"
   },
   {
     "id": 1002,
@@ -36,30 +39,26 @@
     "line": "1",
     "equipment": "Evolution 16",
     "serial": "IR07-NT2515",
+    "direction": "Правосторонняя",
+    "software": "10.7.6.0",
+    "completion": "",
     "delivery_date": "11.2025",
     "install_date": "06.2026",
-    "warranty_end": "06.2027",
-    "warranty_status": "active",
-    "warranty_percent": 8.3,
     "spare_parts": [
       {
         "name": "Camera module",
-        "qty": 2,
-        "date": "11.2025"
+        "qty": 2
       },
       {
         "name": "Conveyor belt",
-        "qty": 1,
-        "date": "11.2025"
+        "qty": 1
       },
       {
         "name": "Control panel",
-        "qty": 1,
-        "date": "11.2025"
+        "qty": 1
       }
     ],
-    "comments": "-",
-    "year": "2026"
+    "comments": "-"
   },
   {
     "id": 1003,
@@ -1218,6 +1217,9 @@
     "line": "8.1.1",
     "equipment": "Evolution 16",
     "serial": "IR07-NT2606",
+    "direction": "Левосторонняя",
+    "software": "10.7.6.0",
+    "completion": "",
     "delivery_date": "10.2025",
     "install_date": "04.2026",
     "spare_parts": [
@@ -1238,6 +1240,9 @@
     "line": "8.1.2",
     "equipment": "Evolution 16",
     "serial": "IR07-NT2607",
+    "direction": "Правосторонняя",
+    "software": "10.7.6.0",
+    "completion": "",
     "delivery_date": "10.2025",
     "install_date": "04.2026",
     "spare_parts": [
@@ -1258,6 +1263,9 @@
     "line": "7.1.1",
     "equipment": "Evolution 16",
     "serial": "IR07-NT2608",
+    "direction": "Левосторонняя",
+    "software": "10.7.6.0",
+    "completion": "",
     "delivery_date": "02.2026",
     "install_date": "04.2026",
     "spare_parts": [
@@ -1278,6 +1286,9 @@
     "line": "7.1.2",
     "equipment": "Evolution 16",
     "serial": "IR07-NT2609",
+    "direction": "Правосторонняя",
+    "software": "10.7.6.0",
+    "completion": "",
     "delivery_date": "02.2026",
     "install_date": "04.2026",
     "spare_parts": [
