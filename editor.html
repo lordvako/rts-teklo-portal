@@ -63,7 +63,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
   z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
 .modal-overlay.show { display: flex; }
-.modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; width: 100%; max-width: 700px;
+.modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; width: 100%; max-width: 750px;
   max-height: 90vh; overflow-y: auto; animation: modalAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes modalAppear { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 .modal-header { padding: 24px 32px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
@@ -164,7 +164,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
       <div class="form-row">
         <div class="form-group">
           <label id="form-equipment-label">Тип оборудования *</label>
-          <select id="form-equipment">
+          <select id="form-equipment" onchange="toggleEquipmentFields()">
             <option value="Evolution 5">Evolution 5</option>
             <option value="Evolution 16">Evolution 16</option>
             <option value="Evolution 12">Evolution 12</option>
@@ -195,6 +195,35 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
         <div class="form-group" id="new-plant-group" style="display:none;">
           <label id="form-new-plant-label">Название нового завода</label>
           <input type="text" id="form-new-plant" placeholder="Название, город, регион">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label id="form-direction-label">Направление</label>
+          <select id="form-direction">
+            <option value="Правосторонняя">Правосторонняя</option>
+            <option value="Левосторонняя">Левосторонняя</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label id="form-software-label">Версия ПО</label>
+          <input type="text" id="form-software" placeholder="v1.0.0">
+        </div>
+      </div>
+      <div class="form-row" id="completion-row" style="display:none;">
+        <div class="form-group full-width">
+          <label id="form-completion-label">Комплектация (для Evolution 5)</label>
+          <select id="form-completion">
+            <option value="FINISH1">FINISH1</option>
+            <option value="FINISH2">FINISH2</option>
+            <option value="FINISH COMBI">FINISH COMBI</option>
+            <option value="BASE">BASE</option>
+            <option value="BASE STRESS">BASE STRESS</option>
+            <option value="BASE STRESS COMBI">BASE STRESS COMBI</option>
+            <option value="LECTOR BOTTOM">LECTOR BOTTOM</option>
+            <option value="LECTOR TOP">LECTOR TOP</option>
+            <option value="WIRE EDGE">WIRE EDGE</option>
+          </select>
         </div>
       </div>
       <div class="form-row">
@@ -251,6 +280,9 @@ const LANG = {
     form_serial: 'Серийный номер *',
     form_plant: 'Завод *',
     form_new_plant: 'Название нового завода',
+    form_direction: 'Направление',
+    form_software: 'Версия ПО',
+    form_completion: 'Комплектация (для Evolution 5)',
     form_line: 'Линия',
     form_year: 'Год установки',
     form_delivery: 'Дата поставки (MM.YYYY)',
@@ -282,7 +314,9 @@ const LANG = {
     status_active: 'Активна',
     status_expired: 'Истекла',
     status_unknown: '?',
-    new_plant_option: '+ Новый завод...'
+    new_plant_option: '+ Новый завод...',
+    direction_left: 'Левосторонняя',
+    direction_right: 'Правосторонняя'
   },
   en: {
     editor_title: '— Data Editor',
@@ -304,6 +338,9 @@ const LANG = {
     form_serial: 'Serial Number *',
     form_plant: 'Plant *',
     form_new_plant: 'New Plant Name',
+    form_direction: 'Direction',
+    form_software: 'Software Version',
+    form_completion: 'Completion (for Evolution 5)',
     form_line: 'Line',
     form_year: 'Installation Year',
     form_delivery: 'Delivery Date (MM.YYYY)',
@@ -335,7 +372,9 @@ const LANG = {
     status_active: 'Active',
     status_expired: 'Expired',
     status_unknown: '?',
-    new_plant_option: '+ New Plant...'
+    new_plant_option: '+ New Plant...',
+    direction_left: 'Left-hand',
+    direction_right: 'Right-hand'
   }
 };
 
@@ -351,6 +390,7 @@ function switchLang(lang) {
   document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
   updateUI();
   renderList();
+  updateDirectionOptions();
 }
 
 function updateUI() {
@@ -370,6 +410,9 @@ function updateUI() {
   document.getElementById('form-serial-label').textContent = t('form_serial');
   document.getElementById('form-plant-label').textContent = t('form_plant');
   document.getElementById('form-new-plant-label').textContent = t('form_new_plant');
+  document.getElementById('form-direction-label').textContent = t('form_direction');
+  document.getElementById('form-software-label').textContent = t('form_software');
+  document.getElementById('form-completion-label').textContent = t('form_completion');
   document.getElementById('form-line-label').textContent = t('form_line');
   document.getElementById('form-year-label').textContent = t('form_year');
   document.getElementById('form-delivery-label').textContent = t('form_delivery');
@@ -384,6 +427,29 @@ function updateUI() {
   const plantSelect = document.getElementById('form-plant');
   const newOption = plantSelect.querySelector('option[value="NEW"]');
   if (newOption) newOption.textContent = t('new_plant_option');
+  
+  updateDirectionOptions();
+}
+
+function updateDirectionOptions() {
+  const dirSelect = document.getElementById('form-direction');
+  if (dirSelect) {
+    const options = dirSelect.options;
+    if (options.length >= 2) {
+      options[0].textContent = t('direction_right');
+      options[1].textContent = t('direction_left');
+    }
+  }
+}
+
+function toggleEquipmentFields() {
+  const eq = document.getElementById('form-equipment').value;
+  const completionRow = document.getElementById('completion-row');
+  if (eq === 'Evolution 5') {
+    completionRow.style.display = 'block';
+  } else {
+    completionRow.style.display = 'none';
+  }
 }
 
 function loadFromFile() {
@@ -482,12 +548,16 @@ function openAddModal() {
   document.getElementById('form-plant').value = 'KAMYSHIN (Verallia), Volgograd region, Russia';
   document.getElementById('new-plant-group').style.display = 'none';
   document.getElementById('form-new-plant').value = '';
+  document.getElementById('form-direction').value = 'Правосторонняя';
+  document.getElementById('form-software').value = '';
+  document.getElementById('form-completion').value = 'FINISH1';
   document.getElementById('form-line').value = '';
   document.getElementById('form-year').value = '2025';
   document.getElementById('form-delivery').value = '';
   document.getElementById('form-install').value = '';
   document.getElementById('form-comments').value = '';
   document.getElementById('spare-list').innerHTML = '';
+  toggleEquipmentFields();
   addSpareRow();
   document.getElementById('modal-overlay').classList.add('show');
   updateUI();
@@ -509,12 +579,17 @@ function openEditModal(id) {
   if (!found && m.plant) { plantSelect.value = 'NEW'; document.getElementById('new-plant-group').style.display = 'block'; document.getElementById('form-new-plant').value = m.plant; }
   else { document.getElementById('new-plant-group').style.display = 'none'; }
   
+  document.getElementById('form-direction').value = m.direction || 'Правосторонняя';
+  document.getElementById('form-software').value = m.software || '';
+  document.getElementById('form-completion').value = m.completion || 'FINISH1';
   document.getElementById('form-line').value = (m.line && m.line !== 'N/A') ? m.line : '';
   const year = (m.install_date && m.install_date !== 'Unknown') ? m.install_date.split('.')[1] : '';
   document.getElementById('form-year').value = year || '';
   document.getElementById('form-delivery').value = (m.delivery_date && m.delivery_date !== 'Unknown') ? m.delivery_date : '';
   document.getElementById('form-install').value = (m.install_date && m.install_date !== 'Unknown') ? m.install_date : '';
   document.getElementById('form-comments').value = (m.comments && m.comments !== '-') ? m.comments : '';
+  
+  toggleEquipmentFields();
   
   const spareList = document.getElementById('spare-list');
   spareList.innerHTML = '';
@@ -544,6 +619,9 @@ function saveMachine() {
   const serial = document.getElementById('form-serial').value.trim();
   let plant = document.getElementById('form-plant').value;
   if (plant === 'NEW') plant = document.getElementById('form-new-plant').value.trim();
+  const direction = document.getElementById('form-direction').value;
+  const software = document.getElementById('form-software').value.trim();
+  const completion = document.getElementById('form-completion').value;
   const line = document.getElementById('form-line').value.trim() || 'N/A';
   const delivery = document.getElementById('form-delivery').value.trim() || 'Unknown';
   const install = document.getElementById('form-install').value.trim() || 'Unknown';
@@ -564,6 +642,9 @@ function saveMachine() {
     line,
     equipment,
     serial,
+    direction: direction || 'Правосторонняя',
+    software: software || '',
+    completion: equipment === 'Evolution 5' ? completion : '',
     delivery_date: delivery,
     install_date: install,
     spare_parts: spareParts,
