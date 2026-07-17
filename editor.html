@@ -15,10 +15,11 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text); min-height: 100vh; }
 .header { background: rgba(15,23,42,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 16px 32px;
-  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 12px; }
+.header-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .header h1 { font-size: 20px; font-weight: 700; }
 .header h1 span { color: var(--accent); }
-.header-actions { display: flex; gap: 12px; }
+.header-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 .action-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600;
   cursor: pointer; font-family: inherit; transition: all 0.3s; border: none; }
 .action-btn.primary { background: linear-gradient(135deg, var(--accent), #d4a017); color: var(--bg-dark); }
@@ -27,6 +28,11 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 .action-btn.secondary:hover { background: rgba(255,255,255,0.1); }
 .action-btn.danger { background: var(--danger); color: white; }
 .action-btn.danger:hover { background: #dc2626; }
+.lang-switch { display: flex; gap: 4px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 10px; padding: 4px; }
+.lang-btn { padding: 6px 14px; border: none; border-radius: 7px; cursor: pointer; font-size: 12px; font-weight: 600;
+  font-family: inherit; transition: all 0.3s; background: transparent; color: var(--text-muted); }
+.lang-btn:hover { color: var(--text); }
+.lang-btn.active { background: var(--primary); color: white; box-shadow: 0 2px 8px rgba(26,58,92,0.4); }
 .container { max-width: 1400px; margin: 0 auto; padding: 24px 32px; }
 .section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
 .section-title::before { content: ''; width: 4px; height: 24px; background: linear-gradient(180deg, var(--accent), var(--primary)); border-radius: 2px; }
@@ -81,6 +87,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 .form-group textarea { min-height: 60px; resize: vertical; }
 .form-group.full-width { grid-column: 1 / -1; }
 .spare-editor { margin-top: 8px; }
+.spare-editor .spare-label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: block; }
 .spare-row { display: grid; grid-template-columns: 1fr 80px 36px; gap: 8px; margin-bottom: 8px; align-items: center; }
 .spare-row input { padding: 10px 12px; background: rgba(15,23,42,0.6); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: inherit; font-size: 13px; }
 .spare-row input:focus { border-color: var(--accent); outline: none; }
@@ -106,7 +113,9 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 @media (max-width: 768px) {
   .machine-row { grid-template-columns: 40px 1fr 80px 60px; }
   .machine-row .cell:nth-child(4), .machine-row .cell:nth-child(5), .machine-row .cell:nth-child(6) { display: none; }
-  .header { padding: 12px 16px; }
+  .header { padding: 12px 16px; flex-direction: column; align-items: stretch; }
+  .header-left { justify-content: center; }
+  .header-actions { justify-content: center; }
   .container { padding: 16px; }
   .form-row { grid-template-columns: 1fr; }
 }
@@ -114,28 +123,34 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 </head>
 <body>
 <div class="header">
-  <h1>RTS TEKLO <span>— Редактор данных</span></h1>
+  <div class="header-left">
+    <h1>RTS TEKLO <span id="editor-title">— Редактор данных</span></h1>
+  </div>
   <div class="header-actions">
-    <button class="action-btn secondary" onclick="loadFromFile()">📁 Загрузить JSON</button>
-    <button class="action-btn primary" onclick="downloadJSON()">💾 Скачать JSON</button>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="ru" onclick="switchLang('ru')">РУ</button>
+      <button class="lang-btn" data-lang="en" onclick="switchLang('en')">EN</button>
+    </div>
+    <button class="action-btn secondary" id="load-btn" onclick="loadFromFile()">📁 Загрузить JSON</button>
+    <button class="action-btn primary" id="download-btn" onclick="downloadJSON()">💾 Скачать JSON</button>
   </div>
 </div>
 
 <div class="container">
-  <div class="instructions">
-    <h3>📋 Как редактировать данные:</h3>
-    <ol>
+  <div class="instructions" id="instructions">
+    <h3 id="instructions-title">📋 Как редактировать данные:</h3>
+    <ol id="instructions-list">
       <li>Нажмите <b>"Загрузить JSON"</b> и выберите файл <code>machines.json</code> из вашего репозитория</li>
       <li>Редактируйте машины (✎) или добавьте новую (+)</li>
       <li>Нажмите <b>"Скачать JSON"</b> — получите обновлённый файл</li>
-     <li>Загрузите этот файл на GitHub в корень репозитория (рядом с index.html)</li>
+      <li>Загрузите этот файл на GitHub в корень репозитория (рядом с index.html)</li>
       <li>Все пользователи увидят изменения при следующем заходе!</li>
     </ol>
   </div>
 
-  <div class="section-title">Список машин</div>
+  <div class="section-title" id="list-title">Список машин</div>
   <div class="machine-list" id="machine-list"></div>
-  <button class="add-btn" onclick="openAddModal()">+ Добавить новую машину</button>
+  <button class="add-btn" id="add-btn" onclick="openAddModal()">+ Добавить новую машину</button>
 </div>
 
 <div class="modal-overlay" id="modal-overlay">
@@ -148,7 +163,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
       <input type="hidden" id="edit-id">
       <div class="form-row">
         <div class="form-group">
-          <label>Тип оборудования *</label>
+          <label id="form-equipment-label">Тип оборудования *</label>
           <select id="form-equipment">
             <option value="Evolution 5">Evolution 5</option>
             <option value="Evolution 16">Evolution 16</option>
@@ -159,13 +174,13 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
           </select>
         </div>
         <div class="form-group">
-          <label>Серийный номер *</label>
+          <label id="form-serial-label">Серийный номер *</label>
           <input type="text" id="form-serial" placeholder="IRIS-XXXX">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label>Завод *</label>
+          <label id="form-plant-label">Завод *</label>
           <select id="form-plant" onchange="checkNewPlant()">
             <option value="KAMYSHIN (Verallia), Volgograd region, Russia">KAMYSHIN (Verallia)</option>
             <option value="KAVMINSTEKLO (Verallia), Stavropol region, Russia">KAVMINSTEKLO (Verallia)</option>
@@ -178,30 +193,30 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
           </select>
         </div>
         <div class="form-group" id="new-plant-group" style="display:none;">
-          <label>Название нового завода</label>
+          <label id="form-new-plant-label">Название нового завода</label>
           <input type="text" id="form-new-plant" placeholder="Название, город, регион">
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label>Линия</label><input type="text" id="form-line" placeholder="3, 731, 2.1"></div>
-        <div class="form-group"><label>Год установки</label><input type="number" id="form-year" placeholder="2025" min="2000" max="2030"></div>
+        <div class="form-group"><label id="form-line-label">Линия</label><input type="text" id="form-line" placeholder="3, 731, 2.1"></div>
+        <div class="form-group"><label id="form-year-label">Год установки</label><input type="number" id="form-year" placeholder="2025" min="2000" max="2030"></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label>Дата поставки (MM.YYYY)</label><input type="text" id="form-delivery" placeholder="01.2025"></div>
-        <div class="form-group"><label>Дата установки (MM.YYYY)</label><input type="text" id="form-install" placeholder="03.2025"></div>
+        <div class="form-group"><label id="form-delivery-label">Дата поставки (MM.YYYY)</label><input type="text" id="form-delivery" placeholder="01.2025"></div>
+        <div class="form-group"><label id="form-install-label">Дата установки (MM.YYYY)</label><input type="text" id="form-install" placeholder="03.2025"></div>
       </div>
       <div class="form-row">
-        <div class="form-group full-width"><label>Комментарии</label><textarea id="form-comments" placeholder="Дополнительная информация..."></textarea></div>
+        <div class="form-group full-width"><label id="form-comments-label">Комментарии</label><textarea id="form-comments" placeholder="Дополнительная информация..."></textarea></div>
       </div>
       <div class="spare-editor">
-        <label style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:block;">Запасные части</label>
+        <label class="spare-label" id="spare-label">Запасные части</label>
         <div id="spare-list"></div>
-        <button class="add-spare-btn" onclick="addSpareRow()">+ Добавить запчасть</button>
+        <button class="add-spare-btn" id="add-spare-btn" onclick="addSpareRow()">+ Добавить запчасть</button>
       </div>
     </div>
     <div class="modal-footer">
-      <button class="modal-btn secondary" onclick="closeModal()">Отмена</button>
-      <button class="modal-btn primary" onclick="saveMachine()">Сохранить</button>
+      <button class="modal-btn secondary" id="modal-cancel" onclick="closeModal()">Отмена</button>
+      <button class="modal-btn primary" id="modal-save" onclick="saveMachine()">Сохранить</button>
     </div>
   </div>
 </div>
@@ -212,6 +227,164 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 let machines = [];
 let nextId = 2000;
 let deleteId = null;
+let currentLang = 'ru';
+
+// ========== ПЕРЕВОДЫ ==========
+const LANG = {
+  ru: {
+    editor_title: '— Редактор данных',
+    load_btn: '📁 Загрузить JSON',
+    download_btn: '💾 Скачать JSON',
+    instructions_title: '📋 Как редактировать данные:',
+    instructions_list: [
+      'Нажмите <b>"Загрузить JSON"</b> и выберите файл <code>machines.json</code> из вашего репозитория',
+      'Редактируйте машины (✎) или добавьте новую (+)',
+      'Нажмите <b>"Скачать JSON"</b> — получите обновлённый файл',
+      'Загрузите этот файл на GitHub в корень репозитория (рядом с index.html)',
+      'Все пользователи увидят изменения при следующем заходе!'
+    ],
+    list_title: 'Список машин',
+    add_btn: '+ Добавить новую машину',
+    modal_add_title: 'Добавить машину',
+    modal_edit_title: 'Редактировать машину #',
+    form_equipment: 'Тип оборудования *',
+    form_serial: 'Серийный номер *',
+    form_plant: 'Завод *',
+    form_new_plant: 'Название нового завода',
+    form_line: 'Линия',
+    form_year: 'Год установки',
+    form_delivery: 'Дата поставки (MM.YYYY)',
+    form_install: 'Дата установки (MM.YYYY)',
+    form_comments: 'Комментарии',
+    spare_label: 'Запасные части',
+    add_spare: '+ Добавить запчасть',
+    modal_cancel: 'Отмена',
+    modal_save: 'Сохранить',
+    toast_loaded: 'Данные загружены: ',
+    toast_machines: ' машин',
+    toast_loaded_error: 'Ошибка чтения JSON: ',
+    toast_updated: 'Машина обновлена',
+    toast_added: 'Машина добавлена',
+    toast_deleted: 'Машина удалена',
+    toast_no_data: 'Нет данных для сохранения',
+    toast_downloaded: 'JSON скачан! Загрузите его на GitHub.',
+    toast_fill_fields: 'Заполните обязательные поля!',
+    toast_start: 'Загрузите JSON-файл или начните с нуля',
+    confirm_delete: 'Удалить машину #',
+    header_id: 'ID',
+    header_plant: 'Завод',
+    header_type: 'Тип',
+    header_serial: 'Серийный',
+    header_year: 'Год',
+    header_line: 'Линия',
+    header_status: 'Статус',
+    header_actions: 'Действия',
+    status_active: 'Активна',
+    status_expired: 'Истекла',
+    status_unknown: '?',
+    new_plant_option: '+ Новый завод...'
+  },
+  en: {
+    editor_title: '— Data Editor',
+    load_btn: '📁 Load JSON',
+    download_btn: '💾 Download JSON',
+    instructions_title: '📋 How to edit data:',
+    instructions_list: [
+      'Click <b>"Load JSON"</b> and select <code>machines.json</code> from your repository',
+      'Edit machines (✎) or add a new one (+)',
+      'Click <b>"Download JSON"</b> — get the updated file',
+      'Upload this file to GitHub in the root folder (next to index.html)',
+      'All users will see the changes on their next visit!'
+    ],
+    list_title: 'Machine List',
+    add_btn: '+ Add New Machine',
+    modal_add_title: 'Add Machine',
+    modal_edit_title: 'Edit Machine #',
+    form_equipment: 'Equipment Type *',
+    form_serial: 'Serial Number *',
+    form_plant: 'Plant *',
+    form_new_plant: 'New Plant Name',
+    form_line: 'Line',
+    form_year: 'Installation Year',
+    form_delivery: 'Delivery Date (MM.YYYY)',
+    form_install: 'Installation Date (MM.YYYY)',
+    form_comments: 'Comments',
+    spare_label: 'Spare Parts',
+    add_spare: '+ Add Spare Part',
+    modal_cancel: 'Cancel',
+    modal_save: 'Save',
+    toast_loaded: 'Data loaded: ',
+    toast_machines: ' machines',
+    toast_loaded_error: 'JSON read error: ',
+    toast_updated: 'Machine updated',
+    toast_added: 'Machine added',
+    toast_deleted: 'Machine deleted',
+    toast_no_data: 'No data to save',
+    toast_downloaded: 'JSON downloaded! Upload it to GitHub.',
+    toast_fill_fields: 'Please fill in all required fields!',
+    toast_start: 'Load JSON file or start from scratch',
+    confirm_delete: 'Delete machine #',
+    header_id: 'ID',
+    header_plant: 'Plant',
+    header_type: 'Type',
+    header_serial: 'Serial',
+    header_year: 'Year',
+    header_line: 'Line',
+    header_status: 'Status',
+    header_actions: 'Actions',
+    status_active: 'Active',
+    status_expired: 'Expired',
+    status_unknown: '?',
+    new_plant_option: '+ New Plant...'
+  }
+};
+
+function t(key) {
+  return LANG[currentLang]?.[key] || key;
+}
+
+function switchLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+  updateUI();
+  renderList();
+}
+
+function updateUI() {
+  document.getElementById('editor-title').textContent = t('editor_title');
+  document.getElementById('load-btn').innerHTML = t('load_btn');
+  document.getElementById('download-btn').innerHTML = t('download_btn');
+  document.getElementById('instructions-title').textContent = t('instructions_title');
+  const list = document.getElementById('instructions-list');
+  const items = t('instructions_list');
+  if (Array.isArray(items)) {
+    list.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+  }
+  document.getElementById('list-title').textContent = t('list_title');
+  document.getElementById('add-btn').textContent = t('add_btn');
+  
+  document.getElementById('form-equipment-label').textContent = t('form_equipment');
+  document.getElementById('form-serial-label').textContent = t('form_serial');
+  document.getElementById('form-plant-label').textContent = t('form_plant');
+  document.getElementById('form-new-plant-label').textContent = t('form_new_plant');
+  document.getElementById('form-line-label').textContent = t('form_line');
+  document.getElementById('form-year-label').textContent = t('form_year');
+  document.getElementById('form-delivery-label').textContent = t('form_delivery');
+  document.getElementById('form-install-label').textContent = t('form_install');
+  document.getElementById('form-comments-label').textContent = t('form_comments');
+  document.getElementById('spare-label').textContent = t('spare_label');
+  document.getElementById('add-spare-btn').textContent = t('add_spare');
+  document.getElementById('modal-cancel').textContent = t('modal_cancel');
+  document.getElementById('modal-save').textContent = t('modal_save');
+  
+  // New plant option
+  const plantSelect = document.getElementById('form-plant');
+  const newOption = plantSelect.querySelector('option[value="NEW"]');
+  if (newOption) newOption.textContent = t('new_plant_option');
+}
 
 function loadFromFile() {
   document.getElementById('file-input').click();
@@ -227,9 +400,9 @@ function handleFileSelect(event) {
       const maxId = Math.max(...machines.map(m => m.id), 0);
       nextId = maxId + 1;
       renderList();
-      showToast('Данные загружены: ' + machines.length + ' машин', 'success');
+      showToast(t('toast_loaded') + machines.length + t('toast_machines'), 'success');
     } catch (err) {
-      showToast('Ошибка чтения JSON: ' + err.message, 'error');
+      showToast(t('toast_loaded_error') + err.message, 'error');
     }
   };
   reader.readAsText(file);
@@ -266,20 +439,20 @@ function renderList() {
   const list = document.getElementById('machine-list');
   list.innerHTML = `
     <div class="machine-row header-row">
-      <div class="cell">ID</div>
-      <div class="cell">Завод</div>
-      <div class="cell">Тип</div>
-      <div class="cell">Серийный</div>
-      <div class="cell">Год</div>
-      <div class="cell">Линия</div>
-      <div class="cell">Статус</div>
-      <div class="cell" style="text-align:right;">Действия</div>
+      <div class="cell">${t('header_id')}</div>
+      <div class="cell">${t('header_plant')}</div>
+      <div class="cell">${t('header_type')}</div>
+      <div class="cell">${t('header_serial')}</div>
+      <div class="cell">${t('header_year')}</div>
+      <div class="cell">${t('header_line')}</div>
+      <div class="cell">${t('header_status')}</div>
+      <div class="cell" style="text-align:right;">${t('header_actions')}</div>
     </div>
   `;
   machines.forEach(m => {
     const warranty = calculateWarrantyStatus(m.install_date);
     const statusClass = warranty.status === 'active' ? 'badge-active' : warranty.status === 'expired' ? 'badge-expired' : 'badge-unknown';
-    const statusText = warranty.status === 'active' ? 'Активна' : warranty.status === 'expired' ? 'Истекла' : '?';
+    const statusText = warranty.status === 'active' ? t('status_active') : warranty.status === 'expired' ? t('status_expired') : t('status_unknown');
     const shortPlant = m.plant ? m.plant.split(',')[0] : '?';
     const year = m.install_date && m.install_date !== 'Unknown' ? m.install_date.split('.')[1] : '?';
     const row = document.createElement('div');
@@ -293,8 +466,8 @@ function renderList() {
       <div class="cell">${m.line || 'N/A'}</div>
       <div class="cell status"><span class="badge ${statusClass}">${statusText}</span></div>
       <div class="cell actions">
-        <button class="edit-btn" onclick="openEditModal(${m.id})" title="Редактировать">✎</button>
-        <button class="del-btn" onclick="deleteMachine(${m.id})" title="Удалить">×</button>
+        <button class="edit-btn" onclick="openEditModal(${m.id})" title="Edit">✎</button>
+        <button class="del-btn" onclick="deleteMachine(${m.id})" title="Delete">×</button>
       </div>
     `;
     list.appendChild(row);
@@ -302,7 +475,7 @@ function renderList() {
 }
 
 function openAddModal() {
-  document.getElementById('modal-title').textContent = 'Добавить машину';
+  document.getElementById('modal-title').textContent = t('modal_add_title');
   document.getElementById('edit-id').value = '';
   document.getElementById('form-equipment').value = 'Evolution 5';
   document.getElementById('form-serial').value = '';
@@ -317,12 +490,13 @@ function openAddModal() {
   document.getElementById('spare-list').innerHTML = '';
   addSpareRow();
   document.getElementById('modal-overlay').classList.add('show');
+  updateUI();
 }
 
 function openEditModal(id) {
   const m = machines.find(x => x.id === id);
   if (!m) return;
-  document.getElementById('modal-title').textContent = 'Редактировать машину #' + id;
+  document.getElementById('modal-title').textContent = t('modal_edit_title') + id;
   document.getElementById('edit-id').value = id;
   document.getElementById('form-equipment').value = m.equipment || 'Evolution 5';
   document.getElementById('form-serial').value = m.serial || '';
@@ -347,6 +521,7 @@ function openEditModal(id) {
   (m.spare_parts || []).forEach(sp => addSpareRow(sp.name, sp.qty));
   if (spareList.children.length === 0) addSpareRow();
   document.getElementById('modal-overlay').classList.add('show');
+  updateUI();
 }
 
 function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
@@ -359,7 +534,7 @@ function addSpareRow(name = '', qty = 1) {
   const container = document.getElementById('spare-list');
   const row = document.createElement('div');
   row.className = 'spare-row';
-  row.innerHTML = `<input type="text" placeholder="Название" value="${name}"><input type="number" placeholder="Кол-во" value="${qty}" min="1"><button onclick="this.parentElement.remove()">×</button>`;
+  row.innerHTML = `<input type="text" placeholder="${currentLang === 'ru' ? 'Название' : 'Name'}" value="${name}"><input type="number" placeholder="${currentLang === 'ru' ? 'Кол-во' : 'Qty'}" value="${qty}" min="1"><button onclick="this.parentElement.remove()">×</button>`;
   container.appendChild(row);
 }
 
@@ -374,7 +549,7 @@ function saveMachine() {
   const install = document.getElementById('form-install').value.trim() || 'Unknown';
   const comments = document.getElementById('form-comments').value.trim() || '-';
 
-  if (!equipment || !serial || !plant) { showToast('Заполните обязательные поля!', 'error'); return; }
+  if (!equipment || !serial || !plant) { showToast(t('toast_fill_fields'), 'error'); return; }
 
   const spareParts = [];
   document.querySelectorAll('.spare-row').forEach(row => {
@@ -397,24 +572,24 @@ function saveMachine() {
 
   if (editId) {
     const idx = machines.findIndex(m => m.id === parseInt(editId));
-    if (idx !== -1) { machines[idx] = machineData; showToast('Машина обновлена', 'success'); }
+    if (idx !== -1) { machines[idx] = machineData; showToast(t('toast_updated'), 'success'); }
   } else {
     machines.push(machineData);
-    showToast('Машина добавлена', 'success');
+    showToast(t('toast_added'), 'success');
   }
   renderList();
   closeModal();
 }
 
 function deleteMachine(id) {
-  if (!confirm('Удалить машину #' + id + '?')) return;
+  if (!confirm(t('confirm_delete') + id + '?')) return;
   machines = machines.filter(m => m.id !== id);
   renderList();
-  showToast('Машина удалена', 'success');
+  showToast(t('toast_deleted'), 'success');
 }
 
 function downloadJSON() {
-  if (machines.length === 0) { showToast('Нет данных для сохранения', 'error'); return; }
+  if (machines.length === 0) { showToast(t('toast_no_data'), 'error'); return; }
   const dataStr = JSON.stringify(machines, null, 2);
   const blob = new Blob([dataStr], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -423,7 +598,7 @@ function downloadJSON() {
   a.download = 'machines.json';
   a.click();
   URL.revokeObjectURL(url);
-  showToast('JSON скачан! Загрузите его на GitHub.', 'success');
+  showToast(t('toast_downloaded'), 'success');
 }
 
 function showToast(message, type = 'info') {
@@ -437,7 +612,8 @@ function showToast(message, type = 'info') {
 }
 
 window.addEventListener('load', () => {
-  showToast('Загрузите JSON-файл или начните с нуля', 'info');
+  updateUI();
+  showToast(t('toast_start'), 'info');
 });
 </script>
 </body>
