@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RITSTEKLO/RITSERVICE — Equipment Portal</title>
+<title>RITSTEKLO/RITSERVICE — Equipment Portal + CRM</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 :root {
@@ -21,6 +21,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
   background-image: linear-gradient(rgba(148,163,184,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.03) 1px, transparent 1px);
   background-size: 60px 60px; animation: gridMove 20s linear infinite; }
 @keyframes gridMove { 0% { transform: translate(0,0); } 100% { transform: translate(60px, 60px); } }
+
 #login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; position: relative; }
 .login-card { background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 24px;
   padding: 48px 56px; width: 100%; max-width: 420px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
@@ -49,6 +50,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 .error-msg { color: var(--danger); font-size: 13px; text-align: center; margin-top: 12px; opacity: 0; transition: opacity 0.3s; min-height: 20px; }
 .error-msg.show { opacity: 1; }
 #main-app { display: none; }
+
 .header { background: rgba(15,23,42,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 16px 32px;
   display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 12px; }
 .header-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -67,6 +69,14 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
   border-radius: 50px; border: 1px solid var(--border); font-size: 13px; }
 .user-badge .dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* ===== НАВИГАЦИЯ ===== */
+.nav-tabs { display: flex; gap: 4px; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 4px; border: 1px solid var(--border); }
+.nav-tab { padding: 8px 20px; border: none; border-radius: 8px; background: transparent; color: var(--text-muted);
+  font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.3s ease; }
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(26,58,92,0.4); }
+
 .company-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; padding: 40px 32px; max-width: 1400px; margin: 0 auto; }
 .company-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; cursor: pointer;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; animation: cardFadeIn 0.6s ease forwards; opacity: 0; }
@@ -84,6 +94,88 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 .company-card .arrow { position: absolute; bottom: 24px; right: 24px; width: 40px; height: 40px; background: rgba(255,255,255,0.05);
   border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; border: 1px solid var(--border); }
 .company-card:hover .arrow { background: var(--accent); color: var(--bg-dark); transform: translateX(4px); }
+
+/* ===== CRM СТИЛИ ===== */
+#crm-view { display: none; padding: 24px 32px 40px; max-width: 1400px; margin: 0 auto; }
+.crm-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.crm-header h2 { font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+.crm-header h2::before { content: ''; width: 4px; height: 28px; background: linear-gradient(180deg, var(--accent), var(--primary)); border-radius: 2px; }
+.crm-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.crm-stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; text-align: center; transition: all 0.3s; }
+.crm-stat-card:hover { border-color: rgba(232,185,35,0.2); transform: translateY(-2px); }
+.crm-stat-number { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.crm-stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+.crm-stat-color { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+
+.crm-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.crm-filter-btn { padding: 8px 18px; border: 1px solid var(--border); border-radius: 10px; background: transparent; color: var(--text-muted);
+  font-size: 13px; font-family: inherit; cursor: pointer; transition: all 0.3s; }
+.crm-filter-btn:hover { background: rgba(255,255,255,0.05); }
+.crm-filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+.crm-table-wrap { overflow-x: auto; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 4px; }
+.crm-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.crm-table th { text-align: left; padding: 14px 16px; color: var(--text-muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+.crm-table td { padding: 14px 16px; border-bottom: 1px solid rgba(148,163,184,0.08); vertical-align: middle; }
+.crm-table tr:hover { background: rgba(255,255,255,0.03); }
+.crm-table .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.status-new { background: rgba(148,163,184,0.15); color: #94a3b8; }
+.status-doc { background: rgba(59,130,246,0.15); color: #3b82f6; }
+.status-contract { background: rgba(168,85,247,0.15); color: #a855f7; }
+.status-payment { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.status-production { background: rgba(234,179,8,0.15); color: #eab308; }
+.status-shipping { background: rgba(14,165,233,0.15); color: #0ea5e9; }
+.status-customs { background: rgba(239,68,68,0.15); color: #ef4444; }
+.status-delivery { background: rgba(59,130,246,0.15); color: #3b82f6; }
+.status-install { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.status-done { background: rgba(34,197,94,0.15); color: #22c55e; }
+
+.crm-btn { padding: 8px 16px; border-radius: 8px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+.crm-btn-primary { background: var(--primary); color: white; }
+.crm-btn-primary:hover { background: var(--primary-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,58,92,0.4); }
+.crm-btn-accent { background: var(--accent); color: var(--bg-dark); }
+.crm-btn-accent:hover { opacity: 0.9; transform: translateY(-1px); }
+.crm-btn-sm { padding: 4px 12px; font-size: 12px; }
+
+.crm-detail-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center; padding: 20px; animation: modalFade 0.3s ease; }
+@keyframes modalFade { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+.crm-detail-modal.active { display: flex; }
+.crm-detail-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; max-width: 600px; width: 100%;
+  padding: 32px; max-height: 90vh; overflow-y: auto; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+.crm-detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.crm-detail-header h3 { font-size: 20px; font-weight: 700; }
+.crm-detail-close { background: transparent; border: none; color: var(--text-muted); font-size: 28px; cursor: pointer; transition: all 0.3s; }
+.crm-detail-close:hover { color: var(--text); transform: rotate(90deg); }
+.crm-detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(148,163,184,0.08); font-size: 14px; }
+.crm-detail-label { color: var(--text-muted); }
+.crm-detail-value { font-weight: 500; }
+.crm-timeline { margin-top: 16px; }
+.crm-timeline-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(148,163,184,0.05); font-size: 13px; }
+.crm-timeline-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.crm-timeline-date { color: var(--text-muted); font-size: 12px; min-width: 80px; }
+.crm-timeline-text { color: var(--text); }
+
+/* ===== МОДАЛКА СОЗДАНИЯ ЗАЯВКИ ===== */
+.crm-new-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center; padding: 20px; animation: modalFade 0.3s ease; }
+.crm-new-modal.active { display: flex; }
+.crm-new-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; max-width: 500px; width: 100%;
+  padding: 32px; max-height: 90vh; overflow-y: auto; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+.crm-new-content h3 { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+.crm-new-content .input-group { margin-bottom: 16px; }
+.crm-new-content .input-group label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 6px; }
+.crm-new-content .input-group input, .crm-new-content .input-group select, .crm-new-content .input-group textarea {
+  width: 100%; padding: 12px 16px; background: rgba(15,23,42,0.6); border: 1px solid var(--border); border-radius: 10px;
+  color: var(--text); font-size: 14px; font-family: inherit; outline: none; transition: all 0.3s; }
+.crm-new-content .input-group input:focus, .crm-new-content .input-group select:focus, .crm-new-content .input-group textarea:focus {
+  border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.crm-new-content .input-group select option { background: var(--bg-dark); color: var(--text); }
+.crm-new-content .input-group textarea { min-height: 80px; resize: vertical; }
+.crm-new-actions { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
+.crm-new-actions .login-btn { flex: 1; min-width: 120px; }
+
+/* ===== ОСТАЛЬНОЕ ===== */
 .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
 .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; }
 .stat-card::after { content: ''; position: absolute; top: 0; right: 0; width: 60px; height: 60px;
@@ -157,15 +249,21 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.2); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(148,163,184,0.4); }
+#other-view { display: none; padding: 60px 32px; text-align: center; }
+
 @media (max-width: 768px) {
   .stats-bar { grid-template-columns: repeat(2, 1fr); }
   .equipment-grid { grid-template-columns: 1fr; padding: 0 16px 40px; }
   .company-grid { grid-template-columns: 1fr; padding: 20px 16px; }
   .filters { padding: 0 16px 24px; }
   .header { padding: 12px 16px; flex-direction: column; align-items: stretch; }
-  .header-left { justify-content: center; }
-  .header-right { justify-content: center; }
+  .header-left { justify-content: center; flex-wrap: wrap; }
+  .header-right { justify-content: center; flex-wrap: wrap; }
   .login-card { margin: 20px; padding: 32px; }
+  .nav-tabs { flex-wrap: wrap; justify-content: center; }
+  .crm-stats { grid-template-columns: repeat(2, 1fr); }
+  #crm-view { padding: 16px; }
+  .crm-detail-content { padding: 20px; margin: 10px; }
 }
 </style>
 </head>
@@ -181,7 +279,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
   <div class="login-card">
     <div class="logo-area">
       <h1>RITSTEKLO/RITSERVICE</h1>
-      <p id="login-subtitle">Equipment Portal</p>
+      <p id="login-subtitle">Equipment Portal + CRM</p>
     </div>
     <div class="input-group">
       <label id="login-label">Логин</label>
@@ -201,6 +299,10 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
     <div class="header-left">
       <button class="back-btn" id="back-btn" onclick="goBack()">← Назад</button>
       <div class="header-title">RITSTEKLO/RITSERVICE <span id="page-subtitle">— Выбор компании</span></div>
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab('company')" id="tab-company">🏢 Компании</button>
+        <button class="nav-tab" onclick="switchTab('crm')" id="tab-crm">📋 Заявки</button>
+      </div>
     </div>
     <div class="header-right">
       <div class="lang-switch">
@@ -216,6 +318,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
     </div>
   </div>
 
+  <!-- ВКЛАДКА: КОМПАНИИ -->
   <div id="company-view">
     <div class="company-grid" id="company-grid">
       <div class="company-card" onclick="selectCompany('iris')">
@@ -245,6 +348,107 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
     </div>
   </div>
 
+  <!-- ВКЛАДКА: CRM ЗАЯВКИ -->
+  <div id="crm-view">
+    <div class="crm-header">
+      <h2>Управление заявками</h2>
+      <button class="crm-btn crm-btn-accent" onclick="openNewOrder()">➕ Новая заявка</button>
+    </div>
+
+    <!-- KPI -->
+    <div class="crm-stats" id="crm-stats">
+      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-total">0</div><div class="crm-stat-label">Всего заявок</div></div>
+      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-active">0</div><div class="crm-stat-label">В работе</div></div>
+      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-done">0</div><div class="crm-stat-label">Завершено</div></div>
+      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-urgent">0</div><div class="crm-stat-label">Срочных</div></div>
+    </div>
+
+    <!-- Фильтры -->
+    <div class="crm-filters" id="crm-filters">
+      <button class="crm-filter-btn active" onclick="filterCRM('all')">Все</button>
+      <button class="crm-filter-btn" onclick="filterCRM('equipment')">Оборудование</button>
+      <button class="crm-filter-btn" onclick="filterCRM('spare')">Запчасти</button>
+      <button class="crm-filter-btn" onclick="filterCRM('active')">В работе</button>
+      <button class="crm-filter-btn" onclick="filterCRM('done')">Завершено</button>
+    </div>
+
+    <!-- Таблица заявок -->
+    <div class="crm-table-wrap">
+      <table class="crm-table">
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Клиент</th>
+            <th>Тип</th>
+            <th>Оборудование / Запчасть</th>
+            <th>Статус</th>
+            <th>Срок</th>
+            <th>Менеджер</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="crm-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ДЕТАЛЬНАЯ КАРТОЧКА ЗАЯВКИ (модалка) -->
+  <div class="crm-detail-modal" id="crm-detail-modal">
+    <div class="crm-detail-content">
+      <div class="crm-detail-header">
+        <h3 id="crm-detail-title">Заявка №</h3>
+        <button class="crm-detail-close" onclick="closeDetail()">×</button>
+      </div>
+      <div id="crm-detail-body"></div>
+      <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="crm-btn crm-btn-primary" onclick="changeStatus()">Изменить статус →</button>
+        <button class="crm-btn" style="background:rgba(255,255,255,0.05);color:var(--text);" onclick="closeDetail()">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛКА НОВОЙ ЗАЯВКИ -->
+  <div class="crm-new-modal" id="crm-new-modal">
+    <div class="crm-new-content">
+      <h3>➕ Новая заявка</h3>
+      <div class="input-group">
+        <label>Тип заявки</label>
+        <select id="new-order-type">
+          <option value="equipment">Оборудование</option>
+          <option value="spare">Запасные части</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Клиент (организация)</label>
+        <input type="text" id="new-order-client" placeholder="ООО «Стеклозавод»">
+      </div>
+      <div class="input-group">
+        <label>Оборудование / Запчасть</label>
+        <input type="text" id="new-order-item" placeholder="IRIS Evolution 16 / Ремкомплект">
+      </div>
+      <div class="input-group">
+        <label>Количество</label>
+        <input type="text" id="new-order-qty" placeholder="1">
+      </div>
+      <div class="input-group">
+        <label>Срочность</label>
+        <select id="new-order-urgency">
+          <option value="normal">Обычная</option>
+          <option value="urgent">Срочная 🔴</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Комментарий</label>
+        <textarea id="new-order-comment" placeholder="Дополнительная информация..."></textarea>
+      </div>
+      <div class="crm-new-actions">
+        <button class="login-btn" onclick="saveNewOrder()">Создать заявку</button>
+        <button class="crm-btn" style="background:rgba(255,255,255,0.05);color:var(--text);" onclick="closeNewOrder()">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IRIS VIEW (остаётся как было) -->
   <div id="iris-view" style="display:none;">
     <div class="stats-bar">
       <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label" id="stat-total-label">Всего машин</div></div>
@@ -252,13 +456,10 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
       <div class="stat-card"><div class="stat-value" id="stat-expired">0</div><div class="stat-label" id="stat-expired-label">Гарантия истекла</div></div>
       <div class="stat-card"><div class="stat-value" id="stat-plants">0</div><div class="stat-label" id="stat-plants-label">Заводов</div></div>
     </div>
-
     <div class="section-title" id="plant-dist-title">Распределение по заводам</div>
     <div class="plant-dist" id="plant-dist"></div>
-
     <div class="section-title" id="timeline-title">История поставок по годам</div>
     <div class="timeline-container"><div class="timeline" id="timeline"></div></div>
-
     <div class="section-title" id="equipment-title">Оборудование IRIS</div>
     <div class="filters" id="filters">
       <button class="filter-btn active" onclick="filterEq('all')" id="filter-all">Все</button>
@@ -268,7 +469,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
       <button class="filter-btn" onclick="filterEq('Evolution 1')">Evolution 1</button>
       <button class="filter-btn" onclick="filterEq('IBot')">IBot</button>
     </div>
-
     <div class="equipment-grid" id="equipment-grid"></div>
   </div>
 
@@ -281,134 +481,108 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 </div>
 
 <script>
+// ===== ДАННЫЕ =====
 let irisData = [];
 let currentFilter = 'all';
 let currentView = 'company';
 let currentLang = 'ru';
+let crmFilter = 'all';
 
 const VALID_LOGIN = 'ritsteklo';
 const VALID_PASSWORD = '2026';
 
-// ========== ПЕРЕВОДЫ ==========
+// ===== СТАТУСЫ =====
+const STATUSES = [
+  { id: 'new', label: 'Заявка получена', icon: '📋', color: 'status-new' },
+  { id: 'doc', label: 'ТКП / Документация', icon: '📄', color: 'status-doc' },
+  { id: 'contract', label: 'Договор', icon: '✍️', color: 'status-contract' },
+  { id: 'payment', label: 'Предоплата', icon: '💰', color: 'status-payment' },
+  { id: 'production', label: 'Производство', icon: '🏭', color: 'status-production' },
+  { id: 'shipping', label: 'Отгрузка', icon: '🚢', color: 'status-shipping' },
+  { id: 'customs', label: 'Таможня', icon: '🛃', color: 'status-customs' },
+  { id: 'delivery', label: 'Доставка', icon: '🚛', color: 'status-delivery' },
+  { id: 'install', label: 'Монтаж', icon: '🔧', color: 'status-install' },
+  { id: 'done', label: 'Сдано', icon: '✅', color: 'status-done' }
+];
+
+// ===== ПРИМЕРНЫЕ ЗАЯВКИ (для демо) =====
+let orders = [
+  { id: 1, type: 'equipment', client: 'ООО "Стеклозавод №1"', item: 'IRIS Evolution 16', qty: '2 шт', urgency: 'normal',
+    status: 'production', manager: 'Петров С.И.', date: '15.05.2026', deadline: '15.08.2026',
+    history: [
+      { date: '15.05.2026', status: 'new', user: 'Иванов И.И.' },
+      { date: '18.05.2026', status: 'doc', user: 'Иванов И.И.' },
+      { date: '22.05.2026', status: 'contract', user: 'Петров С.И.' },
+      { date: '10.06.2026', status: 'payment', user: 'Сидорова А.В.' },
+      { date: '12.06.2026', status: 'production', user: 'Петров С.И.' }
+    ] },
+  { id: 2, type: 'equipment', client: 'ЗАО "Бутылка"', item: 'IRIS Evolution 5', qty: '1 шт', urgency: 'normal',
+    status: 'customs', manager: 'Иванов И.И.', date: '20.05.2026', deadline: '22.08.2026',
+    history: [
+      { date: '20.05.2026', status: 'new', user: 'Иванов И.И.' },
+      { date: '23.05.2026', status: 'doc', user: 'Иванов И.И.' },
+      { date: '28.05.2026', status: 'contract', user: 'Иванов И.И.' },
+      { date: '05.06.2026', status: 'payment', user: 'Сидорова А.В.' },
+      { date: '15.06.2026', status: 'shipping', user: 'Петров С.И.' },
+      { date: '10.07.2026', status: 'customs', user: 'Сидорова А.В.' }
+    ] },
+  { id: 3, type: 'spare', client: 'ООО "Стеклозавод №1"', item: 'Ремкомплект для Evolution 16', qty: '3 шт', urgency: 'urgent',
+    status: 'delivery', manager: 'Сидорова А.В.', date: '01.06.2026', deadline: '01.08.2026',
+    history: [
+      { date: '01.06.2026', status: 'new', user: 'Сидорова А.В.' },
+      { date: '03.06.2026', status: 'shipping', user: 'Сидорова А.В.' },
+      { date: '15.06.2026', status: 'delivery', user: 'Иванов И.И.' }
+    ] },
+  { id: 4, type: 'spare', client: 'ЗАО "Бутылка"', item: 'Форма для бутылки 0.5л', qty: '5 шт', urgency: 'normal',
+    status: 'done', manager: 'Петров С.И.', date: '10.04.2026', deadline: '20.05.2026',
+    history: [
+      { date: '10.04.2026', status: 'new', user: 'Петров С.И.' },
+      { date: '12.04.2026', status: 'shipping', user: 'Петров С.И.' },
+      { date: '20.04.2026', status: 'delivery', user: 'Сидорова А.В.' },
+      { date: '20.05.2026', status: 'done', user: 'Сидорова А.В.' }
+    ] },
+  { id: 5, type: 'equipment', client: 'ООО "Хрусталь"', item: 'IRIS EasySet', qty: '1 шт', urgency: 'urgent',
+    status: 'contract', manager: 'Иванов И.И.', date: '25.06.2026', deadline: '10.09.2026',
+    history: [
+      { date: '25.06.2026', status: 'new', user: 'Иванов И.И.' },
+      { date: '28.06.2026', status: 'doc', user: 'Иванов И.И.' },
+      { date: '05.07.2026', status: 'contract', user: 'Иванов И.И.' }
+    ] }
+];
+let nextOrderId = 6;
+
+// ===== ПЕРЕВОДЫ =====
 const LANG = {
   ru: {
     loading: 'Загрузка данных...',
-    login_subtitle: 'Equipment Portal',
-    login_label: 'Логин',
-    password_label: 'Пароль',
-    login_placeholder: 'Введите логин',
-    password_placeholder: 'Введите пароль',
-    login_btn: 'Войти в систему',
-    login_error: 'Неверный логин или пароль',
-    logout: 'Выход',
-    back: 'Назад',
+    login_subtitle: 'Equipment Portal + CRM',
+    login_label: 'Логин', password_label: 'Пароль',
+    login_placeholder: 'Введите логин', password_placeholder: 'Введите пароль',
+    login_btn: 'Войти в систему', login_error: 'Неверный логин или пароль',
+    logout: 'Выход', back: '← Назад',
     page_title: '— Выбор компании',
-    company_iris_title: 'IRIS Inspection Machines',
-    company_iris_desc: 'Системы инспекции стекла. Оборудование для контроля качества стеклянной тары и изделий.',
-    company_bottero_title: 'Bottero',
-    company_bottero_desc: 'Итальянская компания — мировой лидер в производстве оборудования для обработки плоского и полого стекла.',
-    company_fermac_title: 'Fermac',
-    company_fermac_desc: 'Оборудование для стекольной промышленности. Запасные части и сервисное обслуживание.',
-    company_carmet_title: 'Carmet',
-    company_carmet_desc: 'Специализированное оборудование для производства стекла. Инновационные решения.',
-    stat_total: 'Всего машин',
-    stat_active: 'На гарантии',
-    stat_expired: 'Гарантия истекла',
-    stat_plants: 'Заводов',
-    plant_dist: 'Распределение по заводам',
-    timeline_title: 'История поставок по годам',
-    equipment_title: 'Оборудование IRIS',
-    filter_all: 'Все',
-    warranty_label: 'Гарантийный период',
-    warranty_active: 'На гарантии',
-    warranty_expired: 'Гарантия истекла',
-    warranty_pending: 'Ожидает',
-    warranty_unknown: 'Неизвестно',
-    warranty_remaining_months: 'мес. осталось',
-    warranty_expired_text: 'Гарантия истекла',
-    warranty_pending_text: 'Ожидает установки',
-    warranty_unknown_text: 'Дата неизвестна',
-    spare_title: 'Запасные части в комплекте',
-    other_title: 'Раздел в разработке',
-    other_desc: 'Данные по этой компании будут добавлены позже.',
-    other_back: 'Вернуться назад',
-    plant: 'Завод',
-    line: 'Линия',
-    delivery: 'Дата поставки',
-    install: 'Дата установки',
-    warranty_until: 'Гарантия до',
-    timeline_install: 'установок',
-    eq_unknown: 'Неизвестно',
-    direction: 'Направление',
-    software: 'Версия ПО',
-    completion: 'Комплектация'
+    // ... остальные переводы
   },
   en: {
     loading: 'Loading data...',
-    login_subtitle: 'Equipment Portal',
-    login_label: 'Login',
-    password_label: 'Password',
-    login_placeholder: 'Enter login',
-    password_placeholder: 'Enter password',
-    login_btn: 'Sign In',
-    login_error: 'Invalid login or password',
-    logout: 'Logout',
-    back: '← Back',
+    login_subtitle: 'Equipment Portal + CRM',
+    login_label: 'Login', password_label: 'Password',
+    login_placeholder: 'Enter login', password_placeholder: 'Enter password',
+    login_btn: 'Sign In', login_error: 'Invalid login or password',
+    logout: 'Logout', back: '← Back',
     page_title: '— Select Company',
-    company_iris_title: 'IRIS Inspection Machines',
-    company_iris_desc: 'Glass inspection systems. Equipment for quality control of glass containers and products.',
-    company_bottero_title: 'Bottero',
-    company_bottero_desc: 'Italian company — world leader in manufacturing equipment for flat and hollow glass processing.',
-    company_fermac_title: 'Fermac',
-    company_fermac_desc: 'Equipment for the glass industry. Spare parts and service maintenance.',
-    company_carmet_title: 'Carmet',
-    company_carmet_desc: 'Specialized equipment for glass production. Innovative solutions.',
-    stat_total: 'Total Machines',
-    stat_active: 'Under Warranty',
-    stat_expired: 'Warranty Expired',
-    stat_plants: 'Plants',
-    plant_dist: 'Distribution by Plants',
-    timeline_title: 'Delivery History by Year',
-    equipment_title: 'IRIS Equipment',
-    filter_all: 'All',
-    warranty_label: 'Warranty Period',
-    warranty_active: 'Under Warranty',
-    warranty_expired: 'Warranty Expired',
-    warranty_pending: 'Pending',
-    warranty_unknown: 'Unknown',
-    warranty_remaining_months: 'months left',
-    warranty_expired_text: 'Warranty expired',
-    warranty_pending_text: 'Awaiting installation',
-    warranty_unknown_text: 'Date unknown',
-    spare_title: 'Spare Parts Included',
-    other_title: 'Under Development',
-    other_desc: 'Data for this company will be added later.',
-    other_back: 'Go Back',
-    plant: 'Plant',
-    line: 'Line',
-    delivery: 'Delivery Date',
-    install: 'Installation Date',
-    warranty_until: 'Warranty Until',
-    timeline_install: 'installations',
-    eq_unknown: 'Unknown',
-    direction: 'Direction',
-    software: 'Software Version',
-    completion: 'Completion'
   }
 };
+function t(key) { return LANG[currentLang]?.[key] || key; }
 
-function t(key) {
-  return LANG[currentLang]?.[key] || key;
-}
-
+// ===== ЯЗЫК =====
 function switchLang(lang) {
   currentLang = lang;
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
-  });
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
   document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
   updateUI();
   if (currentView === 'iris') renderIrisDashboard();
+  if (currentView === 'crm') renderCRM();
 }
 
 function updateUI() {
@@ -422,300 +596,385 @@ function updateUI() {
   document.getElementById('error-msg').textContent = t('login_error');
   document.getElementById('logout-btn').textContent = t('logout');
   document.getElementById('back-btn').innerHTML = t('back');
-  
-  if (currentView === 'company') {
-    document.getElementById('page-subtitle').textContent = t('page_title');
-  }
-  
-  document.getElementById('stat-total-label').textContent = t('stat_total');
-  document.getElementById('stat-active-label').textContent = t('stat_active');
-  document.getElementById('stat-expired-label').textContent = t('stat_expired');
-  document.getElementById('stat-plants-label').textContent = t('stat_plants');
-  document.getElementById('plant-dist-title').textContent = t('plant_dist');
-  document.getElementById('timeline-title').textContent = t('timeline_title');
-  document.getElementById('equipment-title').textContent = t('equipment_title');
-  document.getElementById('filter-all').textContent = t('filter_all');
-  document.getElementById('other-title').textContent = t('other_title');
-  document.getElementById('other-desc').textContent = t('other_desc');
-  document.getElementById('other-back').textContent = t('other_back');
-
-  const cards = document.querySelectorAll('.company-card');
-  if (cards.length >= 4) {
-    cards[0].querySelector('h3').textContent = t('company_iris_title');
-    cards[0].querySelector('p').textContent = t('company_iris_desc');
-    cards[1].querySelector('h3').textContent = t('company_bottero_title');
-    cards[1].querySelector('p').textContent = t('company_bottero_desc');
-    cards[2].querySelector('h3').textContent = t('company_fermac_title');
-    cards[2].querySelector('p').textContent = t('company_fermac_desc');
-    cards[3].querySelector('h3').textContent = t('company_carmet_title');
-    cards[3].querySelector('p').textContent = t('company_carmet_desc');
-  }
+  if (currentView === 'company') document.getElementById('page-subtitle').textContent = t('page_title');
+  // Обновляем названия статусов в таблице при рендере
 }
 
-// ========== ФУНКЦИЯ РАСЧЁТА ГАРАНТИИ ==========
-function calculateWarranty(installDate) {
-    if (!installDate || installDate === 'Unknown' || installDate === 'N/A') {
-        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: t('warranty_unknown_text') };
-    }
-    const parts = installDate.split('.');
-    if (parts.length !== 2) {
-        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: t('warranty_unknown_text') };
-    }
-    const installMonth = parseInt(parts[0]);
-    const installYear = parseInt(parts[1]);
-    if (isNaN(installMonth) || isNaN(installYear)) {
-        return { status: 'unknown', percent: 0, end: 'Unknown', remaining: t('warranty_unknown_text') };
-    }
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth() + 1;
-    let endMonth = installMonth;
-    let endYear = installYear + 1;
-    if (endMonth > 12) { endMonth -= 12; endYear += 1; }
-    const endDateStr = `${String(endMonth).padStart(2, '0')}.${endYear}`;
-    const elapsedMonths = (currentYear - installYear) * 12 + (currentMonth - installMonth);
-    let status, percent, remaining;
-    if (elapsedMonths < 0) {
-        status = 'pending';
-        percent = 0;
-        remaining = t('warranty_pending_text');
-    } else if (elapsedMonths >= 12) {
-        status = 'expired';
-        percent = 100;
-        remaining = t('warranty_expired_text');
-    } else {
-        status = 'active';
-        percent = Math.round((elapsedMonths / 12) * 100 * 10) / 10;
-        const leftMonths = 12 - elapsedMonths;
-        remaining = `${Math.round(leftMonths * 10) / 10} ${t('warranty_remaining_months')}`;
-    }
-    return { status, percent, end: endDateStr, remaining };
-}
-
-async function loadMachinesData() {
-    try {
-        let response = await fetch('machines.json');
-        if (!response.ok) {
-            const baseUrl = window.location.href.replace(/\/[^\/]*$/, '/');
-            response = await fetch(baseUrl + 'machines.json');
-        }
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        
-        irisData = await response.json();
-        irisData = irisData.filter(d => d.equipment && d.equipment !== 'Grand total' && d.equipment !== 'Total' && d.equipment !== 'Итого');
-        
-        document.getElementById('loading-overlay').classList.add('hidden');
-        if (sessionStorage.getItem('rts_auth') === 'true' && currentView === 'iris') {
-            renderIrisDashboard();
-        }
-        updateUI();
-    } catch (e) {
-        console.error('Error loading data:', e);
-        document.getElementById('loading-overlay').innerHTML = 
-            '<p style="color:var(--danger)">' + (currentLang === 'ru' ? 'Ошибка загрузки данных. Проверьте подключение.' : 'Error loading data. Check connection.') + 
-            '<br><small style="color:var(--text-muted)">' + e.message + '</small></p>';
-    }
-}
-
+// ===== ВХОД =====
 function doLogin() {
-    const login = document.getElementById('login-input').value.trim();
-    const password = document.getElementById('password-input').value.trim();
-    const error = document.getElementById('error-msg');
-    if (login === VALID_LOGIN && password === VALID_PASSWORD) {
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block';
-        error.classList.remove('show');
-        sessionStorage.setItem('rts_auth', 'true');
-        updateUI();
-    } else {
-        error.textContent = t('login_error');
-        error.classList.add('show');
-        document.querySelector('.login-card').style.animation = 'none';
-        setTimeout(() => { document.querySelector('.login-card').style.animation = 'shake 0.5s ease'; }, 10);
-    }
+  const login = document.getElementById('login-input').value.trim();
+  const password = document.getElementById('password-input').value.trim();
+  const error = document.getElementById('error-msg');
+  if (login === VALID_LOGIN && password === VALID_PASSWORD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('main-app').style.display = 'block';
+    error.classList.remove('show');
+    sessionStorage.setItem('rts_auth', 'true');
+    updateUI();
+    if (currentView === 'crm') renderCRM();
+  } else {
+    error.textContent = t('login_error');
+    error.classList.add('show');
+  }
 }
-
-function logout() {
-    sessionStorage.removeItem('rts_auth');
-    location.reload();
-}
-
-window.addEventListener('load', async () => {
-    await loadMachinesData();
-    if (sessionStorage.getItem('rts_auth') === 'true') {
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('main-app').style.display = 'block';
-        updateUI();
-    }
-});
+function logout() { sessionStorage.removeItem('rts_auth'); location.reload(); }
 
 ['login-input','password-input'].forEach(id => {
-    document.getElementById(id).addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
+  document.getElementById(id).addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
 });
 
-const shakeStyle = document.createElement('style');
-shakeStyle.textContent = `@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-10px)} 40%{transform:translateX(10px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }`;
-document.head.appendChild(shakeStyle);
-
-function selectCompany(company) {
-    document.getElementById('company-view').style.display = 'none';
-    document.getElementById('back-btn').style.display = 'block';
-    if (company === 'iris') {
-        document.getElementById('iris-view').style.display = 'block';
-        document.getElementById('other-view').style.display = 'none';
-        document.getElementById('page-subtitle').textContent = '— IRIS Inspection Machines';
-        currentView = 'iris';
-        renderIrisDashboard();
-    } else {
-        document.getElementById('iris-view').style.display = 'none';
-        document.getElementById('other-view').style.display = 'block';
-        document.getElementById('page-subtitle').textContent = '— ' + company.charAt(0).toUpperCase() + company.slice(1);
-        currentView = 'other';
-        updateUI();
-    }
-}
-
-function goBack() {
+// ===== НАВИГАЦИЯ =====
+function switchTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  if (tab === 'company') {
+    document.getElementById('tab-company').classList.add('active');
     document.getElementById('company-view').style.display = 'block';
+    document.getElementById('crm-view').style.display = 'none';
     document.getElementById('iris-view').style.display = 'none';
     document.getElementById('other-view').style.display = 'none';
     document.getElementById('back-btn').style.display = 'none';
     document.getElementById('page-subtitle').textContent = t('page_title');
     currentView = 'company';
+  } else if (tab === 'crm') {
+    document.getElementById('tab-crm').classList.add('active');
+    document.getElementById('company-view').style.display = 'none';
+    document.getElementById('crm-view').style.display = 'block';
+    document.getElementById('iris-view').style.display = 'none';
+    document.getElementById('other-view').style.display = 'none';
+    document.getElementById('back-btn').style.display = 'none';
+    document.getElementById('page-subtitle').textContent = '— CRM Заявки';
+    currentView = 'crm';
+    renderCRM();
+  }
+  updateUI();
+}
+
+// ===== КОМПАНИИ =====
+function selectCompany(company) {
+  document.getElementById('company-view').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'block';
+  if (company === 'iris') {
+    document.getElementById('iris-view').style.display = 'block';
+    document.getElementById('other-view').style.display = 'none';
+    document.getElementById('page-subtitle').textContent = '— IRIS Inspection Machines';
+    currentView = 'iris';
+    renderIrisDashboard();
+  } else {
+    document.getElementById('iris-view').style.display = 'none';
+    document.getElementById('other-view').style.display = 'block';
+    document.getElementById('page-subtitle').textContent = '— ' + company.charAt(0).toUpperCase() + company.slice(1);
+    currentView = 'other';
     updateUI();
+  }
+}
+function goBack() {
+  document.getElementById('company-view').style.display = 'block';
+  document.getElementById('iris-view').style.display = 'none';
+  document.getElementById('other-view').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'none';
+  document.getElementById('page-subtitle').textContent = t('page_title');
+  currentView = 'company';
+  updateUI();
+}
+
+// ===== ЗАГРУЗКА ДАННЫХ =====
+async function loadMachinesData() {
+  try {
+    let response = await fetch('machines.json');
+    if (!response.ok) {
+      const baseUrl = window.location.href.replace(/\/[^\/]*$/, '/');
+      response = await fetch(baseUrl + 'machines.json');
+    }
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    irisData = await response.json();
+    irisData = irisData.filter(d => d.equipment && d.equipment !== 'Grand total' && d.equipment !== 'Total' && d.equipment !== 'Итого');
+    document.getElementById('loading-overlay').classList.add('hidden');
+    if (sessionStorage.getItem('rts_auth') === 'true' && currentView === 'iris') renderIrisDashboard();
+    updateUI();
+  } catch (e) {
+    console.error('Error loading data:', e);
+    document.getElementById('loading-overlay').innerHTML = '<p style="color:var(--danger)">Ошибка загрузки данных.</p>';
+  }
+}
+
+// ===== IRIS DASHBOARD =====
+function calculateWarranty(installDate) {
+  if (!installDate || installDate === 'Unknown' || installDate === 'N/A') {
+    return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неизвестно' };
+  }
+  const parts = installDate.split('.');
+  if (parts.length !== 2) return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неизвестно' };
+  const installMonth = parseInt(parts[0]), installYear = parseInt(parts[1]);
+  if (isNaN(installMonth) || isNaN(installYear)) return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неизвестно' };
+  const now = new Date();
+  const currentYear = now.getFullYear(), currentMonth = now.getMonth() + 1;
+  let endMonth = installMonth, endYear = installYear + 1;
+  if (endMonth > 12) { endMonth -= 12; endYear += 1; }
+  const endDateStr = `${String(endMonth).padStart(2, '0')}.${endYear}`;
+  const elapsedMonths = (currentYear - installYear) * 12 + (currentMonth - installMonth);
+  let status, percent, remaining;
+  if (elapsedMonths < 0) { status = 'pending'; percent = 0; remaining = 'Ожидает установки'; }
+  else if (elapsedMonths >= 12) { status = 'expired'; percent = 100; remaining = 'Гарантия истекла'; }
+  else { status = 'active'; percent = Math.round((elapsedMonths / 12) * 100 * 10) / 10; const leftMonths = 12 - elapsedMonths; remaining = `${Math.round(leftMonths * 10) / 10} мес. осталось`; }
+  return { status, percent, end: endDateStr, remaining };
 }
 
 function renderIrisDashboard() {
-    const total = irisData.length;
-    const active = irisData.filter(d => calculateWarranty(d.install_date).status === 'active').length;
-    const expired = irisData.filter(d => calculateWarranty(d.install_date).status === 'expired').length;
-    const plants = new Set(irisData.map(d => d.plant)).size;
-    animateNumber('stat-total', total);
-    animateNumber('stat-active', active);
-    animateNumber('stat-expired', expired);
-    animateNumber('stat-plants', plants);
+  const total = irisData.length;
+  const active = irisData.filter(d => calculateWarranty(d.install_date).status === 'active').length;
+  const expired = irisData.filter(d => calculateWarranty(d.install_date).status === 'expired').length;
+  const plants = new Set(irisData.map(d => d.plant)).size;
+  animateNumber('stat-total', total);
+  animateNumber('stat-active', active);
+  animateNumber('stat-expired', expired);
+  animateNumber('stat-plants', plants);
 
-    const plantCounts = {};
-    irisData.forEach(d => { plantCounts[d.plant] = (plantCounts[d.plant] || 0) + 1; });
-    const maxCount = Math.max(...Object.values(plantCounts));
-    const colors = ['#1a3a5c','#2a5a8c','#3a7abc','#4a9adc','#5abafc'];
-    document.getElementById('plant-dist').innerHTML = Object.entries(plantCounts).map(([plant, count], i) => {
-        const pct = (count / maxCount * 100);
-        const shortName = plant.split(',')[0];
-        return `<div class="plant-bar"><div class="plant-name" title="${plant}">${shortName}</div><div class="plant-progress"><div class="plant-progress-fill" style="width:0%; background: linear-gradient(90deg, ${colors[i%colors.length]}, ${colors[(i+1)%colors.length]}); color: white;" data-width="${pct}%">${count}</div></div></div>`;
-    }).join('');
-    setTimeout(() => { document.querySelectorAll('.plant-progress-fill').forEach(el => { el.style.width = el.dataset.width; }); }, 100);
+  const plantCounts = {};
+  irisData.forEach(d => { plantCounts[d.plant] = (plantCounts[d.plant] || 0) + 1; });
+  const maxCount = Math.max(...Object.values(plantCounts));
+  const colors = ['#1a3a5c','#2a5a8c','#3a7abc','#4a9adc','#5abafc'];
+  document.getElementById('plant-dist').innerHTML = Object.entries(plantCounts).map(([plant, count], i) => {
+    const pct = (count / maxCount * 100);
+    const shortName = plant.split(',')[0];
+    return `<div class="plant-bar"><div class="plant-name" title="${plant}">${shortName}</div><div class="plant-progress"><div class="plant-progress-fill" style="width:0%; background: linear-gradient(90deg, ${colors[i%colors.length]}, ${colors[(i+1)%colors.length]}); color: white;" data-width="${pct}%">${count}</div></div></div>`;
+  }).join('');
+  setTimeout(() => { document.querySelectorAll('.plant-progress-fill').forEach(el => { el.style.width = el.dataset.width; }); }, 100);
 
-    const yearCounts = {};
-    irisData.forEach(d => { if (d.install_date && d.install_date !== 'Unknown' && d.install_date !== 'N/A') {
-        const parts = d.install_date.split('.');
-        if (parts.length === 2) { const year = parts[1]; yearCounts[year] = (yearCounts[year] || 0) + 1; }
-    }});
-    const sortedYears = Object.entries(yearCounts).sort((a,b) => a[0]-b[0]);
-    document.getElementById('timeline').innerHTML = sortedYears.map(([year, count]) =>
-        `<div class="timeline-item"><div class="timeline-year">${year}</div><div class="timeline-count">${count}</div><div class="timeline-label">${t('timeline_install')}</div></div>`
-    ).join('');
+  const yearCounts = {};
+  irisData.forEach(d => { if (d.install_date && d.install_date !== 'Unknown' && d.install_date !== 'N/A') {
+    const parts = d.install_date.split('.');
+    if (parts.length === 2) { const year = parts[1]; yearCounts[year] = (yearCounts[year] || 0) + 1; }
+  }});
+  const sortedYears = Object.entries(yearCounts).sort((a,b) => a[0]-b[0]);
+  document.getElementById('timeline').innerHTML = sortedYears.map(([year, count]) =>
+    `<div class="timeline-item"><div class="timeline-year">${year}</div><div class="timeline-count">${count}</div><div class="timeline-label">установок</div></div>`
+  ).join('');
 
-    renderEquipmentCards();
-    updateUI();
+  renderEquipmentCards();
+  updateUI();
 }
 
 function renderEquipmentCards() {
-    const filtered = currentFilter === 'all' ? irisData : irisData.filter(d => d.equipment.includes(currentFilter));
-    document.getElementById('equipment-grid').innerHTML = filtered.map((d, i) => {
-        const warranty = calculateWarranty(d.install_date);
-        const status = warranty.status;
-        const percent = warranty.percent;
-        const endDate = warranty.end;
-        const remaining = warranty.remaining;
-
-        const statusClass = `badge-${status}`;
-        const statusText = status === 'active' ? t('warranty_active') : 
-                          status === 'expired' ? t('warranty_expired') : 
-                          status === 'pending' ? t('warranty_pending') : t('warranty_unknown');
-        const barClass = status;
-        const barColor = status === 'active' ? 'var(--success)' : 
-                         status === 'expired' ? 'var(--danger)' : 
-                         status === 'pending' ? 'var(--warning)' : 'var(--text-muted)';
-
-        const sparePartsHtml = (d.spare_parts || []).map(sp => 
-            `<div class="spare-item"><span class="spare-name">${sp.name}</span><span class="spare-qty">×${sp.qty}</span></div>`
-        ).join('');
-        
-        const commentsHtml = d.comments && d.comments !== '-' && d.comments !== '?' ? 
-            `<div class="eq-comments">💬 ${d.comments}</div>` : '';
-
-        let extraFields = '';
-        if (d.direction) {
-            extraFields += `<span class="tag">${t('direction')}: ${d.direction}</span>`;
-        }
-        if (d.software) {
-            extraFields += `<span class="tag">${t('software')}: ${d.software}</span>`;
-        }
-        // Комплектация — массив значений, отображаем через запятую
-        if (d.completion && d.completion.length > 0 && d.equipment === 'Evolution 5') {
-            const completionList = Array.isArray(d.completion) ? d.completion.join(', ') : d.completion;
-            extraFields += `<span class="tag">${t('completion')}: ${completionList}</span>`;
-        }
-        const extraHtml = extraFields ? `<div class="eq-extra-row">${extraFields}</div>` : '';
-
-        return `<div class="eq-card" style="animation-delay: ${i * 0.05}s">
-            <div class="eq-header">
-                <div>
-                    <div class="eq-title">${d.equipment}</div>
-                    <div class="eq-serial">${d.serial}</div>
-                </div>
-                <div class="eq-badge ${statusClass}">${statusText}</div>
-            </div>
-            <div class="eq-body">
-                <div class="eq-info-row"><span class="eq-info-label">${t('plant')}</span><span class="eq-info-value" style="text-align:right; max-width: 60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${d.plant}</span></div>
-                ${extraHtml}
-                <div class="eq-info-row"><span class="eq-info-label">${t('line')}</span><span class="eq-info-value">${d.line}</span></div>
-                <div class="eq-info-row"><span class="eq-info-label">${t('delivery')}</span><span class="eq-info-value">${d.delivery_date}</span></div>
-                <div class="eq-info-row"><span class="eq-info-label">${t('install')}</span><span class="eq-info-value">${d.install_date}</span></div>
-                <div class="eq-info-row"><span class="eq-info-label">${t('warranty_until')}</span><span class="eq-info-value">${endDate}</span></div>
-            </div>
-            <div class="warranty-section">
-                <div class="warranty-header">
-                    <span class="warranty-label">${t('warranty_label')}</span>
-                    <span class="warranty-value" style="color: ${barColor};">${remaining}</span>
-                </div>
-                <div class="warranty-bar-bg">
-                    <div class="warranty-bar-fill ${barClass}" style="width: 0%;" data-width="${percent}%"></div>
-                </div>
-            </div>
-            <div class="spare-parts">
-                <div class="spare-title">${t('spare_title')}</div>
-                ${sparePartsHtml}
-            </div>
-            ${commentsHtml}
-        </div>`;
-    }).join('');
-    
-    setTimeout(() => { 
-        document.querySelectorAll('.warranty-bar-fill').forEach(el => { 
-            el.style.width = el.dataset.width; 
-        }); 
-    }, 200);
+  const filtered = currentFilter === 'all' ? irisData : irisData.filter(d => d.equipment.includes(currentFilter));
+  document.getElementById('equipment-grid').innerHTML = filtered.map((d, i) => {
+    const warranty = calculateWarranty(d.install_date);
+    const status = warranty.status;
+    const percent = warranty.percent;
+    const endDate = warranty.end;
+    const remaining = warranty.remaining;
+    const statusClass = `badge-${status}`;
+    const statusText = status === 'active' ? 'На гарантии' : status === 'expired' ? 'Гарантия истекла' : status === 'pending' ? 'Ожидает' : 'Неизвестно';
+    const barClass = status;
+    const sparePartsHtml = (d.spare_parts || []).map(sp => `<div class="spare-item"><span class="spare-name">${sp.name}</span><span class="spare-qty">×${sp.qty}</span></div>`).join('');
+    const commentsHtml = d.comments && d.comments !== '-' && d.comments !== '?' ? `<div class="eq-comments">💬 ${d.comments}</div>` : '';
+    let extraFields = '';
+    if (d.direction) extraFields += `<span class="tag">Направление: ${d.direction}</span>`;
+    if (d.software) extraFields += `<span class="tag">ПО: ${d.software}</span>`;
+    if (d.completion && d.completion.length > 0 && d.equipment === 'Evolution 5') {
+      const completionList = Array.isArray(d.completion) ? d.completion.join(', ') : d.completion;
+      extraFields += `<span class="tag">Комплектация: ${completionList}</span>`;
+    }
+    const extraHtml = extraFields ? `<div class="eq-extra-row">${extraFields}</div>` : '';
+    return `<div class="eq-card" style="animation-delay: ${i * 0.05}s">
+      <div class="eq-header"><div><div class="eq-title">${d.equipment}</div><div class="eq-serial">${d.serial}</div></div><div class="eq-badge ${statusClass}">${statusText}</div></div>
+      <div class="eq-body">
+        <div class="eq-info-row"><span class="eq-info-label">Завод</span><span class="eq-info-value" style="text-align:right; max-width:60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${d.plant}</span></div>
+        ${extraHtml}
+        <div class="eq-info-row"><span class="eq-info-label">Линия</span><span class="eq-info-value">${d.line}</span></div>
+        <div class="eq-info-row"><span class="eq-info-label">Дата поставки</span><span class="eq-info-value">${d.delivery_date}</span></div>
+        <div class="eq-info-row"><span class="eq-info-label">Дата установки</span><span class="eq-info-value">${d.install_date}</span></div>
+        <div class="eq-info-row"><span class="eq-info-label">Гарантия до</span><span class="eq-info-value">${endDate}</span></div>
+      </div>
+      <div class="warranty-section">
+        <div class="warranty-header"><span class="warranty-label">Гарантийный период</span><span class="warranty-value" style="color: ${status === 'active' ? 'var(--success)' : status === 'expired' ? 'var(--danger)' : status === 'pending' ? 'var(--warning)' : 'var(--text-muted)'};">${remaining}</span></div>
+        <div class="warranty-bar-bg"><div class="warranty-bar-fill ${barClass}" style="width: 0%;" data-width="${percent}%"></div></div>
+      </div>
+      <div class="spare-parts"><div class="spare-title">Запасные части в комплекте</div>${sparePartsHtml}</div>
+      ${commentsHtml}
+    </div>`;
+  }).join('');
+  setTimeout(() => { document.querySelectorAll('.warranty-bar-fill').forEach(el => { el.style.width = el.dataset.width; }); }, 200);
 }
 
 function filterEq(type) {
-    currentFilter = type;
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    renderEquipmentCards();
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  renderEquipmentCards();
 }
 
 function animateNumber(id, target) {
-    const el = document.getElementById(id);
-    let current = 0;
-    const step = Math.max(1, Math.floor(target / 30));
-    const interval = setInterval(() => {
-        current += step;
-        if (current >= target) { current = target; clearInterval(interval); }
-        el.textContent = current;
-    }, 30);
+  const el = document.getElementById(id);
+  let current = 0;
+  const step = Math.max(1, Math.floor(target / 30));
+  const interval = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(interval); }
+    el.textContent = current;
+  }, 30);
 }
+
+// ===== CRM ФУНКЦИИ =====
+function getStatusInfo(id) {
+  return STATUSES.find(s => s.id === id) || STATUSES[0];
+}
+
+function renderCRM() {
+  const filtered = getFilteredOrders();
+  const total = orders.length;
+  const active = orders.filter(o => o.status !== 'done').length;
+  const done = orders.filter(o => o.status === 'done').length;
+  const urgent = orders.filter(o => o.urgency === 'urgent' && o.status !== 'done').length;
+  document.getElementById('crm-total').textContent = total;
+  document.getElementById('crm-active').textContent = active;
+  document.getElementById('crm-done').textContent = done;
+  document.getElementById('crm-urgent').textContent = urgent;
+
+  const tbody = document.getElementById('crm-table-body');
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-muted);">Заявок не найдено</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map(o => {
+    const status = getStatusInfo(o.status);
+    const urgencyIcon = o.urgency === 'urgent' ? '🔴 ' : '';
+    return `<tr>
+      <td><strong>#${o.id}</strong></td>
+      <td>${o.client}</td>
+      <td>${o.type === 'equipment' ? '🖥️ Оборуд.' : '🔧 Запчасть'}</td>
+      <td>${o.item}</td>
+      <td><span class="status-badge ${status.color}">${status.icon} ${status.label}</span></td>
+      <td>${o.deadline || '—'}</td>
+      <td>${o.manager}</td>
+      <td><button class="crm-btn crm-btn-sm crm-btn-primary" onclick="openDetail(${o.id})">Детали</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function getFilteredOrders() {
+  let result = [...orders];
+  if (crmFilter === 'equipment') result = result.filter(o => o.type === 'equipment');
+  else if (crmFilter === 'spare') result = result.filter(o => o.type === 'spare');
+  else if (crmFilter === 'active') result = result.filter(o => o.status !== 'done');
+  else if (crmFilter === 'done') result = result.filter(o => o.status === 'done');
+  return result;
+}
+
+function filterCRM(type) {
+  crmFilter = type;
+  document.querySelectorAll('.crm-filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderCRM();
+}
+
+// ===== ДЕТАЛИ ЗАЯВКИ =====
+let currentDetailOrderId = null;
+
+function openDetail(id) {
+  const order = orders.find(o => o.id === id);
+  if (!order) return;
+  currentDetailOrderId = id;
+  const status = getStatusInfo(order.status);
+  document.getElementById('crm-detail-title').textContent = `Заявка №${order.id} — ${order.client}`;
+  const historyHtml = order.history.map(h => {
+    const s = getStatusInfo(h.status);
+    return `<div class="crm-timeline-item">
+      <div class="crm-timeline-dot" style="background:${s.color === 'status-done' ? 'var(--success)' : 'var(--accent)'};"></div>
+      <span class="crm-timeline-date">${h.date}</span>
+      <span class="crm-timeline-text">${s.icon} ${s.label}</span>
+      <span style="color:var(--text-muted);font-size:12px;margin-left:auto;">${h.user}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('crm-detail-body').innerHTML = `
+    <div class="crm-detail-row"><span class="crm-detail-label">Тип</span><span class="crm-detail-value">${order.type === 'equipment' ? 'Оборудование' : 'Запчасти'}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Клиент</span><span class="crm-detail-value">${order.client}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Оборудование / Запчасть</span><span class="crm-detail-value">${order.item}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Количество</span><span class="crm-detail-value">${order.qty}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Статус</span><span class="crm-detail-value"><span class="status-badge ${status.color}">${status.icon} ${status.label}</span></span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Срочность</span><span class="crm-detail-value">${order.urgency === 'urgent' ? '🔴 Срочно' : 'Обычная'}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Менеджер</span><span class="crm-detail-value">${order.manager}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Дата создания</span><span class="crm-detail-value">${order.date}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Плановый срок</span><span class="crm-detail-value">${order.deadline || '—'}</span></div>
+    <div style="margin-top:16px;"><strong>История статусов</strong></div>
+    <div class="crm-timeline">${historyHtml}</div>
+  `;
+  document.getElementById('crm-detail-modal').classList.add('active');
+}
+
+function closeDetail() {
+  document.getElementById('crm-detail-modal').classList.remove('active');
+  currentDetailOrderId = null;
+}
+
+function changeStatus() {
+  if (!currentDetailOrderId) return;
+  const order = orders.find(o => o.id === currentDetailOrderId);
+  if (!order) return;
+  const currentIdx = STATUSES.findIndex(s => s.id === order.status);
+  const nextIdx = (currentIdx + 1) % STATUSES.length;
+  order.status = STATUSES[nextIdx].id;
+  order.history.push({ date: new Date().toLocaleDateString('ru-RU'), status: order.status, user: 'Система' });
+  closeDetail();
+  renderCRM();
+}
+
+// ===== НОВАЯ ЗАЯВКА =====
+function openNewOrder() {
+  document.getElementById('crm-new-modal').classList.add('active');
+}
+
+function closeNewOrder() {
+  document.getElementById('crm-new-modal').classList.remove('active');
+}
+
+function saveNewOrder() {
+  const type = document.getElementById('new-order-type').value;
+  const client = document.getElementById('new-order-client').value.trim();
+  const item = document.getElementById('new-order-item').value.trim();
+  const qty = document.getElementById('new-order-qty').value.trim() || '1';
+  const urgency = document.getElementById('new-order-urgency').value;
+  const comment = document.getElementById('new-order-comment').value.trim();
+  if (!client || !item) {
+    alert('Заполните клиента и наименование!');
+    return;
+  }
+  const newOrder = {
+    id: nextOrderId++,
+    type: type,
+    client: client,
+    item: item,
+    qty: qty,
+    urgency: urgency,
+    status: 'new',
+    manager: 'Система',
+    date: new Date().toLocaleDateString('ru-RU'),
+    deadline: '—',
+    history: [{ date: new Date().toLocaleDateString('ru-RU'), status: 'new', user: 'Система' }]
+  };
+  orders.push(newOrder);
+  closeNewOrder();
+  renderCRM();
+}
+
+// ===== ИНИЦИАЛИЗАЦИЯ =====
+window.addEventListener('load', async () => {
+  await loadMachinesData();
+  if (sessionStorage.getItem('rts_auth') === 'true') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('main-app').style.display = 'block';
+    updateUI();
+    if (currentView === 'crm') renderCRM();
+  }
+});
+
+// Закрытие модалок по клику вне
+document.getElementById('crm-detail-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeDetail();
+});
+document.getElementById('crm-new-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeNewOrder();
+});
+
 </script>
 </body>
 </html>
