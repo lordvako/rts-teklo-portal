@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -265,6 +265,30 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
   #crm-view { padding: 16px; }
   .crm-detail-content { padding: 20px; margin: 10px; }
 }
+.global-toolbar {display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:20px 32px;max-width:1400px;margin:0 auto 18px;background:rgba(30,41,59,.35);border:1px solid rgba(148,163,184,.12);border-radius:14px}
+.global-toolbar label{font-size:12px;font-weight:700;color:#a8bdd8}
+.global-toolbar select,.global-toolbar input{background:#19283d;color:#edf5ff;border:1px solid #38506b;border-radius:9px;padding:10px 12px;font:inherit;min-width:145px}
+.global-toolbar input{flex:1;min-width:220px}
+.global-toolbar .filter-btn{padding:10px 15px}
+
+/* ===== IRIS GLOBAL COMMAND CENTER / 2026 VISUAL SYSTEM ===== */
+:root{--primary:#0879cf;--primary-light:#12baff;--accent:#f6c342;--accent-glow:rgba(246,195,66,.18);--bg-dark:#061224;--bg-card:rgba(16,35,60,.9);--border:rgba(93,166,230,.17);--text:#edf5ff;--text-muted:#8da7c4}
+body{background:#061224;font-family:Inter,system-ui,sans-serif}
+.bg-animation{background:radial-gradient(ellipse at 10% 80%,#092e50 0%,transparent 48%),radial-gradient(ellipse at 80% 10%,#13213a 0%,transparent 46%),#061224}
+.bg-animation::before{background-size:48px 48px;opacity:.5}
+.header{background:rgba(4,14,30,.95);border-bottom:1px solid #1a3556;box-shadow:0 6px 30px #0003;padding:13px 28px}
+.header-title{letter-spacing:-.5px;font-size:19px}.header-title span{color:#f7c642}.nav-tabs{background:#0d2038}.nav-tab.active{background:#124b7d;box-shadow:inset 0 0 0 1px #2c7dbc}.user-badge{background:#0e213b}
+#company-view,#crm-view{max-width:1600px;margin:auto}.company-grid{max-width:1540px;gap:20px;padding:44px 32px}.company-card{background:linear-gradient(140deg,#122b49,#0a1c32);border-color:#254b70;box-shadow:0 14px 36px #0003}.company-card:hover{border-color:#10bfff;box-shadow:0 18px 45px #008aff25}.company-logo{color:#fff!important;background:linear-gradient(135deg,#03407c,#0099f2)!important;border-color:#1398ed}.company-card h3{color:#fff}.login-card,.crm-stat-card,.crm-table-wrap,.crm-detail-content,.crm-new-content{background:linear-gradient(145deg,#142a45,#0d1d34);border:1px solid #244466}.login-btn,.crm-btn-primary{background:linear-gradient(115deg,#005fa9,#09a9e9)}
+#iris-view{max-width:none;margin:0}.iris-hero{padding:37px clamp(20px,4vw,72px);display:flex;align-items:center;justify-content:space-between;gap:22px;min-height:222px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 72% 35%,#0d54804d,transparent 50%),linear-gradient(110deg,#06172e,#082b4a 63%,#07172d);border-bottom:1px solid #16446b}.iris-hero:after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(125deg,transparent 0 55px,#41c8ff08 56px 57px)}.iris-hero>div{position:relative;z-index:1}.eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;color:#4acaff}.iris-hero h1{font-size:clamp(30px,3.3vw,56px);letter-spacing:-2px;line-height:1.05;font-weight:800;max-width:900px;margin:14px 0 12px}.iris-hero h1 em{color:#f7c441;font-style:normal}.iris-hero p{color:#9abbd5;font-size:14px;line-height:1.6}.hero-symbol{font-size:clamp(45px,6vw,110px);font-weight:900;font-style:italic;letter-spacing:-8px;color:#e9f8ff;text-shadow:0 0 35px #008cff8c;white-space:nowrap}.hero-symbol span{display:block;letter-spacing:3px;font-style:normal;font-size:10px;text-align:right;color:#3bcaff}
+.command-layout{display:grid;grid-template-columns:245px minmax(0,1fr);max-width:1900px;margin:0 auto;min-height:750px}.command-sidebar{background:linear-gradient(#071b34,#061428);border-right:1px solid #164169;padding:25px 16px;position:relative}.sidebar-brand{font-size:13px;font-weight:800;letter-spacing:1px;color:#5acfff;padding:8px 12px 24px}.sidebar-caption{font-size:10px;font-weight:800;color:#6e91b5;letter-spacing:1.8px;padding:20px 12px 9px}.side-link,.country-shortcut{width:100%;display:flex;align-items:center;justify-content:space-between;border:1px solid transparent;border-radius:10px;background:transparent;color:#a9c1db;padding:13px 12px;text-align:left;font-family:inherit;font-weight:600;cursor:pointer;transition:.2s}.side-link:hover,.country-shortcut:hover{background:#123355;color:white}.side-link.active,.country-shortcut.active{color:#fff;background:linear-gradient(90deg,#095b9e,#103a64);border-color:#2477ac;box-shadow:inset 3px 0 #12baff}.country-shortcut{font-size:12px;padding:11px 12px}.country-shortcut b{background:#163a60;padding:3px 8px;border-radius:7px;color:#f9c640}.sidebar-foot{font-size:11px;color:#4ccaff;line-height:1.9;margin:38px 12px 10px;border-top:1px solid #1b3a5a;padding-top:22px}.sidebar-foot small{color:#708fae}
+.command-main{min-width:0;padding:24px clamp(16px,2.6vw,44px) 60px;background:linear-gradient(180deg,#08172b,#0a1c34 70%,#071528)}.command-topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#b5cde4;font-size:11px;font-weight:800;letter-spacing:1.5px;margin:2px 0 23px}.topbar-muted{color:#5e86a8}.topbar-tag{border:1px solid #225d8d;color:#36c4ff;border-radius:7px;padding:7px 11px;white-space:nowrap}.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1be5ac;box-shadow:0 0 14px #1be5ac;margin-right:8px}
+.command-filters{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:0 0 22px;background:#10243d;border:1px solid #214264;padding:14px;border-radius:14px}.command-filters label{font-size:10px;font-weight:800;letter-spacing:1.4px;color:#7599bd;display:flex;flex-direction:column;gap:7px;min-width:140px}.command-filters .search-label{flex:1;min-width:220px}.command-filters select,.command-filters input{background:#07192e;border:1px solid #244968;color:#dceeff;border-radius:9px;padding:11px 13px;outline:none;font:500 12px Inter,system-ui;width:100%}.command-filters select:focus,.command-filters input:focus{border-color:#00b8ff;box-shadow:0 0 0 2px #00aaff1b}.export-btn{background:linear-gradient(110deg,#0063b3,#009ee4);border:1px solid #2eabf3;border-radius:9px;color:white;padding:12px 18px;font-weight:800;cursor:pointer;white-space:nowrap}
+#iris-view .stats-bar{padding:0;max-width:none;gap:14px;margin:0 0 23px;grid-template-columns:repeat(4,minmax(0,1fr))}#iris-view .stat-card{background:linear-gradient(140deg,#162e4d,#0d223b);border:1px solid #244769;border-radius:15px;padding:23px 21px;min-width:0;position:relative}#iris-view .stat-card:hover{border-color:#159ee4;transform:translateY(-2px);transition:.25s}#iris-view .stat-icon{position:absolute;right:18px;top:16px;color:#238fca;font-size:26px}#iris-view .stat-value{font-size:clamp(30px,3vw,45px);color:#fff;background:none;-webkit-text-fill-color:initial}#iris-view .stat-label{font-size:11px;letter-spacing:1.3px;font-weight:700;color:#829fbb}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.insight-card{min-width:0;background:linear-gradient(150deg,#112944,#0b1e35);border:1px solid #22486c;border-radius:15px;padding:24px;margin-bottom:18px;box-shadow:0 12px 30px #0002}.history-card{margin-top:0}.command-main .section-title{font-size:17px;font-weight:800;color:#f5faff;letter-spacing:-.4px;padding:0;margin:0 0 23px}.command-main .section-title:before{background:linear-gradient(#f9ca43,#02aeff)}.command-main .plant-dist{padding:0;max-width:none}.command-main .plant-bar{gap:12px;margin-bottom:16px}.command-main .plant-name{min-width:140px;width:36%;font-size:12px;color:#b4cee8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.command-main .plant-progress{height:24px;background:#08182d;border:1px solid #1c3a5a;border-radius:7px;overflow:hidden}.command-main .plant-progress-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#0b6fc3,#19c0ff)!important;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:12px;font-weight:800;min-width:26px}.command-main .timeline-container{padding:0;max-width:none}.command-main .timeline-item{min-width:130px;background:#102b48;border:1px solid #234c72}.command-main .timeline-year{color:#f5c83e}.command-main .timeline-count{color:white}
+#panel-machines>.section-title{margin-top:8px}.result-count{font-size:12px;color:#51cfff}.command-main .filters{max-width:none;padding:0 0 20px;gap:8px}.command-main .filter-btn{padding:10px 15px;border-color:#274968;background:#112842}.command-main .filter-btn.active{background:#0769ad;border-color:#22bfff}.command-main .equipment-grid{max-width:none;padding:0;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}.command-main .eq-card{background:linear-gradient(155deg,#152e4b,#0c1e35);border:1px solid #24476a;border-radius:15px}.command-main .eq-card:hover{border-color:#00b8ff;box-shadow:0 14px 35px #0099ff17}.command-main .eq-header{padding:19px 20px}.command-main .eq-body{padding:17px 20px}.command-main .eq-title{color:#fff}.command-main .eq-extra-row .tag{color:#f9cc4a;background:#f9c54216}.command-main .warranty-section{padding:0 20px 17px}.command-main .spare-parts{padding:0 20px 17px}.command-main .eq-comments{padding:0 20px 18px}.command-main .spare-item{background:#ffffff09}.analytics-note{color:#829db8;font-size:12px}.analytics-bar{margin:14px 0}.analytics-bar-label{display:flex;justify-content:space-between;font-size:12px;color:#b6cee8;margin-bottom:6px}.analytics-track{height:12px;background:#071a2e;border-radius:10px;overflow:hidden}.analytics-fill{height:100%;background:linear-gradient(90deg,#0771c7,#28c5ff);border-radius:10px}
+@media(max-width:1100px){.command-layout{grid-template-columns:200px minmax(0,1fr)}.insight-grid{grid-template-columns:1fr}.iris-hero{min-height:190px}.hero-symbol{font-size:56px}}
+@media(max-width:760px){.command-layout{display:block}.command-sidebar{display:flex;flex-wrap:wrap;gap:6px;padding:12px;align-items:center}.sidebar-brand{padding:8px}.sidebar-caption,.country-shortcuts,.sidebar-foot{display:none}.side-link{width:auto;font-size:12px;padding:10px}.command-main{padding:17px 12px 40px}.iris-hero{padding:25px 18px}.iris-hero h1{font-size:32px}.hero-symbol{display:none}#iris-view .stats-bar{grid-template-columns:repeat(2,minmax(0,1fr))}.command-main .equipment-grid{grid-template-columns:1fr}.command-main .plant-name{min-width:90px}.topbar-muted{display:none}}
+
 </style>
 </head>
 <body>
@@ -272,7 +296,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 
 <div class="loading-overlay" id="loading-overlay">
   <div class="spinner"></div>
-  <p style="color: var(--text-muted); font-size: 14px;" id="loading-text">Загрузка данных...</p>
+  <p style="color: var(--text-muted); font-size: 14px;" id="loading-text">Loading data...</p>
 </div>
 
 <div id="login-screen">
@@ -282,38 +306,38 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
       <p id="login-subtitle">Equipment Portal + CRM</p>
     </div>
     <div class="input-group">
-      <label id="login-label">Логин</label>
-      <input type="text" id="login-input" placeholder="Введите логин">
+      <label id="login-label">Login</label>
+      <input type="text" id="login-input" placeholder="Enter username">
     </div>
     <div class="input-group">
-      <label id="password-label">Пароль</label>
-      <input type="password" id="password-input" placeholder="Введите пароль">
+      <label id="password-label">Password</label>
+      <input type="password" id="password-input" placeholder="Enter password">
     </div>
-    <button class="login-btn" id="login-btn" onclick="doLogin()">Войти в систему</button>
-    <div class="error-msg" id="error-msg">Неверный логин или пароль</div>
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="error-msg" id="error-msg">Invalid username or password</div>
   </div>
 </div>
 
 <div id="main-app">
   <div class="header">
     <div class="header-left">
-      <button class="back-btn" id="back-btn" onclick="goBack()">← Назад</button>
-      <div class="header-title">RTD <span id="page-subtitle">— Выбор компании</span></div>
+      <button class="back-btn" id="back-btn" onclick="goBack()">← Back</button>
+      <div class="header-title">RTD <span id="page-subtitle">— Select Company</span></div>
       <div class="nav-tabs">
-        <button class="nav-tab active" onclick="switchTab('company')" id="tab-company">🏢 Компании</button>
-        <button class="nav-tab" onclick="switchTab('crm')" id="tab-crm">📋 Заявки</button>
+        <button class="nav-tab active" onclick="switchTab('company')" id="tab-company">🏢 Companies</button>
+        <button class="nav-tab" onclick="switchTab('crm')" id="tab-crm">📋 Applications</button>
       </div>
     </div>
     <div class="header-right">
       <div class="lang-switch">
-        <button class="lang-btn active" data-lang="ru" onclick="switchLang('ru')">РУ</button>
-        <button class="lang-btn" data-lang="en" onclick="switchLang('en')">EN</button>
+        
+        <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
       </div>
       <div class="user-badge">
         <div class="dot"></div>
         <span id="user-name">ritsteklo</span>
         <span style="color:var(--text-muted)">|</span>
-        <span style="cursor:pointer;color:var(--danger)" id="logout-btn" onclick="logout()">Выход</span>
+        <span style="cursor:pointer;color:var(--danger)" id="logout-btn" onclick="logout()">Logout</span>
       </div>
     </div>
   </div>
@@ -324,25 +348,25 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
       <div class="company-card" onclick="selectCompany('iris')">
         <div class="company-logo" style="background: linear-gradient(135deg, #1a3a5c, #2a5a8c);">IRIS</div>
         <h3>IRIS Inspection Machines</h3>
-        <p>Системы инспекции стекла. Оборудование для контроля качества стеклянной тары и изделий.</p>
+        <p>Glass inspection systems and quality-control equipment for glass containers.</p>
         <div class="arrow">→</div>
       </div>
       <div class="company-card" onclick="selectCompany('bottero')">
         <div class="company-logo" style="background: linear-gradient(135deg, #0066b2, #0099cc);">B</div>
         <h3>Bottero</h3>
-        <p>Итальянская компания — мировой лидер в производстве оборудования для обработки плоского и полого стекла.</p>
+        <p>Italian manufacturer of equipment for flat and hollow glass.</p>
         <div class="arrow">→</div>
       </div>
       <div class="company-card" onclick="selectCompany('fermac')">
         <div class="company-logo" style="background: linear-gradient(135deg, #1e3a5f, #2d5a87);">F</div>
         <h3>Fermac</h3>
-        <p>Оборудование для стекольной промышленности. Запасные части и сервисное обслуживание.</p>
+        <p>Equipment, spare parts and services for the glass industry.</p>
         <div class="arrow">→</div>
       </div>
       <div class="company-card" onclick="selectCompany('carmet')">
         <div class="company-logo" style="background: linear-gradient(135deg, #c41e3a, #e85d75);">C</div>
         <h3>Carmet</h3>
-        <p>Специализированное оборудование для производства стекла. Инновационные решения.</p>
+        <p>Specialized glass manufacturing equipment and innovative solutions.</p>
         <div class="arrow">→</div>
       </div>
     </div>
@@ -351,25 +375,25 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
   <!-- ВКЛАДКА: CRM ЗАЯВКИ -->
   <div id="crm-view">
     <div class="crm-header">
-      <h2>Управление заявками</h2>
-      <button class="crm-btn crm-btn-accent" onclick="openNewOrder()">➕ Новая заявка</button>
+      <h2>Application Management</h2>
+      <button class="crm-btn crm-btn-accent" onclick="openNewOrder()">➕ New Application</button>
     </div>
 
     <!-- KPI -->
     <div class="crm-stats" id="crm-stats">
-      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-total">0</div><div class="crm-stat-label">Всего заявок</div></div>
-      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-active">0</div><div class="crm-stat-label">В работе</div></div>
-      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-done">0</div><div class="crm-stat-label">Завершено</div></div>
-      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-urgent">0</div><div class="crm-stat-label">Срочных</div></div>
+      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-total">0</div><div class="crm-stat-label">Total Applications</div></div>
+      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-active">0</div><div class="crm-stat-label">In Progress</div></div>
+      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-done">0</div><div class="crm-stat-label">Completed</div></div>
+      <div class="crm-stat-card"><div class="crm-stat-number" id="crm-urgent">0</div><div class="crm-stat-label">Urgent</div></div>
     </div>
 
     <!-- Фильтры -->
     <div class="crm-filters" id="crm-filters">
-      <button class="crm-filter-btn active" onclick="filterCRM('all')">Все</button>
-      <button class="crm-filter-btn" onclick="filterCRM('equipment')">Оборудование</button>
-      <button class="crm-filter-btn" onclick="filterCRM('spare')">Запчасти</button>
-      <button class="crm-filter-btn" onclick="filterCRM('active')">В работе</button>
-      <button class="crm-filter-btn" onclick="filterCRM('done')">Завершено</button>
+      <button class="crm-filter-btn active" onclick="filterCRM('all')">All</button>
+      <button class="crm-filter-btn" onclick="filterCRM('equipment')">Equipment</button>
+      <button class="crm-filter-btn" onclick="filterCRM('spare')">Spare Parts</button>
+      <button class="crm-filter-btn" onclick="filterCRM('active')">In Progress</button>
+      <button class="crm-filter-btn" onclick="filterCRM('done')">Completed</button>
     </div>
 
     <!-- Таблица заявок -->
@@ -378,12 +402,12 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
         <thead>
           <tr>
             <th>№</th>
-            <th>Клиент</th>
-            <th>Тип</th>
-            <th>Оборудование / Запчасть</th>
-            <th>Статус</th>
-            <th>Срок</th>
-            <th>Менеджер</th>
+            <th>Customer</th>
+            <th>Type</th>
+            <th>Equipment / Spare Part</th>
+            <th>Status</th>
+            <th>Deadline</th>
+            <th>Manager</th>
             <th></th>
           </tr>
         </thead>
@@ -396,13 +420,13 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
   <div class="crm-detail-modal" id="crm-detail-modal">
     <div class="crm-detail-content">
       <div class="crm-detail-header">
-        <h3 id="crm-detail-title">Заявка №</h3>
+        <h3 id="crm-detail-title">Application #</h3>
         <button class="crm-detail-close" onclick="closeDetail()">×</button>
       </div>
       <div id="crm-detail-body"></div>
       <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
-        <button class="crm-btn crm-btn-primary" onclick="changeStatus()">Изменить статус →</button>
-        <button class="crm-btn" style="background:rgba(255,255,255,0.05);color:var(--text);" onclick="closeDetail()">Закрыть</button>
+        <button class="crm-btn crm-btn-primary" onclick="changeStatus()">Change Status →</button>
+        <button class="crm-btn" style="background:rgba(255,255,255,0.05);color:var(--text);" onclick="closeDetail()">Close</button>
       </div>
     </div>
   </div>
@@ -410,73 +434,79 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
   <!-- МОДАЛКА НОВОЙ ЗАЯВКИ -->
   <div class="crm-new-modal" id="crm-new-modal">
     <div class="crm-new-content">
-      <h3>➕ Новая заявка</h3>
+      <h3>➕ New Application</h3>
       <div class="input-group">
-        <label>Тип заявки</label>
+        <label>Application Type</label>
         <select id="new-order-type">
-          <option value="equipment">Оборудование</option>
-          <option value="spare">Запасные части</option>
+          <option value="equipment">Equipment</option>
+          <option value="spare">Spare Parts</option>
         </select>
       </div>
       <div class="input-group">
-        <label>Клиент (организация)</label>
-        <input type="text" id="new-order-client" placeholder="ООО «Стеклозавод»">
+        <label>Customer (Company)</label>
+        <input type="text" id="new-order-client" placeholder="Glass Plant Ltd.">
       </div>
       <div class="input-group">
-        <label>Оборудование / Запчасть</label>
-        <input type="text" id="new-order-item" placeholder="IRIS Evolution 16 / Ремкомплект">
+        <label>Equipment / Spare Part</label>
+        <input type="text" id="new-order-item" placeholder="IRIS Evolution 16 / Service kit">
       </div>
       <div class="input-group">
-        <label>Количество</label>
+        <label>Quantity</label>
         <input type="text" id="new-order-qty" placeholder="1">
       </div>
       <div class="input-group">
-        <label>Срочность</label>
+        <label>Urgency</label>
         <select id="new-order-urgency">
-          <option value="normal">Обычная</option>
-          <option value="urgent">Срочная 🔴</option>
+          <option value="normal">Normal</option>
+          <option value="urgent">Urgent 🔴</option>
         </select>
       </div>
       <div class="input-group">
-        <label>Комментарий</label>
-        <textarea id="new-order-comment" placeholder="Дополнительная информация..."></textarea>
+        <label>Comment</label>
+        <textarea id="new-order-comment" placeholder="Additional information..."></textarea>
       </div>
       <div class="crm-new-actions">
-        <button class="login-btn" onclick="saveNewOrder()">Создать заявку</button>
-        <button class="crm-btn" style="background:rgba(255,255,255,0.05);color:var(--text);" onclick="closeNewOrder()">Отмена</button>
+        <button class="login-btn" onclick="saveNewOrder()">Create Application</button>
+        <button class="crm-btn" style="background:rgba(255,255,255,0.05);color:var(--text);" onclick="closeNewOrder()">Cancel</button>
       </div>
     </div>
   </div>
 
-  <!-- IRIS VIEW (остаётся как было) -->
+  <!-- IRIS GLOBAL COMMAND CENTER -->
   <div id="iris-view" style="display:none;">
-    <div class="stats-bar">
-      <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label" id="stat-total-label">Всего машин</div></div>
-      <div class="stat-card"><div class="stat-value" id="stat-active">0</div><div class="stat-label" id="stat-active-label">На гарантии</div></div>
-      <div class="stat-card"><div class="stat-value" id="stat-expired">0</div><div class="stat-label" id="stat-expired-label">Гарантия истекла</div></div>
-      <div class="stat-card"><div class="stat-value" id="stat-plants">0</div><div class="stat-label" id="stat-plants-label">Заводов</div></div>
+    <div class="iris-hero"><div><div class="eyebrow">IRIS INSPECTION MACHINES / GLOBAL EQUIPMENT INTELLIGENCE</div><h1>ALL OUR MACHINES <em>IN ONE PLACE.</em></h1><p>One connected equipment database. Every country. Every plant. Every installation.</p></div><div class="hero-symbol">IRIS<span>GLOBAL SERVICE HUB</span></div></div>
+    <div class="command-layout">
+      <aside class="command-sidebar">
+        <div class="sidebar-brand">◈ &nbsp; COMMAND CENTER</div>
+        <div class="sidebar-caption">WORKSPACE</div>
+        <button class="side-link active" data-panel="overview" onclick="showPortalPanel('overview')">◉ &nbsp; Overview</button>
+        <button class="side-link" data-panel="machines" onclick="showPortalPanel('machines')">▣ &nbsp; Machines</button>
+        <button class="side-link" data-panel="analytics" onclick="showPortalPanel('analytics')">▥ &nbsp; Analytics</button>
+        <div class="sidebar-caption">COUNTRY FILTER</div>
+        <div id="country-shortcuts" class="country-shortcuts"></div>
+        <div class="sidebar-foot">● &nbsp; IRIS EQUIPMENT DATABASE<br><small>Source: machines.json</small></div>
+      </aside>
+      <main class="command-main">
+        <div class="command-topbar"><div><span class="live-dot"></span> EQUIPMENT INTELLIGENCE <span class="topbar-muted">/ CENTRALIZED OPERATIONS</span></div><div class="topbar-tag">GLOBAL VIEW</div></div>
+        <div class="command-filters" id="global-toolbar"><label>COUNTRY<select id="country-filter" onchange="applyEquipmentFilters();syncCountryShortcuts()"><option value="all">All countries</option></select></label><label>PLANT<select id="plant-filter" onchange="applyEquipmentFilters()"><option value="all">All plants</option></select></label><label class="search-label">SEARCH<input id="machine-search" type="search" oninput="applyEquipmentFilters()" placeholder="Search machines, plants, serial numbers..."></label><button class="export-btn" onclick="exportFilteredCSV()">↓ Export CSV</button></div>
+        <div class="stats-bar">
+          <div class="stat-card"><div class="stat-icon">◈</div><div class="stat-value" id="stat-total">0</div><div class="stat-label" id="stat-total-label">Total Machines</div></div>
+          <div class="stat-card"><div class="stat-icon">✓</div><div class="stat-value" id="stat-active">0</div><div class="stat-label" id="stat-active-label">Under Warranty</div></div>
+          <div class="stat-card"><div class="stat-icon">◷</div><div class="stat-value" id="stat-expired">0</div><div class="stat-label" id="stat-expired-label">Warranty Expired</div></div>
+          <div class="stat-card"><div class="stat-icon">⌂</div><div class="stat-value" id="stat-plants">0</div><div class="stat-label" id="stat-plants-label">Plants</div></div>
+        </div>
+        <div class="portal-panel" id="panel-overview"><div class="insight-grid"><div class="insight-card"><div class="section-title" id="country-dist-title">Distribution by Country</div><div class="plant-dist" id="country-dist"></div></div><div class="insight-card"><div class="section-title" id="plant-dist-title">Distribution by Plant</div><div class="plant-dist" id="plant-dist"></div></div></div><div class="insight-card history-card"><div class="section-title" id="timeline-title">Installation History by Year</div><div class="timeline-container"><div class="timeline" id="timeline"></div></div></div></div>
+        <div class="portal-panel" id="panel-machines" style="display:none"><div class="section-title" id="equipment-title">Equipment Registry <span id="visible-machine-count" class="result-count"></span></div><div class="filters" id="filters"><button class="filter-btn active" onclick="filterEq('all')" id="filter-all">All models</button><button class="filter-btn" onclick="filterEq('Evolution 5')">Evolution 5</button><button class="filter-btn" onclick="filterEq('Evolution 16')">Evolution 16</button><button class="filter-btn" onclick="filterEq('EasySet')">EasySet</button><button class="filter-btn" onclick="filterEq('Evolution 1')">Evolution 1</button><button class="filter-btn" onclick="filterEq('IBot')">IBot</button></div><div class="equipment-grid" id="equipment-grid"></div></div>
+        <div class="portal-panel" id="panel-analytics" style="display:none"><div class="insight-grid"><div class="insight-card"><div class="section-title">Installed Equipment by Country</div><div id="analytics-country"></div></div><div class="insight-card"><div class="section-title">Equipment by Model</div><div id="analytics-model"></div></div></div><p class="analytics-note">Metrics are calculated from your imported records. Unknown dates and unverified serial numbers are not inferred.</p></div>
+      </main>
     </div>
-    <div class="section-title" id="plant-dist-title">Распределение по заводам</div>
-    <div class="plant-dist" id="plant-dist"></div>
-    <div class="section-title" id="timeline-title">История поставок по годам</div>
-    <div class="timeline-container"><div class="timeline" id="timeline"></div></div>
-    <div class="section-title" id="equipment-title">Оборудование IRIS</div>
-    <div class="filters" id="filters">
-      <button class="filter-btn active" onclick="filterEq('all')" id="filter-all">Все</button>
-      <button class="filter-btn" onclick="filterEq('Evolution 5')">Evolution 5</button>
-      <button class="filter-btn" onclick="filterEq('Evolution 16')">Evolution 16</button>
-      <button class="filter-btn" onclick="filterEq('EasySet')">EasySet</button>
-      <button class="filter-btn" onclick="filterEq('Evolution 1')">Evolution 1</button>
-      <button class="filter-btn" onclick="filterEq('IBot')">IBot</button>
-    </div>
-    <div class="equipment-grid" id="equipment-grid"></div>
   </div>
 
   <div id="other-view" style="display:none; padding: 60px 32px; text-align: center;">
     <div style="font-size: 64px; margin-bottom: 20px;">🔧</div>
-    <h2 id="other-title" style="font-size: 24px; margin-bottom: 12px;">Раздел в разработке</h2>
-    <p id="other-desc" style="color: var(--text-muted);">Данные по этой компании будут добавлены позже.</p>
-    <button class="login-btn" style="max-width: 200px; margin-top: 24px;" onclick="goBack()" id="other-back">Вернуться назад</button>
+    <h2 id="other-title" style="font-size: 24px; margin-bottom: 12px;">Coming Soon</h2>
+    <p id="other-desc" style="color: var(--text-muted);">Data for this company will be added later.</p>
+    <button class="login-btn" style="max-width: 200px; margin-top: 24px;" onclick="goBack()" id="other-back">Go Back</button>
   </div>
 </div>
 
@@ -485,7 +515,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(
 let irisData = [];
 let currentFilter = 'all';
 let currentView = 'company';
-let currentLang = 'ru';
+let currentLang = 'en';
 let crmFilter = 'all';
 
 const VALID_LOGIN = 'ritsteklo';
@@ -493,76 +523,66 @@ const VALID_PASSWORD = '2026';
 
 // ===== СТАТУСЫ =====
 const STATUSES = [
-  { id: 'new', label: 'Заявка получена', icon: '📋', color: 'status-new' },
-  { id: 'doc', label: 'ТКП / Документация', icon: '📄', color: 'status-doc' },
-  { id: 'contract', label: 'Договор', icon: '✍️', color: 'status-contract' },
-  { id: 'payment', label: 'Предоплата', icon: '💰', color: 'status-payment' },
-  { id: 'production', label: 'Производство', icon: '🏭', color: 'status-production' },
-  { id: 'shipping', label: 'Отгрузка', icon: '🚢', color: 'status-shipping' },
-  { id: 'customs', label: 'Таможня', icon: '🛃', color: 'status-customs' },
-  { id: 'delivery', label: 'Доставка', icon: '🚛', color: 'status-delivery' },
-  { id: 'install', label: 'Монтаж', icon: '🔧', color: 'status-install' },
-  { id: 'done', label: 'Сдано', icon: '✅', color: 'status-done' }
+  { id: 'new', label: 'Application Received', icon: '📋', color: 'status-new' },
+  { id: 'doc', label: 'Quotation / Documentation', icon: '📄', color: 'status-doc' },
+  { id: 'contract', label: 'Contract', icon: '✍️', color: 'status-contract' },
+  { id: 'payment', label: 'Advance Payment', icon: '💰', color: 'status-payment' },
+  { id: 'production', label: 'Production', icon: '🏭', color: 'status-production' },
+  { id: 'shipping', label: 'Shipping', icon: '🚢', color: 'status-shipping' },
+  { id: 'customs', label: 'Customs', icon: '🛃', color: 'status-customs' },
+  { id: 'delivery', label: 'Delivery', icon: '🚛', color: 'status-delivery' },
+  { id: 'install', label: 'Installation', icon: '🔧', color: 'status-install' },
+  { id: 'done', label: 'Completed', icon: '✅', color: 'status-done' }
 ];
 
 // ===== ПРИМЕРНЫЕ ЗАЯВКИ (для демо) =====
 let orders = [
-  { id: 1, type: 'equipment', client: 'ООО "Стеклозавод №1"', item: 'IRIS Evolution 16', qty: '2 шт', urgency: 'normal',
-    status: 'production', manager: 'Петров С.И.', date: '15.05.2026', deadline: '15.08.2026',
+  { id: 1, type: 'equipment', client: 'Glass Plant No. 1 Ltd.', item: 'IRIS Evolution 16', qty: '2 pcs', urgency: 'normal',
+    status: 'production', manager: 'Peter S.', date: '15.05.2026', deadline: '15.08.2026',
     history: [
-      { date: '15.05.2026', status: 'new', user: 'Иванов И.И.' },
-      { date: '18.05.2026', status: 'doc', user: 'Иванов И.И.' },
-      { date: '22.05.2026', status: 'contract', user: 'Петров С.И.' },
-      { date: '10.06.2026', status: 'payment', user: 'Сидорова А.В.' },
-      { date: '12.06.2026', status: 'production', user: 'Петров С.И.' }
+      { date: '15.05.2026', status: 'new', user: 'Ivan I.' },
+      { date: '18.05.2026', status: 'doc', user: 'Ivan I.' },
+      { date: '22.05.2026', status: 'contract', user: 'Peter S.' },
+      { date: '10.06.2026', status: 'payment', user: 'Anna S.' },
+      { date: '12.06.2026', status: 'production', user: 'Peter S.' }
     ] },
-  { id: 2, type: 'equipment', client: 'ЗАО "Бутылка"', item: 'IRIS Evolution 5', qty: '1 шт', urgency: 'normal',
-    status: 'customs', manager: 'Иванов И.И.', date: '20.05.2026', deadline: '22.08.2026',
+  { id: 2, type: 'equipment', client: 'Bottle Factory JSC', item: 'IRIS Evolution 5', qty: '1 pc', urgency: 'normal',
+    status: 'customs', manager: 'Ivan I.', date: '20.05.2026', deadline: '22.08.2026',
     history: [
-      { date: '20.05.2026', status: 'new', user: 'Иванов И.И.' },
-      { date: '23.05.2026', status: 'doc', user: 'Иванов И.И.' },
-      { date: '28.05.2026', status: 'contract', user: 'Иванов И.И.' },
-      { date: '05.06.2026', status: 'payment', user: 'Сидорова А.В.' },
-      { date: '15.06.2026', status: 'shipping', user: 'Петров С.И.' },
-      { date: '10.07.2026', status: 'customs', user: 'Сидорова А.В.' }
+      { date: '20.05.2026', status: 'new', user: 'Ivan I.' },
+      { date: '23.05.2026', status: 'doc', user: 'Ivan I.' },
+      { date: '28.05.2026', status: 'contract', user: 'Ivan I.' },
+      { date: '05.06.2026', status: 'payment', user: 'Anna S.' },
+      { date: '15.06.2026', status: 'shipping', user: 'Peter S.' },
+      { date: '10.07.2026', status: 'customs', user: 'Anna S.' }
     ] },
-  { id: 3, type: 'spare', client: 'ООО "Стеклозавод №1"', item: 'Ремкомплект для Evolution 16', qty: '3 шт', urgency: 'urgent',
-    status: 'delivery', manager: 'Сидорова А.В.', date: '01.06.2026', deadline: '01.08.2026',
+  { id: 3, type: 'spare', client: 'Glass Plant No. 1 Ltd.', item: 'Service kit for Evolution 16', qty: '3 pcs', urgency: 'urgent',
+    status: 'delivery', manager: 'Anna S.', date: '01.06.2026', deadline: '01.08.2026',
     history: [
-      { date: '01.06.2026', status: 'new', user: 'Сидорова А.В.' },
-      { date: '03.06.2026', status: 'shipping', user: 'Сидорова А.В.' },
-      { date: '15.06.2026', status: 'delivery', user: 'Иванов И.И.' }
+      { date: '01.06.2026', status: 'new', user: 'Anna S.' },
+      { date: '03.06.2026', status: 'shipping', user: 'Anna S.' },
+      { date: '15.06.2026', status: 'delivery', user: 'Ivan I.' }
     ] },
-  { id: 4, type: 'spare', client: 'ЗАО "Бутылка"', item: 'Форма для бутылки 0.5л', qty: '5 шт', urgency: 'normal',
-    status: 'done', manager: 'Петров С.И.', date: '10.04.2026', deadline: '20.05.2026',
+  { id: 4, type: 'spare', client: 'Bottle Factory JSC', item: 'Bottle mold 0.5 L', qty: '5 pcs', urgency: 'normal',
+    status: 'done', manager: 'Peter S.', date: '10.04.2026', deadline: '20.05.2026',
     history: [
-      { date: '10.04.2026', status: 'new', user: 'Петров С.И.' },
-      { date: '12.04.2026', status: 'shipping', user: 'Петров С.И.' },
-      { date: '20.04.2026', status: 'delivery', user: 'Сидорова А.В.' },
-      { date: '20.05.2026', status: 'done', user: 'Сидорова А.В.' }
+      { date: '10.04.2026', status: 'new', user: 'Peter S.' },
+      { date: '12.04.2026', status: 'shipping', user: 'Peter S.' },
+      { date: '20.04.2026', status: 'delivery', user: 'Anna S.' },
+      { date: '20.05.2026', status: 'done', user: 'Anna S.' }
     ] },
-  { id: 5, type: 'equipment', client: 'ООО "Хрусталь"', item: 'IRIS EasySet', qty: '1 шт', urgency: 'urgent',
-    status: 'contract', manager: 'Иванов И.И.', date: '25.06.2026', deadline: '10.09.2026',
+  { id: 5, type: 'equipment', client: 'Crystal Glass Ltd.', item: 'IRIS EasySet', qty: '1 pc', urgency: 'urgent',
+    status: 'contract', manager: 'Ivan I.', date: '25.06.2026', deadline: '10.09.2026',
     history: [
-      { date: '25.06.2026', status: 'new', user: 'Иванов И.И.' },
-      { date: '28.06.2026', status: 'doc', user: 'Иванов И.И.' },
-      { date: '05.07.2026', status: 'contract', user: 'Иванов И.И.' }
+      { date: '25.06.2026', status: 'new', user: 'Ivan I.' },
+      { date: '28.06.2026', status: 'doc', user: 'Ivan I.' },
+      { date: '05.07.2026', status: 'contract', user: 'Ivan I.' }
     ] }
 ];
 let nextOrderId = 6;
 
 // ===== ПЕРЕВОДЫ =====
 const LANG = {
-  ru: {
-    loading: 'Загрузка данных...',
-    login_subtitle: 'Equipment Portal + CRM',
-    login_label: 'Логин', password_label: 'Пароль',
-    login_placeholder: 'Введите логин', password_placeholder: 'Введите пароль',
-    login_btn: 'Войти в систему', login_error: 'Неверный логин или пароль',
-    logout: 'Выход', back: '← Назад',
-    page_title: '— Выбор компании',
-    // ... остальные переводы
-  },
   en: {
     loading: 'Loading data...',
     login_subtitle: 'Equipment Portal + CRM',
@@ -577,9 +597,9 @@ function t(key) { return LANG[currentLang]?.[key] || key; }
 
 // ===== ЯЗЫК =====
 function switchLang(lang) {
-  currentLang = lang;
+  currentLang = 'en';
   document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
-  document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+  document.documentElement.lang = 'en';
   updateUI();
   if (currentView === 'iris') renderIrisDashboard();
   if (currentView === 'crm') renderCRM();
@@ -642,7 +662,7 @@ function switchTab(tab) {
     document.getElementById('iris-view').style.display = 'none';
     document.getElementById('other-view').style.display = 'none';
     document.getElementById('back-btn').style.display = 'none';
-    document.getElementById('page-subtitle').textContent = '— CRM Заявки';
+    document.getElementById('page-subtitle').textContent = '— CRM Applications';
     currentView = 'crm';
     renderCRM();
   }
@@ -687,25 +707,25 @@ async function loadMachinesData() {
     }
     if (!response.ok) throw new Error('HTTP ' + response.status);
     irisData = await response.json();
-    irisData = irisData.filter(d => d.equipment && d.equipment !== 'Grand total' && d.equipment !== 'Total' && d.equipment !== 'Итого');
+    irisData = irisData.filter(d => d.equipment && d.equipment !== 'Grand total' && d.equipment !== 'Total' && d.equipment !== 'Total');
     document.getElementById('loading-overlay').classList.add('hidden');
     if (sessionStorage.getItem('rts_auth') === 'true' && currentView === 'iris') renderIrisDashboard();
     updateUI();
   } catch (e) {
     console.error('Error loading data:', e);
-    document.getElementById('loading-overlay').innerHTML = '<p style="color:var(--danger)">Ошибка загрузки данных.</p>';
+    document.getElementById('loading-overlay').innerHTML = '<p style="color:var(--danger)">Unable to load machines.json. Please run from a web server.</p>';
   }
 }
 
 // ===== IRIS DASHBOARD =====
 function calculateWarranty(installDate) {
   if (!installDate || installDate === 'Unknown' || installDate === 'N/A') {
-    return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неизвестно' };
+    return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Unknown' };
   }
   const parts = installDate.split('.');
-  if (parts.length !== 2) return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неизвестно' };
+  if (parts.length !== 2) return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Unknown' };
   const installMonth = parseInt(parts[0]), installYear = parseInt(parts[1]);
-  if (isNaN(installMonth) || isNaN(installYear)) return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Неизвестно' };
+  if (isNaN(installMonth) || isNaN(installYear)) return { status: 'unknown', percent: 0, end: 'Unknown', remaining: 'Unknown' };
   const now = new Date();
   const currentYear = now.getFullYear(), currentMonth = now.getMonth() + 1;
   let endMonth = installMonth, endYear = installYear + 1;
@@ -713,29 +733,34 @@ function calculateWarranty(installDate) {
   const endDateStr = `${String(endMonth).padStart(2, '0')}.${endYear}`;
   const elapsedMonths = (currentYear - installYear) * 12 + (currentMonth - installMonth);
   let status, percent, remaining;
-  if (elapsedMonths < 0) { status = 'pending'; percent = 0; remaining = 'Ожидает установки'; }
-  else if (elapsedMonths >= 12) { status = 'expired'; percent = 100; remaining = 'Гарантия истекла'; }
-  else { status = 'active'; percent = Math.round((elapsedMonths / 12) * 100 * 10) / 10; const leftMonths = 12 - elapsedMonths; remaining = `${Math.round(leftMonths * 10) / 10} мес. осталось`; }
+  if (elapsedMonths < 0) { status = 'pending'; percent = 0; remaining = 'Awaiting Installation'; }
+  else if (elapsedMonths >= 12) { status = 'expired'; percent = 100; remaining = 'Warranty Expired'; }
+  else { status = 'active'; percent = Math.round((elapsedMonths / 12) * 100 * 10) / 10; const leftMonths = 12 - elapsedMonths; remaining = `${Math.round(leftMonths * 10) / 10} months remaining`; }
   return { status, percent, end: endDateStr, remaining };
 }
 
 function renderIrisDashboard() {
+  populateGlobalFilters();
   const total = irisData.length;
   const active = irisData.filter(d => calculateWarranty(d.install_date).status === 'active').length;
   const expired = irisData.filter(d => calculateWarranty(d.install_date).status === 'expired').length;
-  const plants = new Set(irisData.map(d => d.plant)).size;
+  const plants = new Set(irisData.map(d => `${d.country || "Unknown"}::${d.plant}`)).size;
   animateNumber('stat-total', total);
   animateNumber('stat-active', active);
   animateNumber('stat-expired', expired);
   animateNumber('stat-plants', plants);
 
+  const countryCounts = {};
+  irisData.forEach(d => { const c=d.country || 'Unknown'; countryCounts[c]=(countryCounts[c]||0)+1; });
+  const countryMax=Math.max(1,...Object.values(countryCounts));
+  document.getElementById('country-dist').innerHTML=Object.entries(countryCounts).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`<div class="plant-bar"><div class="plant-name">${escapeHTML(c)}</div><div class="plant-progress"><div class="plant-progress-fill" style="width:${n/countryMax*100}%;background:linear-gradient(90deg,#1762a2,#04b4f5)">${n}</div></div></div>`).join('');
   const plantCounts = {};
   irisData.forEach(d => { plantCounts[d.plant] = (plantCounts[d.plant] || 0) + 1; });
-  const maxCount = Math.max(...Object.values(plantCounts));
+  const maxCount = Math.max(1,...Object.values(plantCounts));
   const colors = ['#1a3a5c','#2a5a8c','#3a7abc','#4a9adc','#5abafc'];
   document.getElementById('plant-dist').innerHTML = Object.entries(plantCounts).map(([plant, count], i) => {
     const pct = (count / maxCount * 100);
-    const shortName = plant.split(',')[0];
+    const shortName = escapeHTML(plant.split(',')[0]);
     return `<div class="plant-bar"><div class="plant-name" title="${plant}">${shortName}</div><div class="plant-progress"><div class="plant-progress-fill" style="width:0%; background: linear-gradient(90deg, ${colors[i%colors.length]}, ${colors[(i+1)%colors.length]}); color: white;" data-width="${pct}%">${count}</div></div></div>`;
   }).join('');
   setTimeout(() => { document.querySelectorAll('.plant-progress-fill').forEach(el => { el.style.width = el.dataset.width; }); }, 100);
@@ -747,7 +772,7 @@ function renderIrisDashboard() {
   }});
   const sortedYears = Object.entries(yearCounts).sort((a,b) => a[0]-b[0]);
   document.getElementById('timeline').innerHTML = sortedYears.map(([year, count]) =>
-    `<div class="timeline-item"><div class="timeline-year">${year}</div><div class="timeline-count">${count}</div><div class="timeline-label">установок</div></div>`
+    `<div class="timeline-item"><div class="timeline-year">${year}</div><div class="timeline-count">${count}</div><div class="timeline-label">installations</div></div>`
   ).join('');
 
   renderEquipmentCards();
@@ -755,7 +780,12 @@ function renderIrisDashboard() {
 }
 
 function renderEquipmentCards() {
-  const filtered = currentFilter === 'all' ? irisData : irisData.filter(d => d.equipment.includes(currentFilter));
+  const country=document.getElementById('country-filter')?.value || 'all';
+  const plant=document.getElementById('plant-filter')?.value || 'all';
+  const q=(document.getElementById('machine-search')?.value || '').toLowerCase().trim();
+  const filtered=irisData.filter(d=>(currentFilter==='all'||d.equipment.includes(currentFilter)) &&
+    (country==='all'||d.country===country) && (plant==='all'||d.plant===plant) &&
+    (!q||[d.plant,d.country,d.equipment,d.serial,d.line].some(v=>String(v||'').toLowerCase().includes(q))));
   document.getElementById('equipment-grid').innerHTML = filtered.map((d, i) => {
     const warranty = calculateWarranty(d.install_date);
     const status = warranty.status;
@@ -763,43 +793,65 @@ function renderEquipmentCards() {
     const endDate = warranty.end;
     const remaining = warranty.remaining;
     const statusClass = `badge-${status}`;
-    const statusText = status === 'active' ? 'На гарантии' : status === 'expired' ? 'Гарантия истекла' : status === 'pending' ? 'Ожидает' : 'Неизвестно';
+    const statusText = status === 'active' ? 'Under Warranty' : status === 'expired' ? 'Warranty Expired' : status === 'pending' ? 'Pending' : 'Unknown';
     const barClass = status;
-    const sparePartsHtml = (d.spare_parts || []).map(sp => `<div class="spare-item"><span class="spare-name">${sp.name}</span><span class="spare-qty">×${sp.qty}</span></div>`).join('');
-    const commentsHtml = d.comments && d.comments !== '-' && d.comments !== '?' ? `<div class="eq-comments">💬 ${d.comments}</div>` : '';
+    const safe=(v)=>escapeHTML(v ?? 'Unknown');
+    const sparePartsHtml = (d.spare_parts || []).map(sp => `<div class="spare-item"><span class="spare-name">${safe(sp.name)}</span><span class="spare-qty">×${sp.qty}</span></div>`).join('');
+    const commentsHtml = d.comments && d.comments !== '-' && d.comments !== '?' ? `<div class="eq-comments">💬 ${safe(d.comments)}</div>` : '';
     let extraFields = '';
-    if (d.direction) extraFields += `<span class="tag">Направление: ${d.direction}</span>`;
-    if (d.software) extraFields += `<span class="tag">ПО: ${d.software}</span>`;
+    if (d.direction) extraFields += `<span class="tag">Direction: ${safe(d.direction)}</span>`;
+    if (d.software) extraFields += `<span class="tag">SW: ${safe(d.software)}</span>`;
     if (d.completion && d.completion.length > 0 && d.equipment === 'Evolution 5') {
       const completionList = Array.isArray(d.completion) ? d.completion.join(', ') : d.completion;
-      extraFields += `<span class="tag">Комплектация: ${completionList}</span>`;
+      extraFields += `<span class="tag">Configuration: ${safe(completionList)}</span>`;
     }
     const extraHtml = extraFields ? `<div class="eq-extra-row">${extraFields}</div>` : '';
     return `<div class="eq-card" style="animation-delay: ${i * 0.05}s">
-      <div class="eq-header"><div><div class="eq-title">${d.equipment}</div><div class="eq-serial">${d.serial}</div></div><div class="eq-badge ${statusClass}">${statusText}</div></div>
+      <div class="eq-header"><div><div class="eq-title">${safe(d.equipment)}</div><div class="eq-serial">${safe(d.serial)}${d.serial_verified===false ? " · DEMO / UNVERIFIED" : ""}</div></div><div class="eq-badge ${statusClass}">${statusText}</div></div>
       <div class="eq-body">
-        <div class="eq-info-row"><span class="eq-info-label">Завод</span><span class="eq-info-value" style="text-align:right; max-width:60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${d.plant}</span></div>
+        <div class="eq-info-row"><span class="eq-info-label">Plant</span><span class="eq-info-value" style="text-align:right; max-width:60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${safe(d.plant)}</span></div>
+        <div class="eq-info-row"><span class="eq-info-label">Country</span><span class="eq-info-value">${safe(d.country)}</span></div>
         ${extraHtml}
-        <div class="eq-info-row"><span class="eq-info-label">Линия</span><span class="eq-info-value">${d.line}</span></div>
-        <div class="eq-info-row"><span class="eq-info-label">Дата поставки</span><span class="eq-info-value">${d.delivery_date}</span></div>
-        <div class="eq-info-row"><span class="eq-info-label">Дата установки</span><span class="eq-info-value">${d.install_date}</span></div>
-        <div class="eq-info-row"><span class="eq-info-label">Гарантия до</span><span class="eq-info-value">${endDate}</span></div>
+        <div class="eq-info-row"><span class="eq-info-label">Line</span><span class="eq-info-value">${safe(d.line)}</span></div>
+        <div class="eq-info-row"><span class="eq-info-label">Delivery Date</span><span class="eq-info-value">${safe(d.delivery_date)}</span></div>
+        <div class="eq-info-row"><span class="eq-info-label">Installation Date</span><span class="eq-info-value">${safe(d.install_date)}</span></div>
+        <div class="eq-info-row"><span class="eq-info-label">Warranty Until</span><span class="eq-info-value">${endDate}</span></div>
       </div>
       <div class="warranty-section">
-        <div class="warranty-header"><span class="warranty-label">Гарантийный период</span><span class="warranty-value" style="color: ${status === 'active' ? 'var(--success)' : status === 'expired' ? 'var(--danger)' : status === 'pending' ? 'var(--warning)' : 'var(--text-muted)'};">${remaining}</span></div>
+        <div class="warranty-header"><span class="warranty-label">Warranty Period</span><span class="warranty-value" style="color: ${status === 'active' ? 'var(--success)' : status === 'expired' ? 'var(--danger)' : status === 'pending' ? 'var(--warning)' : 'var(--text-muted)'};">${remaining}</span></div>
         <div class="warranty-bar-bg"><div class="warranty-bar-fill ${barClass}" style="width: 0%;" data-width="${percent}%"></div></div>
       </div>
-      <div class="spare-parts"><div class="spare-title">Запасные части в комплекте</div>${sparePartsHtml}</div>
+      <div class="spare-parts"><div class="spare-title">Included Spare Parts</div>${sparePartsHtml}</div>
       ${commentsHtml}
     </div>`;
   }).join('');
   setTimeout(() => { document.querySelectorAll('.warranty-bar-fill').forEach(el => { el.style.width = el.dataset.width; }); }, 200);
 }
 
+function escapeHTML(value) { return String(value ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function populateGlobalFilters() {
+  const cs=document.getElementById('country-filter'), ps=document.getElementById('plant-filter');
+  if(!cs||!ps)return;
+  const selected=cs.value, oldPlant=ps.value;
+  const countries=[...new Set(irisData.map(d=>d.country||'Unknown'))].sort();
+  cs.innerHTML='<option value="all">All countries</option>'+countries.map(c=>`<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+  cs.value=countries.includes(selected)?selected:'all';
+  const plants=[...new Set(irisData.filter(d=>cs.value==='all'||d.country===cs.value).map(d=>d.plant))].sort();
+  ps.innerHTML='<option value="all">All plants</option>'+plants.map(v=>`<option value="${escapeHTML(v)}">${escapeHTML(v)}</option>`).join('');
+  ps.value=plants.includes(oldPlant)?oldPlant:'all';
+}
+function applyEquipmentFilters() { populateGlobalFilters(); renderEquipmentCards(); }
+function exportFilteredCSV() {
+ const c=document.getElementById('country-filter')?.value||'all',p=document.getElementById('plant-filter')?.value||'all',q=(document.getElementById('machine-search')?.value||'').toLowerCase();
+ const rows=irisData.filter(d=>(c==='all'||d.country===c)&&(p==='all'||d.plant===p)&&(currentFilter==='all'||d.equipment.includes(currentFilter))&&(!q||[d.country,d.plant,d.serial,d.equipment].some(v=>String(v||'').toLowerCase().includes(q))));
+ const keys=['country','plant','line','equipment','serial','serial_verified','direction','software','delivery_date','install_date','comments'];
+ const csv=[keys.join(','),...rows.map(d=>keys.map(k=>'"'+String(d[k]??'').replaceAll('"','""')+'"').join(','))].join('\r\n');
+ const url=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'})); const a=document.createElement('a');a.href=url;a.download='iris-machines.csv';a.click();URL.revokeObjectURL(url);
+}
 function filterEq(type) {
   currentFilter = type;
   document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
+  const btn=[...document.querySelectorAll('.filter-btn')].find(b=>b.getAttribute('onclick')===`filterEq('${type}')`); if(btn)btn.classList.add('active');
   renderEquipmentCards();
 }
 
@@ -832,7 +884,7 @@ function renderCRM() {
 
   const tbody = document.getElementById('crm-table-body');
   if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-muted);">Заявок не найдено</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-muted);">No applications found</td></tr>`;
     return;
   }
   tbody.innerHTML = filtered.map(o => {
@@ -841,12 +893,12 @@ function renderCRM() {
     return `<tr>
       <td><strong>#${o.id}</strong></td>
       <td>${o.client}</td>
-      <td>${o.type === 'equipment' ? '🖥️ Оборуд.' : '🔧 Запчасть'}</td>
+      <td>${o.type === 'equipment' ? '🖥️ Equipment' : '🔧 Spare Part'}</td>
       <td>${o.item}</td>
       <td><span class="status-badge ${status.color}">${status.icon} ${status.label}</span></td>
       <td>${o.deadline || '—'}</td>
       <td>${o.manager}</td>
-      <td><button class="crm-btn crm-btn-sm crm-btn-primary" onclick="openDetail(${o.id})">Детали</button></td>
+      <td><button class="crm-btn crm-btn-sm crm-btn-primary" onclick="openDetail(${o.id})">Details</button></td>
     </tr>`;
   }).join('');
 }
@@ -863,7 +915,7 @@ function getFilteredOrders() {
 function filterCRM(type) {
   crmFilter = type;
   document.querySelectorAll('.crm-filter-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  const btn=[...document.querySelectorAll('.crm-filter-btn')].find(b=>b.getAttribute('onclick')===`filterCRM('${type}')`); if(btn)btn.classList.add('active');
   renderCRM();
 }
 
@@ -875,7 +927,7 @@ function openDetail(id) {
   if (!order) return;
   currentDetailOrderId = id;
   const status = getStatusInfo(order.status);
-  document.getElementById('crm-detail-title').textContent = `Заявка №${order.id} — ${order.client}`;
+  document.getElementById('crm-detail-title').textContent = `Application #${order.id} — ${order.client}`;
   const historyHtml = order.history.map(h => {
     const s = getStatusInfo(h.status);
     return `<div class="crm-timeline-item">
@@ -886,16 +938,16 @@ function openDetail(id) {
     </div>`;
   }).join('');
   document.getElementById('crm-detail-body').innerHTML = `
-    <div class="crm-detail-row"><span class="crm-detail-label">Тип</span><span class="crm-detail-value">${order.type === 'equipment' ? 'Оборудование' : 'Запчасти'}</span></div>
-    <div class="crm-detail-row"><span class="crm-detail-label">Клиент</span><span class="crm-detail-value">${order.client}</span></div>
-    <div class="crm-detail-row"><span class="crm-detail-label">Оборудование / Запчасть</span><span class="crm-detail-value">${order.item}</span></div>
-    <div class="crm-detail-row"><span class="crm-detail-label">Количество</span><span class="crm-detail-value">${order.qty}</span></div>
-    <div class="crm-detail-row"><span class="crm-detail-label">Статус</span><span class="crm-detail-value"><span class="status-badge ${status.color}">${status.icon} ${status.label}</span></span></div>
-    <div class="crm-detail-row"><span class="crm-detail-label">Срочность</span><span class="crm-detail-value">${order.urgency === 'urgent' ? '🔴 Срочно' : 'Обычная'}</span></div>
-    <div class="crm-detail-row"><span class="crm-detail-label">Менеджер</span><span class="crm-detail-value">${order.manager}</span></div>
-    <div class="crm-detail-row"><span class="crm-detail-label">Дата создания</span><span class="crm-detail-value">${order.date}</span></div>
-    <div class="crm-detail-row"><span class="crm-detail-label">Плановый срок</span><span class="crm-detail-value">${order.deadline || '—'}</span></div>
-    <div style="margin-top:16px;"><strong>История статусов</strong></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Type</span><span class="crm-detail-value">${order.type === 'equipment' ? 'Equipment' : 'Spare Parts'}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Customer</span><span class="crm-detail-value">${order.client}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Equipment / Spare Part</span><span class="crm-detail-value">${order.item}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Quantity</span><span class="crm-detail-value">${order.qty}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Status</span><span class="crm-detail-value"><span class="status-badge ${status.color}">${status.icon} ${status.label}</span></span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Urgency</span><span class="crm-detail-value">${order.urgency === 'urgent' ? '🔴 Urgent' : 'Normal'}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Manager</span><span class="crm-detail-value">${order.manager}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Created On</span><span class="crm-detail-value">${order.date}</span></div>
+    <div class="crm-detail-row"><span class="crm-detail-label">Planned Deadline</span><span class="crm-detail-value">${order.deadline || '—'}</span></div>
+    <div style="margin-top:16px;"><strong>Status History</strong></div>
     <div class="crm-timeline">${historyHtml}</div>
   `;
   document.getElementById('crm-detail-modal').classList.add('active');
@@ -913,7 +965,7 @@ function changeStatus() {
   const currentIdx = STATUSES.findIndex(s => s.id === order.status);
   const nextIdx = (currentIdx + 1) % STATUSES.length;
   order.status = STATUSES[nextIdx].id;
-  order.history.push({ date: new Date().toLocaleDateString('ru-RU'), status: order.status, user: 'Система' });
+  order.history.push({ date: new Date().toLocaleDateString('en-GB'), status: order.status, user: 'System' });
   closeDetail();
   renderCRM();
 }
@@ -935,7 +987,7 @@ function saveNewOrder() {
   const urgency = document.getElementById('new-order-urgency').value;
   const comment = document.getElementById('new-order-comment').value.trim();
   if (!client || !item) {
-    alert('Заполните клиента и наименование!');
+    alert('Please enter a customer and item!');
     return;
   }
   const newOrder = {
@@ -946,10 +998,10 @@ function saveNewOrder() {
     qty: qty,
     urgency: urgency,
     status: 'new',
-    manager: 'Система',
-    date: new Date().toLocaleDateString('ru-RU'),
+    manager: 'System',
+    date: new Date().toLocaleDateString('en-GB'),
     deadline: '—',
-    history: [{ date: new Date().toLocaleDateString('ru-RU'), status: 'new', user: 'Система' }]
+    history: [{ date: new Date().toLocaleDateString('en-GB'), status: 'new', user: 'System' }]
   };
   orders.push(newOrder);
   closeNewOrder();
@@ -974,6 +1026,31 @@ document.getElementById('crm-detail-modal').addEventListener('click', function(e
 document.getElementById('crm-new-modal').addEventListener('click', function(e) {
   if (e.target === this) closeNewOrder();
 });
+
+
+// Global equipment command-center controls; existing data/CRM logic remains intact.
+function showPortalPanel(panel){
+  ['overview','machines','analytics'].forEach(id=>{const el=document.getElementById('panel-'+id);if(el)el.style.display=id===panel?'block':'none';});
+  document.querySelectorAll('.side-link[data-panel]').forEach(el=>el.classList.toggle('active',el.dataset.panel===panel));
+  if(panel==='analytics')renderPortalAnalytics();
+}
+function syncCountryShortcuts(){
+ const el=document.getElementById('country-shortcuts'),select=document.getElementById('country-filter');if(!el||!select)return;
+ const counts={};irisData.forEach(d=>{const c=d.country||'Unknown';counts[c]=(counts[c]||0)+1;});
+ el.innerHTML='<button class="country-shortcut '+(select.value==='all'?'active':'')+'" data-all-country="true"><span>🌐 All countries</span><b>'+irisData.length+'</b></button>'+Object.keys(counts).sort().map(c=>'<button class="country-shortcut '+(select.value===c?'active':'')+'" data-country="'+escapeHTML(c)+'"><span>◈ '+escapeHTML(c)+'</span><b>'+counts[c]+'</b></button>').join('');
+ el.querySelector('[data-all-country]')?.addEventListener('click',()=>choosePortalCountry('all'));
+ el.querySelectorAll('[data-country]').forEach(btn=>btn.addEventListener('click',()=>choosePortalCountry(btn.dataset.country)));
+}
+function choosePortalCountry(country){const sel=document.getElementById('country-filter');sel.value=country;applyEquipmentFilters();syncCountryShortcuts();showPortalPanel('machines');}
+function renderPortalAnalytics(){
+ const draw=(target,key)=>{const el=document.getElementById(target);if(!el)return;const counts={};irisData.forEach(d=>{const v=key(d);counts[v]=(counts[v]||0)+1;});const max=Math.max(1,...Object.values(counts));el.innerHTML=Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([name,n])=>'<div class="analytics-bar"><div class="analytics-bar-label"><span>'+escapeHTML(name)+'</span><strong>'+n+'</strong></div><div class="analytics-track"><div class="analytics-fill" style="width:'+(100*n/max)+'%"></div></div></div>').join('');};
+ draw('analytics-country',d=>d.country||'Unknown');draw('analytics-model',d=>d.equipment||'Unknown');
+}
+// Attach after all original functions, preserving the existing render flow.
+const _originalRenderIrisDashboard=renderIrisDashboard;
+renderIrisDashboard=function(){_originalRenderIrisDashboard();syncCountryShortcuts();renderPortalAnalytics();};
+const _originalRenderEquipmentCards=renderEquipmentCards;
+renderEquipmentCards=function(){_originalRenderEquipmentCards();const n=document.querySelectorAll('#equipment-grid .eq-card').length;const label=document.getElementById('visible-machine-count');if(label)label.textContent='· '+n+' shown';};
 
 </script>
 </body>
