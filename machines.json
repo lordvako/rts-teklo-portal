@@ -5,7 +5,7 @@
     "line": "1",
     "equipment": "Evolution 5",
     "serial": "IR02-NS2656",
-    "direction": "Правосторонняя",
+    "direction": "Right-hand",
     "software": "10.7.6.0",
     "completion": [
       "FINISH COMBI",
@@ -31,7 +31,9 @@
         "qty": 1
       }
     ],
-    "comments": "The flash of the lector station on top is not working"
+    "comments": "The flash of the lector station on top is not working",
+    "country": "Russia",
+    "serial_verified": true
   },
   {
     "id": 1002,
@@ -39,7 +41,7 @@
     "line": "1",
     "equipment": "Evolution 16",
     "serial": "IR07-NT2515",
-    "direction": "Правосторонняя",
+    "direction": "Right-hand",
     "software": "10.7.6.0",
     "completion": "",
     "delivery_date": "11.2025",
@@ -58,7 +60,9 @@
         "qty": 1
       }
     ],
-    "comments": "-"
+    "comments": "-",
+    "country": "Russia",
+    "serial_verified": true
   },
   {
     "id": 1003,
@@ -66,13 +70,15 @@
     "line": "8",
     "equipment": "IBot",
     "serial": "IRIS-1003",
-    "direction": "Правосторонняя",
+    "direction": "Right-hand",
     "software": "3",
     "completion": [],
     "delivery_date": "02.2026",
     "install_date": "04.2026",
     "spare_parts": [],
-    "comments": "-"
+    "comments": "-",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1004,
@@ -108,7 +114,9 @@
       }
     ],
     "comments": "-",
-    "year": "2022"
+    "year": "2022",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1005,
@@ -144,7 +152,9 @@
       }
     ],
     "comments": "-",
-    "year": "2022"
+    "year": "2022",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1006,
@@ -180,7 +190,9 @@
       }
     ],
     "comments": "-",
-    "year": "2023"
+    "year": "2023",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1007,
@@ -216,7 +228,9 @@
       }
     ],
     "comments": "-",
-    "year": "2025"
+    "year": "2025",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1008,
@@ -252,7 +266,9 @@
       }
     ],
     "comments": "-",
-    "year": "2020"
+    "year": "2020",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1009,
@@ -288,7 +304,9 @@
       }
     ],
     "comments": "-",
-    "year": "2020"
+    "year": "2020",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1010,
@@ -314,7 +332,9 @@
       }
     ],
     "comments": "-",
-    "year": "2020"
+    "year": "2020",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1011,
@@ -350,7 +370,9 @@
       }
     ],
     "comments": "-",
-    "year": "2020"
+    "year": "2020",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1012,
@@ -386,7 +408,9 @@
       }
     ],
     "comments": "-",
-    "year": "2020"
+    "year": "2020",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1013,
@@ -412,7 +436,9 @@
       }
     ],
     "comments": "-",
-    "year": "2020"
+    "year": "2020",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1014,
@@ -448,7 +474,9 @@
       }
     ],
     "comments": "-",
-    "year": "2022"
+    "year": "2022",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1015,
@@ -484,7 +512,9 @@
       }
     ],
     "comments": "-",
-    "year": "2022"
+    "year": "2022",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1016,
@@ -520,7 +550,9 @@
       }
     ],
     "comments": "-",
-    "year": "2023"
+    "year": "2023",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1017,
@@ -546,7 +578,9 @@
       }
     ],
     "comments": "-",
-    "year": "2023"
+    "year": "2023",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1018,
@@ -582,7 +616,9 @@
       }
     ],
     "comments": "-",
-    "year": "2025"
+    "year": "2025",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1019,
@@ -618,7 +654,9 @@
       }
     ],
     "comments": "-",
-    "year": "2025"
+    "year": "2025",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1020,
@@ -644,7 +682,9 @@
       }
     ],
     "comments": "-",
-    "year": "2025"
+    "year": "2025",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1021,
@@ -680,7 +720,9 @@
       }
     ],
     "comments": "modernized in 2020",
-    "year": "2012"
+    "year": "2012",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1022,
@@ -716,7 +758,9 @@
       }
     ],
     "comments": "modernized in 2020",
-    "year": "2012"
+    "year": "2012",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1023,
@@ -742,7 +786,9 @@
       }
     ],
     "comments": "-",
-    "year": "2025"
+    "year": "2025",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1024,
@@ -768,7 +814,9 @@
       }
     ],
     "comments": "under consideration",
-    "year": "2013"
+    "year": "2013",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1025,
@@ -804,7 +852,9 @@
       }
     ],
     "comments": "modernized in 2020",
-    "year": "2015"
+    "year": "2015",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1026,
@@ -830,7 +880,9 @@
       }
     ],
     "comments": "modernized in 2020",
-    "year": "2015"
+    "year": "2015",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1027,
@@ -866,7 +918,9 @@
       }
     ],
     "comments": "modernized in?\nout of order due to spacers",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1028,
@@ -902,7 +956,9 @@
       }
     ],
     "comments": "modernized in?\nout of order due to spacers",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1029,
@@ -938,7 +994,9 @@
       }
     ],
     "comments": "upgraded to NEO in?",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1030,
@@ -974,7 +1032,9 @@
       }
     ],
     "comments": "?",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1031,
@@ -1010,7 +1070,9 @@
       }
     ],
     "comments": "?",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1032,
@@ -1046,7 +1108,9 @@
       }
     ],
     "comments": "?",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1033,
@@ -1082,7 +1146,9 @@
       }
     ],
     "comments": "not modernized",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1034,
@@ -1097,7 +1163,9 @@
     "warranty_percent": 0,
     "spare_parts": [],
     "comments": "-",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1035,
@@ -1112,7 +1180,9 @@
     "warranty_percent": 0,
     "spare_parts": [],
     "comments": "-",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1036,
@@ -1127,7 +1197,9 @@
     "warranty_percent": 0,
     "spare_parts": [],
     "comments": "-",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1037,
@@ -1142,7 +1214,9 @@
     "warranty_percent": 0,
     "spare_parts": [],
     "comments": "-",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1038,
@@ -1157,7 +1231,9 @@
     "warranty_percent": 0,
     "spare_parts": [],
     "comments": "-",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1039,
@@ -1172,7 +1248,9 @@
     "warranty_percent": 0,
     "spare_parts": [],
     "comments": "-",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1040,
@@ -1187,7 +1265,9 @@
     "warranty_percent": 0,
     "spare_parts": [],
     "comments": "-",
-    "year": "Unknown"
+    "year": "Unknown",
+    "country": "Russia",
+    "serial_verified": false
   },
   {
     "id": 1041,
@@ -1195,7 +1275,7 @@
     "line": "8.1.1",
     "equipment": "Evolution 16",
     "serial": "IR07-NT2606",
-    "direction": "Левосторонняя",
+    "direction": "Left-hand",
     "software": "10.7.6.0",
     "completion": "",
     "delivery_date": "10.2025",
@@ -1210,7 +1290,9 @@
         "qty": 1
       }
     ],
-    "comments": "-"
+    "comments": "-",
+    "country": "Russia",
+    "serial_verified": true
   },
   {
     "id": 1042,
@@ -1218,7 +1300,7 @@
     "line": "8.1.2",
     "equipment": "Evolution 16",
     "serial": "IR07-NT2607",
-    "direction": "Правосторонняя",
+    "direction": "Right-hand",
     "software": "10.7.6.0",
     "completion": "",
     "delivery_date": "10.2025",
@@ -1233,7 +1315,9 @@
         "qty": 2
       }
     ],
-    "comments": "-"
+    "comments": "-",
+    "country": "Russia",
+    "serial_verified": true
   },
   {
     "id": 1043,
@@ -1241,7 +1325,7 @@
     "line": "7.1.1",
     "equipment": "Evolution 16",
     "serial": "IR07-NT2608",
-    "direction": "Левосторонняя",
+    "direction": "Left-hand",
     "software": "10.7.6.0",
     "completion": "",
     "delivery_date": "02.2026",
@@ -1256,7 +1340,9 @@
         "qty": 2
       }
     ],
-    "comments": "-"
+    "comments": "-",
+    "country": "Russia",
+    "serial_verified": true
   },
   {
     "id": 1044,
@@ -1264,7 +1350,7 @@
     "line": "7.1.2",
     "equipment": "Evolution 16",
     "serial": "IR07-NT2609",
-    "direction": "Правосторонняя",
+    "direction": "Right-hand",
     "software": "10.7.6.0",
     "completion": "",
     "delivery_date": "02.2026",
@@ -1279,6 +1365,200 @@
         "qty": 2
       }
     ],
-    "comments": "-"
+    "comments": "-",
+    "country": "Russia",
+    "serial_verified": true
+  },
+  {
+    "id": 2001,
+    "country": "Uzbekistan",
+    "plant": "ASL OYLA",
+    "line": "Unknown",
+    "equipment": "Evolution 16",
+    "serial": "DEMO-UZ-16-01",
+    "serial_verified": false,
+    "direction": "Unknown",
+    "software": "Unknown",
+    "completion": [],
+    "delivery_date": "Unknown",
+    "install_date": "Unknown",
+    "warranty_end": "Unknown",
+    "warranty_status": "unknown",
+    "spare_parts": [],
+    "comments": "Illustrative entry — verify serial, dates and configuration before operational use.",
+    "data_status": "illustrative"
+  },
+  {
+    "id": 2002,
+    "country": "Turkmenistan",
+    "plant": "Turkmenistan — plant to confirm",
+    "line": "Unknown",
+    "equipment": "Evolution 5",
+    "serial": "DEMO-TM-05-01",
+    "serial_verified": false,
+    "direction": "Unknown",
+    "software": "Unknown",
+    "completion": [
+      "BASE",
+      "LECTOR",
+      "FINISH 1",
+      "FINISH 2",
+      "BASE STRESS"
+    ],
+    "delivery_date": "Unknown",
+    "install_date": "Unknown",
+    "warranty_end": "Unknown",
+    "warranty_status": "unknown",
+    "spare_parts": [],
+    "comments": "Illustrative entry — verify serial, dates and configuration before operational use.",
+    "data_status": "illustrative"
+  },
+  {
+    "id": 2003,
+    "country": "Turkmenistan",
+    "plant": "Turkmenistan — plant to confirm",
+    "line": "Unknown",
+    "equipment": "Evolution 5",
+    "serial": "DEMO-TM-05-02",
+    "serial_verified": false,
+    "direction": "Unknown",
+    "software": "Unknown",
+    "completion": [
+      "BASE",
+      "LECTOR",
+      "FINISH 1",
+      "FINISH 2",
+      "BASE STRESS"
+    ],
+    "delivery_date": "Unknown",
+    "install_date": "Unknown",
+    "warranty_end": "Unknown",
+    "warranty_status": "unknown",
+    "spare_parts": [],
+    "comments": "Illustrative entry — verify serial, dates and configuration before operational use.",
+    "data_status": "illustrative"
+  },
+  {
+    "id": 2004,
+    "country": "Turkmenistan",
+    "plant": "Turkmenistan — plant to confirm",
+    "line": "Unknown",
+    "equipment": "Evolution 5",
+    "serial": "DEMO-TM-05-03",
+    "serial_verified": false,
+    "direction": "Unknown",
+    "software": "Unknown",
+    "completion": [
+      "BASE",
+      "LECTOR",
+      "FINISH 1",
+      "FINISH 2",
+      "BASE STRESS"
+    ],
+    "delivery_date": "Unknown",
+    "install_date": "Unknown",
+    "warranty_end": "Unknown",
+    "warranty_status": "unknown",
+    "spare_parts": [],
+    "comments": "Illustrative entry — verify serial, dates and configuration before operational use.",
+    "data_status": "illustrative"
+  },
+  {
+    "id": 2005,
+    "country": "Turkmenistan",
+    "plant": "Turkmenistan — plant to confirm",
+    "line": "Unknown",
+    "equipment": "Evolution 16",
+    "serial": "DEMO-TM-16-01",
+    "serial_verified": false,
+    "direction": "Unknown",
+    "software": "Unknown",
+    "completion": [],
+    "delivery_date": "Unknown",
+    "install_date": "Unknown",
+    "warranty_end": "Unknown",
+    "warranty_status": "unknown",
+    "spare_parts": [],
+    "comments": "Illustrative entry — verify serial, dates and configuration before operational use.",
+    "data_status": "illustrative"
+  },
+  {
+    "id": 2006,
+    "country": "Turkmenistan",
+    "plant": "Turkmenistan — plant to confirm",
+    "line": "Unknown",
+    "equipment": "Evolution 16",
+    "serial": "DEMO-TM-16-02",
+    "serial_verified": false,
+    "direction": "Unknown",
+    "software": "Unknown",
+    "completion": [],
+    "delivery_date": "Unknown",
+    "install_date": "Unknown",
+    "warranty_end": "Unknown",
+    "warranty_status": "unknown",
+    "spare_parts": [],
+    "comments": "Illustrative entry — verify serial, dates and configuration before operational use.",
+    "data_status": "illustrative"
+  },
+  {
+    "id": 2007,
+    "country": "Turkmenistan",
+    "plant": "Turkmenistan — plant to confirm",
+    "line": "Unknown",
+    "equipment": "Evolution 16",
+    "serial": "DEMO-TM-16-03",
+    "serial_verified": false,
+    "direction": "Unknown",
+    "software": "Unknown",
+    "completion": [],
+    "delivery_date": "Unknown",
+    "install_date": "Unknown",
+    "warranty_end": "Unknown",
+    "warranty_status": "unknown",
+    "spare_parts": [],
+    "comments": "Illustrative entry — verify serial, dates and configuration before operational use.",
+    "data_status": "illustrative"
+  },
+  {
+    "id": 2008,
+    "country": "Kyrgyzstan",
+    "plant": "Kyrgyzstan — plant to confirm",
+    "line": "Unknown",
+    "equipment": "Evolution 16",
+    "serial": "DEMO-KG-16-01",
+    "serial_verified": false,
+    "direction": "Unknown",
+    "software": "Unknown",
+    "completion": [],
+    "delivery_date": "Unknown",
+    "install_date": "Unknown",
+    "warranty_end": "Unknown",
+    "warranty_status": "unknown",
+    "spare_parts": [],
+    "comments": "Illustrative entry — verify serial, dates and configuration before operational use.",
+    "data_status": "illustrative"
+  },
+  {
+    "id": 2009,
+    "country": "Kyrgyzstan",
+    "plant": "Kyrgyzstan — plant to confirm",
+    "line": "Unknown",
+    "equipment": "Evolution 5",
+    "serial": "DEMO-KG-05-01",
+    "serial_verified": false,
+    "direction": "Unknown",
+    "software": "Unknown",
+    "completion": [
+      "BASE",
+      "FINISH"
+    ],
+    "delivery_date": "Unknown",
+    "install_date": "Unknown",
+    "warranty_end": "Unknown",
+    "warranty_status": "unknown",
+    "spare_parts": [],
+    "comments": "Illustrative entry — verify serial, dates and configuration before operational use.",
+    "data_status": "illustrative"
   }
 ]
